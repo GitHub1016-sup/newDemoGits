@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>搜索历史</title>
+    <link rel="stylesheet" href="../../css/mui.min.css" />
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <link rel="stylesheet" href="../../css/swiper.min.css" />
+    <link rel="stylesheet" href="../../css/public.css" />
+    <link rel="stylesheet" href="../../css/scroll.css" />
+    <script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../script/swiper.min.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+    <script type="text/javascript" src="../../script/scroll.js"></script>
+
+    <style>
+        html,
+        body,
+        .Wrap {
+            width: 100%;
+            /* height: 100%; */
+        }
+
+        .Main {
+            padding-bottom: 0;
+        }
+
+        .BottomNav {
+            display: none;
+        }
+
+        .HeaderWrap {
+            /* top: 0rem; */
+            background: #fff;
+            /* padding: 1rem 2rem; */
+            /* padding-top: 3rem; */
+        }
+
+        .mui-search .mui-placeholder {
+            height: 4.3rem;
+            line-height: 4.3rem;
+            font-size: inherit;
+        }
+
+        .HeaderWrap .mui-search .mui-placeholder .mui-icon {
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .HeaderWrap .mui-placeholder {
+            text-align: left;
+        }
+
+        .HeaderWrap .mui-search {
+            width: 31.88rem;
+        }
+
+        .HeaderWrap .mui-search input {
+            background: rgba(245, 245, 245, 0.44);
+            border-radius: 2rem;
+            font-size: 1.63rem !important;
+            padding-left: 4.87rem;
+            height: auto !important;
+            line-height: initial;
+        }
+
+        .HeaderWrap input[type=search] {
+            margin-bottom: 0;
+        }
+
+        .HeaderWrap .mui-active::before,
+        .HeaderWrap .mui-search .mui-placeholder .mui-icon {
+            font-size: 2.25rem;
+        }
+
+        .HeaderWrap .mui-active::before {
+            position: absolute;
+            left: 1rem;
+            top: 0.8rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .ShoppingCart {
+            font-size: 3rem;
+        }
+
+        .mui-placeholder span:nth-child(2) {
+            font-size: 1.63rem;
+        }
+
+        .ProductListWrap {
+            /* margin-top: 6rem; */
+        }
+
+        .NoData {
+            position: fixed;
+            top: 45%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .mescroll{
+              position: fixed;
+              top: 84px;
+              bottom: 0;
+              height: auto; /*如设置bottom:50px,则需height:auto才能生效*/
+            }
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="Wrap" v-cloak>
+     <div id="apiHeader" class="HeaderWrap">
+
+            <div class="ListHBothB HeaderInner">
+                <!-- <div class="fontColor255 fontSize36 HeaderTitle">登录</div> -->
+                <div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"></div>
+                <div class="mui-input-row mui-search" @click="gpseach">
+                    <input disabled="disabled" type="search" v-model="searchContent" v-on:keyup.13="keyupSearch" class=" fontColor666 mui-input-clear" placeholder="请输入商品名称" style="width: 100%;">
+                    <div class="SearchIcon">
+                        <i class="iconfont fontSize30 fontColor666">&#xe741;</i>
+                    </div>
+                </div>
+                <div class="fontColorFF913D iconfont ShoppingCart" v-on:click="_GlobalFun.goToPage('../car/index.html','qgwcym9','')"></div>
+
+            </div>
+
+        </div>
+        <div>
+            <div id="mescroll" class="mescroll">
+                <div>
+                    <div v-if="list.length>=1" class="ProductListWrap">
+
+                        <div class="TempWrap RecWrap">
+
+                            <div class="RecCon">
+
+                                <div class="ListHBothB RecInner">
+
+                                    <div v-on:click="godetail(item.id)" v-for="(item,index) in list" class="RecList">
+                                        <div class="RecPic">
+                                            <img v-bind:src="item.img">
+                                        </div>
+                                        <div class="RecBottom">
+                                            <div class="RecName">
+                                            	<span class="fontSize30 fontColor333 span_1">{{item.name}}</span>
+                                            </div>
+                                            <div class="BuyNum ListHJstBottom">
+                                            	<div class="">
+                                            		<span class="fontSize22 fontColor999 span_1">{{item.unit_name}}</span>
+                                            	</div>
+                                            	<div class="">
+                                            		<span class="fontSize22 fontColor999">销量 {{item.sales}}</span>
+                                            	</div>
+                                            </div>
+                                            <div class=" ListHJstBottom LimitedTimeFooterWrap">
+                                            	<div class="ListHCentent MoneyWrap">
+                                            		<div class="ListHCentent  MoneyList Money1">
+                                            			<span class=" fontSize24 red span_1">￥</span>
+                                            			<span class=" fontSize42 red span_2">{{item.shop_price}}</span>
+                                            		</div>
+                                            		<div class="ListHCentent MoneyList Money2" style="text-decoration: none;">
+                                            			
+                                            		</div>
+                                            	</div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div v-if="list==''||list.length==0" class="fontSize34 fontColor666 ZnoData">
+						<img src="../../image/nodata/nodata.png" >
+                        <span>暂未找到您搜索的商品</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+   
+
+
+    </div>
+
+
+    <script type="text/javascript" src="../../script/public.js"></script>
+
+
+
+</body>
+
+<script>
+    _GlobalFun.IsAPI(function() {
+
+        VueFun();
+
+    })
+
+
+    function VueFun() {
+        var mescroll;
+
+        var vue = new Vue({
+            el: ".Wrap",
+            data: {
+
+                list: "",
+
+                searchContent: _GlobalFun.getPageParam('key'),
+
+            },
+            methods: {
+                godetail(id) {
+                   _GlobalFun.goToPage('../product/index.html', 'qcqxqy2', {
+                   	id: id
+                   })
+                },
+				gpseach(){
+					_GlobalFun.goToPage('searchHistory.html','search','')
+				},
+   
+                GetDataFun(keyV, startV) {
+                    var _this = this;
+                    _GlobalFun.postAjax('home', 'post_cate_goods_list', {
+                        key: _GlobalFun.getPageParam('key'),
+						cate_top:_GlobalFun.getPageParam('cate_top'),
+                        start: startV,
+                    }, function(data) {
+                    mescroll.endErr();
+                        if (data.code == 0) {
+                            if (startV == 0) {
+                                _this.list = data.data;
+                            } else {
+                                _this.list = _this.list.concat(data.data);
+                            }
+                          
+
+                        } else {
+                            mescroll.endErr();
+                            // _GlobalFun.alert(data.msg);
+                        }
+
+
+                    })
+
+
+                },
+
+
+                keyupSearch() {
+                    var _this = this;
+                    // if (_this.searchContent = _this.searchContent) return;
+                    _this.GetDataFun(_this.searchContent, 0);
+                },
+
+
+            },
+
+
+            mounted() {
+                var _this = this;
+
+                // _GlobalFun.ReturnBtn();
+
+                // this.GetDataFun(_GlobalFun.getPageParam('key'), 0);
+                mescroll = new MeScroll("mescroll", { //第一个参数"mescroll"对应上面布局结构div的id (1.3.5版本支持传入dom对象)
+                    //如果您的下拉刷新是重置列表数据,那么down完全可以不用配置,具体用法参考第一个基础案例
+                    //解析: down.callback默认调用mescroll.resetUpScroll(),而resetUpScroll会将page.num=1,再触发up.callback
+                    up: {
+                        callback: downCallback, //上拉加载的回调
+                        //以下是一些常用的配置,当然不写也可以的.
+                        page: {
+                            num: 0, //当前页 默认0,回调之前会加1; 即callback(page)会从1开始
+                            size: 10 //每页数据条数,默认10
+                        },
+                        htmlNodata: '<p class="upwarp-nodata">-- END --</p>',
+                        noMoreSize: 5, //如果列表已无数据,可设置列表的总数量要大于5才显示无更多数据;
+
+                        toTop: {
+                            //回到顶部按钮
+                            src: "../../image/timg.png", //图片路径,默认null,支持网络图
+                            offset: 500 //列表滚动1000px才显示回到顶部按钮
+                        },
+
+                    }
+                });
+                //下拉刷新的回调
+                function downCallback() {
+
+                    _this.GetDataFun(_GlobalFun.getPageParam('key'), _this.list.length);
+                }
+
+            },
+
+        })
+
+
+
+
+
+    }
+</script>
+
+
+</html>

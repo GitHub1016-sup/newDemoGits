@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>资质认证</title>
+		<link rel="stylesheet" href="../../css/reset.css" />
+		<link rel="stylesheet" href="../../css/animate.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/public.css" />
+		<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../../script/vue.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<style>
+			body {
+            background: #fff;
+        }
+
+        .HeaderWrap {
+            background: #fff;
+        }
+
+        .ReceiverWrap {
+
+            padding: 1rem 1rem;
+        }
+
+        .ReceiverList {
+            display: flex
+        }
+
+
+        .MyInputCon {
+            width: 100%;
+            flex: 1;
+        }
+
+        .ReceiverList input {
+            border: 0;
+            height: initial;
+            line-height: initial;
+            padding: 0;
+            margin: 0;
+            height: 6rem;
+            line-height: 6rem;
+            background: none;
+        }
+
+        .ReceiverList input::-webkit-input-placeholder {
+            color: #ADADAD;
+        }
+
+
+
+        .MyInputTitle {
+            width: 13.5rem;
+            padding-left: 1rem;
+            height: 6rem;
+            line-height: 6rem;
+        }
+
+
+
+        .MyInputBox {
+            height: 6rem;
+            line-height: 6rem;
+            padding-bottom: 1rem;
+
+        }
+
+
+
+
+        .ReceiverList {
+            border-bottom: 0.06rem solid #E0E0E0;
+            position: relative;
+        }
+
+
+        .ReceiverList1 .MyInputBox {
+            border-bottom: 0.06rem solid #E0E0E0;
+
+        }
+
+
+        .LoginBtn {
+            margin-top: 5rem;
+			margin-bottom: 5rem;
+        }
+
+        .LoginBtn button {
+            width: 100%;
+            border: 0;
+            width: 44.88rem;
+            height: 4.97rem;
+            background: rgba(224, 224, 224, 1);
+            border-radius: 0.5rem;
+            padding: 0;
+        }
+
+        .LoginBtn button.backColorFF913D {
+            background: #FF913D !important;
+        }
+
+
+
+        .LoginBtn button:active {
+            border: 0 !important;
+            background: rgba(224, 224, 224, 1) !important;
+        }
+
+
+
+        .LegalUploadList {
+            display: block;
+            padding-bottom: 1rem;
+        }
+
+        .LegalUploadList.Select .MyInputTitle .span_2 {
+            opacity: 0;
+        }
+
+
+        .LegalUploadList .MyInputBox {
+            height: auto;
+            line-height: initial;
+        }
+
+        .LegalUploadList .MyInputTitle {
+            width: auto;
+        }
+
+        .LegalUploadList .MyInputTitle .span_1 {
+            margin-right: 1rem;
+        }
+
+        .LegalUploadList .MyInputTitle .span_2 {
+            color: #9D9D9D;
+        }
+
+        .UploadMode {
+            width: 28.14rem;
+            height: 16rem;
+            background: rgba(255, 245, 234, 1);
+            position: relative;
+            margin: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .UploadLine::before,
+        .UploadLine::after {
+            background: #E6D8C9;
+            border-radius: 0.13rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            content: "";
+        }
+
+        .UploadLine::before {
+            width: 0.25rem;
+            height: 3.13rem;
+        }
+
+        .UploadLine::after {
+            height: 0.25rem;
+            width: 3.13rem;
+        }
+
+        .UploadPic {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .UploadPic img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .UploadMode input {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+            opacity: 0;
+        }
+
+        .UploadMode.Select {
+            background: none;
+        }
+
+        .UploadMode.Select .UploadLine {
+            display: none;
+        }
+		
+		
+		.have_one1 {
+			-webkit-appearance: none;
+			vertical-align: middle;
+			margin-top: 0;
+			background: #fff;
+			border: #999 solid 1px;
+			border-radius: 10px;
+			min-height: 20px;
+			min-width: 20px;
+		}
+		
+		.have_one1:checked {
+			background: var(--ThemeColor);
+			border: var(--ThemeColor) solid 1px;
+		}
+		
+		.have_one1:checked::after {
+			content: '';
+			top: 3px;
+			left: 3px;
+			position: absolute;
+			background: transparent;
+			border: #fff solid 2px;
+			border-top: none;
+			border-right: none;
+			height: 6px;  
+			width: 10px;
+			-moz-transform: rotate(-45deg);
+			-ms-transform: rotate(-45deg);
+			-webkit-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+		}
+		
+		.have_one1 {
+			color: #666;
+			text-align: center;
+			position: relative;
+			
+		}
+		
+		.have_one1.active {
+			color: var(--ThemeColor);
+		}
+		.xieyi{
+			margin-left: 1.875rem;
+			margin-top: 1.875rem;
+		}
+.mui-table-view-cell{
+	width: 4rem;
+}
+		.mui-table-view-cell:after{
+			content: '';
+			background-color: #FFFFFF;
+		}
+    </style>
+	</head>
+
+
+	<body>
+
+
+		<div class="Wrap" v-cloak>
+			<div id="apiHeader" class="HeaderWrap">
+				<div class="ListHBothB HeaderInner">
+					<div class=" mui-icon mui-icon-arrowleft fontColor999  HeadReturnBtn Js_HeadReturnBtn" style="flex: 1;">
+					</div>
+					<div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">资质认证</div>
+					<!--fontColorFF913D-->
+					<div class="HeaderRightBtn fontColor666  fontSize24" style="opacity: 0; "> 删除</div>
+				</div>
+
+			</div>
+			<div class="">
+				<div class="ToLine"></div>
+				<div class="ReceiverWrap">
+					<div class="ReceiverList">
+						<div class="fontColor333 fontSize28 MyInputTitle flex0">认证类型</div>
+						<ul class="mui-table-view-radio ListHLeft">
+							<li class="mui-table-view-cell" @click="type=1" :class="type==1?' mui-selected':''">
+								<a class="mui-navigate-right fontSize22">药店</a>
+							</li>
+							<li class="mui-table-view-cell" @click="type=2" :class="type==2?' mui-selected':''">
+								<a class="mui-navigate-right fontSize22">门诊</a>
+							</li>
+							<li class="mui-table-view-cell" @click="type=3" :class="type==3?' mui-selected':''">
+								<a class="mui-navigate-right fontSize22">卫生室</a>
+							</li>
+						</ul>
+					</div>
+					<div class="ReceiverList">
+						<div class="fontColor333 fontSize28 MyInputTitle">姓名</div>
+						<div class="MyInputCon">
+							<div class="MyInputBox MyInputBox1">
+								<input v-on:input="inputFun" v-model="name" class="Js_CompanyName fontSize28 fontColor666" type="text"
+								 placeholder="请输入姓名" />
+							</div>
+						</div>
+					</div>
+
+					<div class="ReceiverList">
+						<div class="fontColor333 fontSize28 MyInputTitle">电话</div>
+						<div class="MyInputCon">
+							<div class="MyInputBox MyInputBox1">
+								<input v-on:input="inputFun" v-model="shop_phone" class="Js_OrgID fontSize28 fontColor666" type="text"
+								 placeholder="请输入电话" />
+							</div>
+						</div>
+					</div>
+
+					<div class="ReceiverList">
+						<div class="fontColor333 fontSize28 MyInputTitle">联系地址</div>
+						<div class="MyInputCon">
+							<div class="MyInputBox MyInputBox1">
+								<input v-on:input="inputFun" v-model="shop_address" class="Js_OrgID fontSize28 fontColor666" type="text"
+								 placeholder="请输入联系地址" />
+							</div>
+						</div>
+					</div>
+
+					<!--Select-->
+					<div class="ReceiverList LegalUploadList">
+						<div class=" MyInputTitle">
+							<span class="fontColor333 fontSize28 span_1">店铺LOGO</span>
+							<span class="span_2 fontColorC8C8C8 fontSize26">请上传LOGO</span>
+						</div>
+						<div class="MyInputCon">
+							<div class="MyInputBox MyInputBox1">
+								<div class="UploadMode" v-on:click="UploadManage(1)">
+									<div class="UploadLine"></div>
+									<div class="UploadPic">
+										<img v-if="shop_img!=''" v-bind:src="shop_img">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--Select-->
+					<div class="ReceiverList LegalUploadList" v-show="type!=3">
+						<div class=" MyInputTitle">
+							<span class="fontColor333 fontSize28 span_1">营业执照</span>
+							<span class="span_2 fontColorC8C8C8 fontSize26">请上传</span>
+						</div>
+						<div class="MyInputCon" v-on:click="UploadManage(2)">
+							<div class="MyInputBox MyInputBox1">
+								<div class="UploadMode">
+									<div class="UploadLine"></div>
+									<div class="UploadPic">
+										<img v-if="shop_imgs!=''" v-bind:src="shop_imgs">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--Select-->
+					<div class="ReceiverList LegalUploadList">
+						<div class=" MyInputTitle">
+							<span class="fontColor333 fontSize28 span_1">经营许可证/医疗机构许可证</span>
+							<span class="span_2 fontColorC8C8C8 fontSize26">请上传</span>
+						</div>
+						<div class="MyInputCon" v-on:click="UploadManage(3)">
+							<div class="MyInputBox MyInputBox1">
+								<div class="UploadMode">
+									<div class="UploadLine"></div>
+									<div class="UploadPic">
+										<img v-if="img3!=''" v-bind:src="img3">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--Select-->
+					<div class="ReceiverList LegalUploadList">
+						<div class=" MyInputTitle">
+							<span class="fontColor333 fontSize28 span_1">法人身份证复印件/法人身份证照片</span>
+							<span class="span_2 fontColorC8C8C8 fontSize26">请上传</span>
+						</div>
+						<div class="MyInputCon" v-on:click="UploadManage(4)">
+							<div class="MyInputBox MyInputBox1">
+								<div class="UploadMode">
+									<div class="UploadLine"></div>
+									<div class="UploadPic">
+										<img v-if="img4!=''" v-bind:src="img4">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="fontSize26 ListHLeft xieyi">
+					<input @input="inputFun" @click="agree = true" type="radio" class="have_one1">
+					同意并遵守<span class="themeColor fontSize26" v-on:click="_GlobalFun.openNew('../article/detail.html','yhxy2','平台协议',{'id':4})">《平台协议》</span>
+				</div>
+
+				<div class="mui-button-row LoginBtn">
+					<button type="button" class="fontSize36 fontColor255 mui-btn mui-btn-primary backColorE0E0E0 Js_Submit" :class="!isKeySubmitBtn?'themeBkColor':''"
+					 v-on:click="submitBtn">提交</button>
+				</div>
+
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../script/public.js"></script>
+
+	</body>
+
+	<script>
+		_GlobalFun.IsAPI(function() {
+			VueFun();
+		})
+
+		function VueFun() {
+
+			var vue = new Vue({
+				el: ".Wrap",
+				data: {
+					name: '',
+					shop_phone: '',
+					shop_address: '',
+					shop_img: '',
+					shop_imgs: '',
+					type: 1, //1药店2门诊3卫生室
+					sfz: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+					sjh: /^1[3456789]\d{9}$/,
+					isKeySubmitBtn: true,
+					agree: false,
+					userInfo: '',
+					img3:'',
+					img4:'',
+
+
+				},
+				methods: {
+
+					UploadManage(type) {
+						var _this = this;
+						_GlobalFun.UploadManage0(function(path) {
+							_GlobalFun.uploadPic(path, function(data) {
+								// alert(JSON.stringify(data))
+								if (data.code == 0) {
+									if(type==1){
+										_this.shop_img = data.data.url;
+									}else if(type==2){
+										_this.shop_imgs = data.data.url;
+									}else if(type==3){
+										_this.img3 = data.data.url;
+									}else if(type==4){
+										_this.img4 = data.data.url;
+									}
+									
+								}
+							});
+						});
+					},
+
+					UploadManage2() {
+						var _this = this;
+						_GlobalFun.UploadManage0(function(path) {
+							_GlobalFun.uploadPic(path, function(data) {
+								if (data.code == 0) {
+									_this.shop_imgs = data.data.url;
+								}
+							});
+						});
+					},
+
+					inputFun() {
+						var _this = this;
+						if (_this.agree) {
+							_this.isKeySubmitBtn = false;
+						} else {
+							_this.isKeySubmitBtn = true;
+						}
+
+					},
+					getinfo() {
+						var _this = this;
+						_GlobalFun.postAjax('user', 'get_user_info', {}, function(data) {
+							if (data.code == 0) {
+								_this.userInfo = data.data;
+							} else {
+
+							}
+						});
+					},
+
+					submitBtn() {
+						var _this = this;
+						if (!_this.isKeySubmitBtn) {
+							_GlobalFun.postAjax('user', 'post_user_shops_apply', {
+								type: _this.type,
+								name: _this.name,
+								phone: _this.shop_phone,
+								address: _this.shop_address,
+								img1: _this.shop_img,
+								img2: _this.shop_imgs,
+								img3:_this.img3,
+								img4:_this.img4,
+							}, function(data) {
+								_GlobalFun.alert(data.msg);
+								if (data.code == 0) {
+									_GlobalFun.comeBack();
+									if (_GlobalVar.IsAPICloud) {
+										api.sendEvent({
+											name: 'repaytj',
+											extra: {
+												msg: '修改昵称'
+											}
+										});
+									}
+								}
+							});
+
+						}
+
+					},
+
+				},
+
+				mounted() {
+					this.getinfo();
+					// _GlobalFun.ReturnBtn();
+
+
+				},
+			});
+
+		}
+	</script>
+
+
+</html>

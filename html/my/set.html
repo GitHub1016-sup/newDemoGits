@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>个人中心</title>
+		<link rel="stylesheet" href="../../css/reset.css" />
+		<link rel="stylesheet" href="../../css/animate.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+		<link rel="stylesheet" href="../../css/public.css" />
+		<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+		<!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+		<script type="text/javascript" src="../../script/vue.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+		<style>
+			body {
+            background: #fff;
+        }
+
+        .HeaderWrap {
+            background: #fff;
+        }
+
+        .PersonalCenentWrap {
+
+            padding-top: 1rem;
+        }
+
+
+
+        .PublicBtnWrap {
+            margin-top: 10rem;
+        }
+
+        .PersonalCenentList {
+            padding-right: 0;
+        }
+
+        .PersonalCenentListRight {
+            text-align: right;
+        }
+		.touxiang{
+			width: 5rem;
+			height: 5rem;
+			overflow: hidden;
+			border-radius: 50%;
+		}
+        .touxiang img{
+			width: 100%;
+			height: 100%;
+		}
+    </style>
+	</head>
+
+
+	<body>
+
+
+		<div class="Wrap" v-cloak>
+			<div id="apiHeader" class="HeaderWrap">
+
+				<div class="ListHBothB HeaderInner">
+					<div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn" style="flex: 1;">
+					</div>
+					<div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">个人中心</div>
+					<!--fontColorFF913D-->
+					<div class="HeaderRightBtn fontColor666  fontSize24" style="pointer-events: none;opacity: 0; flex: 1;padding-left: 0;padding-right: 0;">
+						删除</div>
+				</div>
+
+			</div>
+			<div>
+				<div class="ToLine"></div>
+
+				<div class="PersonalCenentWrap">
+
+					<div class="PersonalCenentCon">
+
+						<div class="ListHBothB PersonalCenentList " style="position: relative;">
+							<div class="fontColor3A3A3A fontSize28 PersonalCenentListLeft">头像</div>
+							<div class="PersonalCenentListRight" v-on:click="UploadManage22">
+								<div :style="{'background':'url('+userInfo.headimg+') no-repeat center/cover'}" class="touxiang PersonalCenentListRightIn">
+									<img :src="userInfo.headimg">
+								</div>
+							</div>
+						</div>
+
+						<div class="ListHBothB PersonalCenentList" v-on:click="_GlobalFun.goToPage('input.html','qxgnc','')">
+							<div class="fontColor3A3A3A fontSize28 PersonalCenentListLeft">昵称</div>
+							<div class=" PersonalCenentListRight">
+								<div class="fontColor888 fontSize28 PersonalCenentListRightIn">{{userInfo.nickname}}</div>
+							</div>
+						</div>
+
+						<div class="ListHBothB PersonalCenentList">
+							<div class="fontColor3A3A3A fontSize28 PersonalCenentListLeft">版本号</div>
+							<div class=" PersonalCenentListRight">
+								<div class="fontColor888 fontSize28 PersonalCenentListRightIn">{{version}}</div>
+							</div>
+						</div>
+						<div class="ListHBothB PersonalCenentList" @click="clearC">
+							<div class="fontColor3A3A3A fontSize28 PersonalCenentListLeft">缓存</div>
+							<div class=" PersonalCenentListRight">
+								<div class="fontColor888 fontSize28 PersonalCenentListRightIn">{{cache}}M</div>
+							</div>
+						</div>
+						<div class="ListHBothB PersonalCenentList" v-on:click="_GlobalFun.openNew('../article/detail.html','yhxy2','用户协议',{'id':2})">
+							<div class="fontColor3A3A3A fontSize28 PersonalCenentListLeft">用户协议</div>
+							<div class="  PersonalCenentListRight">
+								<div class="fontColor888 fontSize36 iconfont PersonalCenentListRightIn">&#xe753;</div>
+							</div>
+						</div>
+						<div class="ListHBothB PersonalCenentList" v-on:click="_GlobalFun.openNew('../article/detail.html','qysym1','隐私政策',{'id':1})">
+							<div class="fontColor3A3A3A fontSize28 PersonalCenentListLeft">隐私协议</div>
+							<div class="  PersonalCenentListRight">
+								<div class="fontColor888 fontSize36 iconfont PersonalCenentListRightIn">&#xe753;</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="PublicBtnWrap">
+						<div class="PublicBtn fontSize36 fontColor255 backColorFF913D One" v-on:click="logOut">
+							注销
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+
+
+
+		<script type="text/javascript" src="../../script/public.js"></script>
+
+
+
+
+	</body>
+
+	<script>
+		_GlobalFun.IsAPI(function() {
+
+			VueFun();
+
+		})
+
+		function VueFun() {
+			var vue = new Vue({
+				el: ".Wrap",
+				data: {
+					version: api.appVersion,
+					cache: 0,
+					userInfo: {
+
+						id: null,
+
+					},
+
+
+				},
+				methods: {
+
+					clearC() {
+						var _this = this;
+						api.clearCache(function() {
+
+							api.getCacheSize(function(ret) {
+								_this.cache = (ret.size / 1024 / 1024).toFixed(2);
+							});
+							api.toast({
+								msg: '清除完成'
+							});
+						});
+
+					},
+					//获取用户信息
+					getUserInfo() {
+
+						var _this = this;
+						api.getCacheSize(function(ret) {
+							_this.cache = (ret.size / 1024 / 1024).toFixed(2);
+						});
+						_GlobalFun.getAjax('user', 'get_user_info', '', function(data) {
+							if (data.code == 0) {
+								_this.userInfo = data.data;
+
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						})
+					},
+
+
+					//选取照片
+					UploadManage22() {
+
+						var _this = this;
+
+						_GlobalFun.UploadManage0(function(path) {
+							_GlobalFun.ChangeHead(path, function(data) {
+								if (data.code == 0) {
+									_this.imgSrc = data.data;
+									_this.userInfo.headimg = _this.imgSrc;
+									if (_GlobalVar.IsAPICloud) {
+										api.sendEvent({
+											name: 'txgg',
+											extra: {
+												msg: '头像更改'
+											}
+										});
+									}
+								}
+							});
+
+
+
+						});
+
+					},
+
+
+
+					//退出登录
+					logOut() {
+
+						_GlobalFun.getAjax('login', 'login_out', '', function(data) {
+							if (data.code == 0) {
+								api.sendEvent({
+									name: 'FooterMenu',
+									extra: {
+										msg: '底部菜单'
+									}
+								});
+								// _GlobalFun.goToPage('../home/index.html', 'tcqsy', '');
+								// _GlobalFun.ReturnHome()
+								if (_GlobalVar.IsAPICloud) {
+									$api.setStorage('userLoginID', '');
+								}
+								api.closeWin();
+								_GlobalFun.ReturnHome()
+								_GlobalFun.goToPage('../login/index.html', 'tcqdl', '');
+							} else {
+								alert(data.msg);
+							}
+						})
+
+
+					},
+
+
+				},
+				mounted() {
+					// _GlobalFun.ReturnBtn();
+					var _this = this;
+					this.getUserInfo();
+					if (_GlobalVar.IsAPICloud) {
+						api.addEventListener({
+							name: 'xgnc'
+						}, function(ret, err) {
+							_this.getUserInfo();
+						});
+					}
+				},
+			});
+		}
+	</script>
+
+
+</html>

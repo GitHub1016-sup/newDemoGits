@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>提交订单</title>
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <link rel="stylesheet" href="../../css/mui.min.css" />
+    <link rel="stylesheet" href="../../css/public.css" />
+    <script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <style>
+        .HeaderWrap {
+            background: #fff;
+        }
+
+        .Group.SortContent {
+            height: auto;
+            margin-top: 0;
+            padding-top: 0;
+            margin-top: 1rem;
+        }
+
+        .SortContentRight {
+            padding: 0;
+            border-left: 1rem solid #f5f5f5;
+            border-right: 1rem solid #f5f5f5;
+        }
+
+        .SortContentRightIn {
+            height: auto;
+            overflow: initial;
+        }
+
+        .Group .SortContentRightList {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .Group .SortContentRightList:last-child {
+            border-bottom: 0;
+        }
+
+        .Group .SortContentRightList.Select .BuyTick {
+            color: var(--ThemeColor);
+        }
+
+
+
+
+
+        .ProductDescName {
+            text-indent: 0;
+        }
+
+
+
+        .ProductFooterList2 {
+            background: none;
+            width: 25rem;
+            text-align: left;
+        }
+
+        .ProductFooterList3 {
+            border-radius: 0.5rem;
+            width: 17.5rem;
+            height: 6.63rem;
+            text-align: center;
+            line-height: 6.63rem;
+        }
+
+
+        .ProductFooterList1.Select .span_1 {
+            color: var(--ThemeColor);
+        }
+
+        .ProductFooterList3.Select {
+            background: var(--ThemeColor);
+        }
+
+
+        .ProductDescName {
+            margin-bottom: 0.5rem;
+        }
+
+        .ProductDescLabel {
+            margin-bottom: 1rem;
+        }
+
+        .ProductDescName span.span_1 {
+            width: 23rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .SortContentRight {
+            border: 0;
+        }
+
+        .ShippingAddressWrap {
+            margin-top: 0.5rem;
+            padding: 1rem 2rem;
+            position: relative;
+        }
+		
+
+        .ShippingAddressLeft {
+            /* font-size: 3rem; */
+            margin-right: 2rem;
+        }
+
+
+
+        .ShippingAddressBox1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .StoreName {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .StoreNameIcon {
+            width: 2.15rem;
+            height: 2.13rem;
+            margin-right: 1rem;
+        }
+
+
+        .MoneyData {
+            padding-left: 3rem;
+            padding-right: 2rem;
+            margin-top: 1rem;
+            height: 4rem;
+        }
+
+        .MoneyData3 {
+            padding-top: 1rem;
+            margin-bottom: 0;
+            border-top: 0.05rem solid #f5f5f5;
+            position: relative;
+
+        }
+
+        .PaymentWrap {
+            margin-top: 1rem;
+            padding: 0 2rem;
+        }
+
+        .PaymentList {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 1.5rem 2rem;
+            border-bottom: 0.06rem solid rgba(237, 237, 237, 1);
+        }
+
+        .Dg {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+
+        .PaymentIcon {
+            width: 3.75rem;
+            margin-right: 1rem;
+        }
+
+
+
+        .ProductDescName span {
+
+            text-overflow: initial;
+            white-space: initial;
+            overflow: auto;
+            display: inline;
+        }
+
+        .info {
+            border: none !important;
+            margin-bottom: 0 !important;
+            padding: 0 !important;
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+            background-color: #FFFFFF;
+        }
+
+        .bouns {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .qbtn {
+            width: 90%;
+            background-color: var(--ThemeColor);
+            color: #FFFFFF;
+            height: 5rem;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+            line-height: 5rem;
+            margin: 20px auto;
+        }
+
+        .ProductDescWrap {
+          width: auto;
+        }
+        .SortContentRightPic{
+          margin-right: 1rem;
+        }
+        .SortContentRightListIn{
+			padding: 1rem;
+
+        }
+        .SortContentRightList{
+          margin-top: 0.7rem;
+        }
+		.CarFooterWrap{
+			height: 10vh;
+		}
+		.HeaderWrap{
+			height: 10vh;
+		}
+		.wrap-b{
+			height: 80vh;
+			position: fixed;
+			top: 10vh;
+			bottom: 10vh;
+			overflow: scroll;
+		}
+		
+		.mlr1rem{
+			margin-left: 1rem;
+			margin-right: 1rem;
+		}
+			
+		.mui-table-view-cell:after{
+			content: '';
+			background-color: #FFFFFF;
+		}
+
+    </style>
+</head>
+
+
+<body>
+
+    <div class="Con">
+
+        <div class="Wrap" v-cloak>
+
+            <div id="apiHeader" class="HeaderWrap">
+
+                <div class="ListHBothB HeaderInner">
+                    <div class="mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"></div>
+                    <div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">提交订单</div>
+                    <div class="fontColorFF913D iconfont ShoppingCart"
+                        style="pointer-events: none;opacity: 0;font-size: 3rem;">&#xe760;</div>
+                </div>
+
+            </div>
+            <div class="wrap-b">
+
+                <div class="backColor255 ShippingAddressWrap mlr1rem">
+
+                    <div v-if="user_address!=''" @click="goToSelectAdd()" class="ListHBoth ShippingAddressInner">
+
+                        <div class="iconfont themeColor  ShippingAddressLeft fontSize30">
+                            &#xe777;
+                        </div>
+                        <div class="ShippingAddressRight" style="flex: 1;">
+                            <div class="ShippingAddressBox1">
+                                <span class="fontSize32 weight500 fontColor333 span_1">{{user_address.name}}</span>
+                                <span class="fontColor999 fontSize26 span_2">{{user_address.phone}}</span>
+                            </div>
+                            <div class="fontSize26 fontColor999 ShippingAddressBox2">
+                                {{user_address.province_name}} {{user_address.city_name}}
+                                {{user_address.district_name}} {{user_address.address}}
+                            </div>
+                        </div>
+                        <div class="iconfont fontColor999  ShippingAddressRight fontSize30">
+                          &#xe753;
+                        </div>
+
+                    </div>
+
+                    <div class="fontSize32 weight500 fontColor333" v-on:click="goToSelectAdd"
+                        style="text-align: center;" v-if="user_address==''">
+                        请选择收货地址
+                    </div>
+
+
+                </div>
+
+                <div class=" SortContentRightList Js_BuyCarList mlr1rem backColor255">
+					<div @click="more = !more" class="fontSize26 fontColor999 mui-text-right" style="margin-right: 1rem;">
+						{{more?'点击收起':'查看更多'}}
+					</div>
+                    <div v-show="more || (!more && index == 0) " v-for="(item,index) in orderInfoArr" class="ListHTop SortContentRightListIn"
+                        style="margin-bottom: 1rem;">
+                        <!--产品图片-->
+                        <div class="SortContentRightPic">
+                            <img v-bind:src="item.img">
+                        </div>
+                
+                        <!--产品描述-->
+                        <div class="ProductDescWrap ">
+                            <div class="ListHBothB ProductDescName">
+                                <span class="fontSize26 fontColor333 weight500 span_1"
+                                    style="flex: 1;padding-right: 1rem;">{{item.name}}</span>
+                                    <span class=" fontSize28 fontColor333 span_2">
+                                        <em class="red fontSize20 em_1">￥</em>
+                                        <em class="fontSize30 red weight500 em_2">{{item.shop_price}}</em>
+                                    </span>
+                
+                            </div>
+                            <div class="ListHBothB ProductDescName">
+                                <div class=" ProductDescLabel">
+                                    <span v-show="item.spec_name" class="fontColor666 fontSize22">规格: {{item.spec_name}}</span>
+                                </div>
+                                <span class="fontColor666 fontSize22">x{{item.num!=undefined?item.num:'1'}}</span>
+                
+                            </div>
+                            <div class="ListHBothB ProductDescLabel">
+                                <span class="fontColor666 fontSize22">
+                                    <em class="fontColor666 fontSize22" v-if="item.is_free==0">包邮</em>
+                                </span>
+                
+                            </div>
+                
+                
+                        </div>
+                    </div>
+                <!-- @click="getBouns(money.moneys)" -->
+                    <div class="jiagemiaoshu">
+                       <div class="ListHBothB MoneyData" >
+                            <span class="fontSize24 fontColor666 span_1">优惠券</span>
+                            <span class="span_2 ListHBottom">
+                                <em class="fontSize16 fontColor666 em_1">￥</em>
+                                <em class="fontSize20 fontColor666 em_1">{{money.reduce}}</em>
+                                <em class="iconfont themeColor fontSize18">
+                                  &#xe753;
+                                </em>
+                            </span>
+                
+                        </div>
+                        <div class="ListHBothB MoneyData">
+                            <span class="fontSize24 fontColor666 span_1">邮费</span>
+                            <span class="span_2">
+                                <em class="fontSize20 fontColor666 em_1">￥</em>
+                                <em class="fontSize28 fontColor666 em_1">{{money.free}}</em>
+                            </span>
+                        </div>
+                        <div class="ListHBothB MoneyData MoneyData3">
+                            <span class="fontSize24 fontColor666 span_1">商品总价</span>
+                            <span class="span_2">
+                                <em class="fontSize20 fontColor666 em_1">￥</em>
+                                <em class="fontSize28 fontColor666 em_2">{{money.money}}</em>
+                            </span>
+                        </div>
+                  
+                        <!-- 优惠价格坐标 -->
+                        <div class="ListHBothB MoneyData MoneyData3">
+                            <span class="fontSize24 fontColor666 weight500 span_1">实付款</span>
+                            <span class="span_2">
+                                <em class="fontSize20 fontColorFF913D em_1">￥</em>
+                                <em class="fontSize28 fontColorFF913D em_2">{{money.heji}}</em>
+                            </span>
+                        </div>
+						<div class="ListHBothB MoneyData MoneyData3">
+						    <span class="fontSize24 fontColor666 weight500 span_1">是否开票</span>
+						    <span class="span_2">
+						        <ul class= "mui-table-view-radio ListHLeft">
+						        	<li class="mui-table-view-cell" @click="is_piao=1" :class="is_piao==1?' mui-selected':''">
+						        		<a class="mui-navigate-right fontSize22">是</a>
+						        	</li>
+						        	<li class="mui-table-view-cell" @click="is_piao=0" :class="is_piao==0?' mui-selected':''">
+						        		<a class="mui-navigate-right fontSize22">否</a>
+						        	</li>
+						        </ul>
+						        
+						    </span>
+						</div>
+                        <div class="ListHBothB MoneyData MoneyData3">
+                            <span class="fontSize24 fontColor666 weight500 span_1">备注</span>
+                            <span class="span_2">
+                                <input class="info" type="text" name="text" id="" placeholder="请填写订单备注" v-model="info" />
+                            </span>
+                        </div>
+                    </div>
+                
+                </div>
+
+                <div class="backColor255 PaymentWrap">
+
+                    <div class="PaymentInner">
+                        <div class="PaymentList" v-for="(item,index) in selectPayArr" v-on:click="selectPayCh(index)"
+                            :class="item.selected?'Select':''">
+                            <div class="PaymentIcon">
+                                <img v-bind:src="item.icon">
+                            </div>
+                            <div class="fontSize30 fontColor333 PaymentText">{{item.name}}</div>
+                            <div class="iconfont fontSize40 fontColore0e0e0 Dg">
+                                &#xe74a;
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 优惠券列表 -->
+                <div @click="closeBouns" v-show="bounShow" class="bg"></div>
+                <div v-show="bounShow" class="backColor255 PaymentWrap bouns">
+
+                    <div class="PaymentInner">
+
+                        <div class="PaymentList" v-for="(item,index) in bounArr"
+                            v-on:click="selectBouns(item.id,item.money)" :class="selectBounsed==item.id?'Select':''">
+
+                            <div class="fontSize30 fontColor333 PaymentText">{{item.title}}</div>
+                            <div class="iconfont fontSize40 fontColore0e0e0 Dg">
+                                &#xe74a;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="qbtn" @click="checkBMoney">
+                        确定
+                    </div>
+                </div>
+                <!-- 优惠券列表 end -->
+
+            </div>
+
+
+            <div class="backColor255 CarFooterWrap">
+
+                <div class="ListHBothB CarFooterInner">
+
+                    <div class=" ProductFooterList ">
+                        <span class="fontColor333 fontSize28  span_1">实付款:</span>
+                        <span class="red fontSize28 span_2">¥</span>
+                        <span class="red fontSize40 span_3">{{money.heji}}</span>
+                    </div>
+                    <div class="themeColor ProductFooterList ProductFooterList3 Select " v-on:click="goPayBtn">
+                        <span class="fontColor255 fontSize34 span_1">立即付款</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <script type="text/javascript" src="../../script/public.js"></script>
+
+</body>
+
+<script>
+    _GlobalFun.IsAPI(function () {
+        VueFun();
+    })
+
+
+    function VueFun() {
+        var vue = new Vue({
+            el: ".Wrap",
+            data: {
+                pwd: '', // 支付密码
+                orderInfoArr: [],
+                money: [],
+                address_id:0,
+                user_address: {},
+                post_cart_payment: {
+                    oid: '',
+                    order_sa: '',
+                    money: '',
+                    add_time: '',
+                },
+                info: '', // 备注
+                payFangshi: 3, //支付方式 1余额支付 2支付宝 3微信 4信用支付
+                payOrderInfo: '',
+                selectPayArr: [{
+                        icon: '../../image/order/PaymentIcon1.png',
+                        name: '微信支付',
+                        selected: true,
+                        payIndex: 3
+                    },
+                    {
+                        icon: '../../image/order/PaymentIcon2.png',
+                        name: '支付宝',
+                        selected: false,
+                        payIndex: 2
+                    },{
+                        icon: '../../image/order/PaymentIcon3.png',
+                        name: '线下付款',
+                        selected: false,
+                        payIndex: 1
+                    },
+                ],
+                keyBtn: false,
+                // 优惠券列表
+                bounArr: [],
+                // 优惠券是否展示
+                bounShow: false,
+                // 优惠券id
+                selectBounsed: 0,
+                // 选择优惠的优惠价格
+                checkedBonudMoney: 0,
+                dis_id:0,
+				more:false,
+				is_piao:0,
+            },
+            methods: {
+                checkBMoney() {
+
+                    // money.you_jian money.qian_money
+                    this.dis_id = this.selectBounsed.toString();
+                    // this.money.reduce = this.checkedBonudMoney
+                    this.getInfoAPI(false);
+                    // this.money.heji = (Number(this.money.heji) - Number(this.money.reduce)).toFixed(2);
+                    this.closeBouns();
+                },
+                closeBouns() {
+                    this.bounShow = false;
+                },
+                // 获取优惠券
+                getBouns(money) {
+                    var _this = this;
+                    _GlobalFun.postAjax('user', 'get_user_use_you', {
+                        money: money,
+                    }, function (data) {
+                        if (data.code == 0) {
+                            // alert(JSON.stringify(data))
+                            _this.bounArr = data.data;
+                            _this.$nextTick(function () {
+                                _this.bounShow = true;
+                            })
+                        } else {
+                            _GlobalFun.alert(data.msg);
+                            _this.bounShow = false;
+                        }
+                    })
+                },
+                // 选择优惠券
+                selectBouns(id, fee) {
+                    if (this.selectBounsed == id) {
+                        this.selectBounsed = 0;
+                        this.checkedBonudMoney = 0;
+                    } else {
+                        this.selectBounsed = id;
+                        this.checkedBonudMoney = fee;
+                    }
+
+                },
+
+                //去选择收货地址
+                goToSelectAdd() {
+                    var _this = this;
+                    _GlobalFun.goToPage('../my/addressList.html', 'qxzshdz', {
+                        dis_id: _GlobalFun.getPageParam('dis_id'), //优惠券ID
+                        id: _GlobalFun.getPageParam('id'), //商品id
+                        spec_id: _GlobalFun.getPageParam('spec_id'), //规格id
+                        aid: _GlobalFun.getPageParam('aid'), //收货地址id
+                        num: _GlobalFun.getPageParam('num'), //商品数量
+                        is_use: _GlobalFun.getPageParam('is_use'), //0否1是 金币抵账
+                        is_collage: _GlobalFun.getPageParam('is_collage'), //0不是拼团1拼团
+                        nums: _GlobalFun.getPageParam('nums'),
+                        isadskong: 1,
+                    })
+                },
+
+                //获取信息
+                getInfoAPI(checkB) {
+                    var _this = this;
+
+                    //点击了立即购买
+                    if (_GlobalFun.getPageParam('is_buynow') == 1) {
+                        _GlobalFun.postAjax('shop', 'post_on_line_purchase', {
+                            dis_id: _this.dis_id, //优惠券ID
+                            good_id: _GlobalFun.getPageParam('id'), //商品id
+                            spec: _GlobalFun.getPageParam('spec_id'), //规格id
+                            aid: _this.address_id, //收货地址id
+                            num: _GlobalFun.getPageParam('num'), //商品数量
+                            is_use: _GlobalFun.getPageParam('is_use'), //0否1是 金币抵账
+                            is_collage: _GlobalFun.getPageParam('is_collage'), //0不是拼团1拼团
+                        }, function (data) {
+                            if (data.code == 0) {
+                                _this.money = data.data;
+                                _this.selectBounsed = _this.money.ids;
+                                _this.orderInfoArr = [data.data.info];
+                                // alert(JSON.stringify(data));
+                                if(checkB==true){
+                                  _this.user_address = data.data.address;
+                                }
+
+                                if (_this.user_address == null) {
+                                    _this.user_address = "";
+                                }
+                                _this.$forceUpdate();
+                            } else {
+                                _GlobalFun.alert(data.msg);
+                            }
+                        });
+                    } else {
+
+                        _GlobalFun.postAjax('shop', 'post_user_cart_reckon', {
+                            dis_id: _this.dis_id,
+                            cart_id: _GlobalFun.getPageParam('carid'),
+                            address_id: _this.address_id,
+                        }, function (data) {
+
+                            if (data.code == 0) {
+                                _this.money = data;
+                                _this.selectBounsed = _this.money.ids;
+                                _this.orderInfoArr = data.list[0].good_list;
+                                if(checkB==true){
+                                  _this.user_address = data.address;
+                                }
+
+                                if (_this.user_address == null) {
+                                    _this.user_address = "";
+                                }
+                                _this.$forceUpdate();
+                            } else {
+                                _GlobalFun.alert(data.msg);
+                            }
+                        })
+                    }
+                },
+
+                //订单提交接口
+                orderSubmit(payChannel) {
+
+                    var _this = this;
+                    //点击了立即购买
+                    var _is_collageVa;
+                    var is_joinVa;
+                    if (_GlobalFun.getPageParam('is_collage') != "") {
+                        _is_collageVa = _GlobalFun.getPageParam('is_collage');
+                    } else {
+                        _is_collageVa = 0;
+                    }
+                    if (_GlobalFun.getPageParam('is_join') != "") {
+                        is_joinVa = _GlobalFun.getPageParam('is_join');
+                    } else {
+                        is_joinVa = 0;
+                    }
+                    if (_GlobalFun.getPageParam('is_buynow') == 1) {
+                        _GlobalFun.postAjax('shop', 'post_on_line_payment', {
+                            good_id: _GlobalFun.getPageParam('id'),
+                            spec: _GlobalFun.getPageParam('spec_id'),
+                            aid: _this.user_address.address_id,
+                            num: _GlobalFun.getPageParam('num'),
+                            red_id: _this.money.ids,
+                            type: payChannel,
+                            info: _this.info,
+							is_piao:_this.is_piao,
+                        }, function (data) {
+                            if (data.code == 0) {
+                                _this.immPayAPI(payChannel, data);
+                            } else {
+                                _GlobalFun.alert(data.msg);
+                            }
+                        })
+                    } else {
+                        _GlobalFun.postAjax('shop', 'post_cart_payment', {
+                            cart_id: _GlobalFun.getPageParam('carid'),
+                            address_id: _this.user_address.address_id,
+                            red_id: _this.money.ids,
+                            type: payChannel,
+                            info: _this.info,
+							is_piao:_this.is_piao,
+                        }, function (data) {
+                          // console.log(JSON.stringify(data))
+                            if (data.code == 0) {
+                                _this.immPayAPI(payChannel, data)
+                            } else {
+                                _GlobalFun.alert(data.msg);
+                            }
+                        })
+                    }
+                },
+
+                //重新付款 立即支付 API
+                immPayAPI(payChannel, data) {
+// console.log(JSON.stringify(data))
+                    if (_GlobalVar.IsAPICloud) {
+                        api.sendEvent({
+                            name: 'djqzf',
+                            extra: {
+                                msg: '点击去支付'
+                            }
+                        });
+                    }
+                    var _this = this;
+					if (payChannel == 1) {
+						
+					    _this.payOrderInfo = data.str;
+					    _this.payMoney(payChannel, _this.payOrderInfo);
+					}
+                    //支付宝
+                    if (payChannel == 2) {
+                        _this.payOrderInfo = data.str;
+                        _this.payMoney(payChannel, _this.payOrderInfo);
+                    }
+                    //微信
+                    if (payChannel == 3) {
+                        // alert(JSON.stringify(data))
+                        var orderaa = data.data;
+                        _this.payOrderInfo = {
+                            apiKey: orderaa.appid,
+                            orderId: orderaa.prepayid,
+                            mchId: orderaa.partnerid,
+                            nonceStr: orderaa.noncestr,
+                            timeStamp: orderaa.timestamp,
+                            package: orderaa.package,
+                            sign: orderaa.sign,
+                        };
+                        _this.payMoney(payChannel, _this.payOrderInfo);
+
+                    }
+
+                },
+
+
+
+                //支付API
+                payMoney(payChannel, orderInfo) {
+                    var _this = this;
+                    //微信支付
+                    if (payChannel == 3) {
+
+                        if (_GlobalVar.IsAPICloud) {
+
+                            var wxPayPlus = api.require('wxPayPlus');
+
+                            wxPayPlus.payOrder(orderInfo, function (ret, err) {
+								// alert(JSON.stringify(ret))
+                                if (ret.status) {
+                                    _this.payScc();
+                                    if (_GlobalVar.IsAPICloud) {
+                                        api.sendEvent({
+                                            name: 'djqzf',
+                                            extra: {
+                                                msg: '点击去支付'
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    api.addEventListener({
+                                        name: 'viewdisappear'
+                                    }, function () {
+                                        api.closeWin();
+                                    });
+                                    _GlobalFun.goToPage('myOrder.html', 'zfqddxqym', {
+                                        id: _this.post_cart_payment.oid
+                                    })
+                                }
+
+                            });
+
+                        } else {
+                            _GlobalFun.alert("支付成功");
+                        }
+                    }
+                    //支付宝支付
+                    else if (payChannel == 2) {
+                        if (_GlobalVar.IsAPICloud) {
+                            var aliPayPlus = api.require('aliPayPlus');
+                            // alert(orderInfo);
+                            aliPayPlus.payOrder({
+                                orderInfo: orderInfo
+                            }, function (ret, err) {
+                                if (ret.code == 9000) {
+                                    _this.payScc();
+                                } else {
+                                    api.addEventListener({
+                                        name: 'viewdisappear'
+                                    }, function () {
+                                        api.closeWin();
+                                    });
+                                    _GlobalFun.goToPage('myOrder.html', 'zfqddxqym', {
+                                        id: _this.post_cart_payment.oid
+                                    })
+                                }
+                                if (_GlobalVar.IsAPICloud) {
+                                    api.sendEvent({
+                                        name: 'djqzf',
+                                        extra: {
+                                            msg: '点击去支付'
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            _GlobalFun.alert("支付成功");
+                        }
+                    } else if (payChannel == 1) { //余额支付
+                        _this.payScc();
+                    } else if (payChannel == 4) { //信用支付
+                        _GlobalFun.alert('信用支付暂未开通');
+                    } else {
+                        _GlobalFun.alert('系统繁忙，请刷新重试');
+                    }
+
+                },
+
+
+                //选择支付方式
+                selectPayCh(index) {
+                    var _this = this;
+                    for (var _i = 0; _i < _this.selectPayArr.length; _i++) {
+                        _this.selectPayArr[_i].selected = false;
+                    }
+                    _this.selectPayArr[index].selected = true;
+                    _this.payFangshi = _this.selectPayArr[index].payIndex;
+                },
+
+
+                //支付成功
+                payScc() {
+                    var _this = this;
+                    api.addEventListener({
+                        name: 'viewdisappear'
+                    }, function () {
+                        api.closeWin();
+                    });
+                    _GlobalFun.goToPage('success.html', 'qzfcgym', '')
+                },
+
+
+                goPayBtn() {
+                    var _this = this;
+					
+                    if (_this.user_address == '') {
+                        _GlobalFun.alert('请选择收货地址');
+                        return
+                    }
+                    if (_this.keyBtn) {
+                        return
+                    }
+					// if(_this.payFangshi==3){
+					// 	_GlobalFun.alert('支付通道暂未开通');
+					// 	return;
+					// }
+                    _this.orderSubmit(_this.payFangshi);
+                },
+
+            },
+            mounted() {
+                var _this = this;
+                _this.address_id = _GlobalFun.getPageParam('aid');
+                this.getInfoAPI(true);
+                if (_GlobalVar.IsAPICloud) {
+                  api.addEventListener({
+                      name: 'zqddym'
+                  }, function (ret, err) {
+                      var _datajs = ret.value.msg;
+                      _this.address_id = _datajs.address_id;
+                      _this.user_address = _datajs
+                      _this.getInfoAPI(true);
+
+                  });
+                }
+            },
+        });
+    }
+</script>
+
+
+</html>

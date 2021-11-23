@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title></title>
+	<link rel="stylesheet" href="../../css/reset.css" />
+	<link rel="stylesheet" href="../../css/animate.css" />
+	<link rel="stylesheet" href="../../css/mui.min.css" />
+	<!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+	<link rel="stylesheet" href="../../css/public.css" />
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+	<style>
+		html,
+		body,
+		.Wrap {
+			width: 100%;
+			background: #fff;
+		}
+
+
+		.ajaxContent {
+			width: 100%;
+			padding: 1.25rem;
+			overflow: hidden;
+
+		}
+
+		.ajaxContent * {
+			max-width: 100%;
+		}
+
+		.Main {
+			padding-bottom: 0;
+		}
+	</style>
+</head>
+
+
+<body>
+
+	<div class="Wrap" v-cloak>
+		<div style="font-size: 2rem;">{{ kuaibao_cont.content }}</div>
+	</div>
+	<script type="text/javascript" src="../../script/public.js"></script>
+
+</body>
+
+<script>
+	_GlobalFun.IsAPI(function () {
+
+		VueFun();
+
+	})
+
+
+	function VueFun() {
+		var vue = new Vue({
+			el: ".Wrap",
+			data: {
+				ajaxContent: '',
+				title: '',
+				kuaibao_cont:[],
+			},
+			
+			methods: {
+				getContent() {
+					var _this = this;
+					if(_GlobalFun.getPageParam('id')){
+						_this.kuaibao_cont = _GlobalFun.getPageParam('id');
+					}else{
+						_GlobalFun.getAjax('home', 'get_kuaibao_content', '', function (data) {
+							_this.kuaibao_cont = data.data;
+						})
+					}
+				}
+				// getArticleContent() {
+				// 	var _this = this;
+				// 	_GlobalFun.getAjax('home', 'post_get_mess_one?id=' + _GlobalFun.getPageParam('id'), '',
+				// 		function (data) {
+				// 			if (data.code == 0) {
+				// 				_this.ajaxContent = data.list.content;
+				// 			}
+				// 		})
+				// },
+
+			},
+			mounted() {
+				this.getContent();
+
+			},
+		});
+	}
+</script>
+
+
+</html>

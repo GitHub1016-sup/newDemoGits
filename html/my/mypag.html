@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的钱包</title>
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <link rel="stylesheet" href="../../css/mui.min.css" />
+    <link rel="stylesheet" href="../../css/public.css" />
+    <script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../../script/vue.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <style>
+        body,
+        html {
+            background-color: #ffffff;
+        }
+
+        .vipbg {
+            width: 42.5rem;
+            height: 17rem;
+            overflow: hidden;
+            border-radius: .625rem;
+            position: relative;
+            left: 50%;
+            margin-top: .625rem;
+            transform: translate(-50%, 0);
+            background-image: url(../../image/my/pag_bg.png);
+            background-size: 100% 100%;
+            margin-bottom: 1.8125rem;
+            padding-left: 2.8125rem;
+            padding-top: 2.3125rem;
+        }
+
+        .v-he {
+            margin-bottom: 1.875rem;
+        }
+
+        .gotbn {
+            height: 3.625rem;
+            width: 9.9375rem;
+            border: .0625rem solid #ffffff;
+            border-radius: 3.625rem;
+            text-align: center;
+            line-height: 3.625rem;
+        }
+
+        .ListHBoth {
+            margin-left: -2.25rem;
+        }
+
+        .vipcard {
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: 43.125rem;
+            box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.07);
+            padding: 1.875rem 2.4375rem;
+            margin-bottom: 1.3125rem;
+            height: 12.1875rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .vchead {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 7.375rem;
+            line-height: 2.375rem;
+        }
+
+        .ListV {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            height: 5.5rem;
+        }
+
+        .vccontent {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <div class="Wrap" v-cloak>
+
+        <div id="apiHeader" class="HeaderWrap">
+
+            <div class="ListHBothB HeaderInner">
+                <div class=" mui-icon mui-icon-arrowleft fontColor999  HeadReturnBtn Js_HeadReturnBtn"
+                    style="flex: 1;">
+                </div>
+                <div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">我的钱包</div>
+                <!--fontColorFF913D-->
+                <div class="HeaderRightBtn fontColor666  fontSize24"
+                    style="pointer-events: none;opacity: 0; flex: 1;padding-left: 0;padding-right: 0;">
+                    删除</div>
+            </div>
+
+        </div>
+        <div class="">
+            <div class="vipbg">
+                
+                <div class="ListHBothB fontColor255">
+                    <div class="fontSize28 fontColor255 v-he">我的账户</div>
+                    <div style="position: relative;top: -1rem;right: 2rem;" class="fontSize28 gotbn" v-on:click="_GlobalFun.goToPage('../my/tixian.html','tixian',{
+                        id:3
+                    })">去提现</div>
+                </div>
+				<div class="ListV fontColor255">
+
+				    <div class="fontSize65"><span class="fontSize22">佣金</span> {{user.money}} </div>
+					<div >
+						
+					</div>
+				</div>
+            </div>
+            <div class="backColor255 HomeItemWrap fontColor444 fontSize36">
+                账户明细
+            </div>
+            <div class="vipcard" v-for="item in List">
+                <div class="vchead">
+                    <div class="ListV">
+                        <span class="fontSize34 fontColor333">{{item.phone}}</span>
+                        <span class="themeColor fontSize30">{{item.msg}}</span>
+                    </div>
+                    <div class="fontSize60 themeColor"><span class="fontSize36">{{item.status==1?'+':'-'}}</span> {{item.money}}</div>
+                </div>
+                <div class="vccontent fontColor999 fontSize24">
+                    <span class="fontSize24">注册时间{{item.add_time}}</span>
+                    <span class="fontSize26">佣金</span>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+    <script type="text/javascript" src="../../script/public.js"></script>
+
+
+
+
+</body>
+
+<script>
+    _GlobalFun.IsAPI(function () {
+
+        VueFun();
+
+    })
+
+
+    function VueFun() {
+        var vue = new Vue({
+            el: ".Wrap",
+            data: {
+                user:'',
+                List: [ ],
+
+                maxInputLength: 120,
+
+                inputContent: '',
+                conte: '',
+                page:0,
+
+
+            },
+            methods: {
+                suggestSubList() {
+                    var _this = this;
+                    _GlobalFun.postAjax("user", "post_user_money_log", {
+                  
+                        start:_this.page,
+                 
+                    }, function (data) {
+                        if (data.code == 0) {
+                            logc(data)
+                            _this.List = _this.List.concat(data.data);
+                            _this.page = _this.List.length;
+                        } else {
+                            // _GlobalFun.alert(data.msg);
+                        }
+                    })
+
+                },
+                suggestSubAPI() {
+                    var _this = this;
+                    _GlobalFun.postAjax("user", "get_user_info", {
+                    }, function (data) {
+                        if (data.code == 0) {
+                            _this.user = data.data;
+                        } else {
+                            _GlobalFun.alert(data.msg);
+                        }
+                    })
+
+                },
+
+
+
+
+            },
+            mounted() {
+                this.suggestSubAPI();
+                this.suggestSubList();
+                var _this = this;
+                _GlobalFun.UpLoadMore(function () {
+                    _this.suggestSubList();
+                })
+            },
+        });
+
+
+
+    }
+</script>
+
+
+</html>

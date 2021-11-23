@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>我的订单</title>
+	<link rel="stylesheet" href="../../css/reset.css" />
+	<link rel="stylesheet" href="../../css/animate.css" />
+	<link rel="stylesheet" href="../../css/mui.min.css" />
+	<!-- <link rel="stylesheet" href="../../css/scroll.css" /> -->
+	<link rel="stylesheet" href="../../css/public.css" />
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<!-- <script type="text/javascript" src="../../script/scroll.js"></script> -->
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<style>
+		.HeaderWrap {
+			background: #fff;
+		}
+
+		.Group.SortContent {
+			height: auto;
+			margin-top: 0;
+			padding-top: 0;
+		}
+
+		.SortContentRight {
+			padding: 0;
+			border-left: 1rem solid #f5f5f5;
+			border-right: 1rem solid #f5f5f5;
+		}
+
+		.SortContentRightIn {
+			height: auto;
+			overflow: initial;
+		}
+
+		.Group .SortContentRightList {
+			padding-left: 1rem;
+			padding-right: 1rem;
+		}
+
+		.Group .SortContentRightList:last-child {
+			border-bottom: 0;
+		}
+
+		.Group .SortContentRightList.Select .BuyTick {
+			color: var(--ThemeColor);
+		}
+
+		.ProductDescName {
+			text-indent: 0;
+		}
+
+		.ProductFooterList2 {
+			background: none;
+			width: 25rem;
+		}
+
+		.ProductFooterList3 {
+			border-radius: 0.5rem;
+			width: 17.5rem;
+			height: 6.63rem;
+			text-align: center;
+			line-height: 6.63rem;
+		}
+
+		.ProductFooterList1.Select .span_1 {
+			color: var(--ThemeColor);
+		}
+
+		.ProductFooterList3.Select {
+			background: var(--ThemeColor);
+		}
+
+		.ProductDescName {
+			margin-bottom: 0.5rem;
+		}
+
+		.ProductDescLabel {
+			margin-bottom: 1rem;
+		}
+
+		.SortContentRight {
+			border: 0;
+		}
+
+		.ShippingAddressWrap {
+			margin-top: 0.5rem;
+			padding: 1rem 2rem 2rem 2rem;
+			position: relative;
+		}
+
+		.ShippingAddressWrap::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: 0rem;
+			width: 100%;
+			height: 0.25rem;
+			background: url(../../image/order/Bod.jpg) repeat-x;
+			background-size: 5.6rem 0.25rem;
+		}
+
+		.ShippingAddressLeft {
+			font-size: 3rem;
+			margin-right: 2rem;
+		}
+
+		.ShippingAddressRight {}
+
+		.ShippingAddressBox1 {
+			margin-bottom: 0.5rem;
+		}
+
+		.StoreName {
+			display: flex;
+			align-items: center;
+			padding: 0 1.5rem;
+			margin-bottom: 1.5rem;
+		}
+
+		.StoreNameIcon {
+			width: 2.15rem;
+			height: 2.13rem;
+			margin-right: 1rem;
+		}
+
+		.StoreNameText {}
+
+		.MoneyData {
+			padding-left: 3rem;
+			padding-right: 2rem;
+			margin-top: 1rem;
+			margin-left: -1rem;
+			margin-right: -1rem;
+			text-align: right;
+		}
+
+		.HomeItemW {
+			padding: 0rem 3rem;
+			margin-bottom: 1rem;
+		}
+
+		.HomeItemList {
+			position: relative;
+			padding: 0 0 2rem;
+		}
+
+		.HomeItemList.Select {
+			color: var(--ThemeColor);
+		}
+
+		.HomeItemList.Select::after {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 0.5rem;
+			background: var(--ThemeColor);
+			bottom: 15%;
+			left: 0;
+			border-radius: 2rem;
+		}
+
+		.ViewStatusBtnWrap {
+			padding: 0 2rem;
+			margin-top: 2rem;
+		}
+
+		.ViewStatusBtnList {
+			padding: 0.8rem 1rem;
+			border-radius: 0.5rem;
+			border: 0.13rem solid #979797;
+			box-sizing: border-box;
+			margin: 0 1rem;
+		}
+
+		.ViewStatusBtnList.Select {
+			color: var(--ThemeColor);
+			border: 0.13rem solid var(--ThemeColor);
+		}
+
+		.tuihuoliyou {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			width: 100vw;
+			height: 6rem;
+			line-height: 6rem;
+			display: flex;
+			justify-content: space-between;
+			background-color: #f5f5f5;
+			padding-top: 0.5rem;
+			padding-bottom: 0.5rem;
+			z-index: 100;
+		}
+
+		.tui-bg {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background-color: rgba(0, 0, 0, 0.8);
+			opacity: 0;
+			display: none;
+		}
+
+		.tui-bg.Select {
+			opacity: 1;
+			display: block;
+			pointer-events: initial;
+		}
+
+		.tuihuoliyou input {
+			font-size: 2rem;
+			box-sizing: border-box;
+			border: 0;
+			/*pointer-events: none;*/
+			width: 80vw;
+		}
+
+		.tui-btn {
+			height: 5rem;
+			line-height: 5rem;
+			width: 16vw;
+			margin: 0 auto;
+			font-size: 16px;
+			color: #fff;
+			background-color: var(--ThemeColor);
+			border-radius: 5px;
+			text-align: center;
+			pointer-events: auto;
+			;
+		}
+
+		.ProductDescName span.span_1 {
+			width: 23rem !important;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.SortContentRightPic {
+			margin-right: 1rem;
+		}
+
+		.ProductDescWrap {
+			width: auto;
+		}
+
+		.SortContentRightPic {
+			margin-right: 1rem;
+		}
+
+		.SortContentRightListIn {}
+
+		.SortContentRightList {
+			padding-top: 0.7rem;
+		}
+
+		.Wrap {
+			height: 100vh !important;
+			overflow-y: scroll !important;
+			overflow-x: hidden;
+		}
+
+		.HeaderWrap {
+			position: sticky !important;
+			top: 0 !important;
+			height: 11vh !important;
+		}
+
+		.HomeItemW {
+			height: 7vh;
+			position: sticky !important;
+			top: 11vh !important;
+		}
+
+		.mescroll {
+			/*position: fixed;
+			top: 18vh;
+			bottom: 0;*/
+			height: 82vh;
+			width: 100vw;
+			overflow-x: hidden;
+		}
+	</style>
+</head>
+
+
+<body>
+
+
+	<div class="Wrap" v-cloak>
+		<div id="apiHeader" class="HeaderWrap fy-head">
+
+			<div class="ListHBothB HeaderInner">
+
+				<div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"></div>
+				<div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">我的订单</div>
+				<div class="fontColorFF913D iconfont ShoppingCart" style="pointer-events: none;opacity: 0;font-size: 3rem;">
+					&#xe760;</div>
+			</div>
+
+		</div>
+
+		<div class="backColor255 ListHBothB HomeItemW">
+			<div v-for="(item,index) in curStatusList" class="fontColor666 fontSize30 transition HomeItemList  " v-on:click="curStatus(index)" :class="item.selected?'Select':''">{{item.name}}</div>
+		</div>
+		<div id="mescroll" class="mescroll">
+			<div>
+				<div class=" Group SortContent" style="background: none;">
+
+					<div v-for="(item,index) in orderList" class="SortContentRight" style="background: #fff;padding-top: 0.5rem;">
+
+						<div class="ScrollOpacity SortContentRightIn">
+
+							<div class="SortContentRightBox">
+
+								<div class=" SortContentRightList  Js_BuyCarList " v-for="item2 in item.goods">
+
+									<div v-on:click="goToOrderDtl(index)" class="ListHTop SortContentRightListIn">
+										<!--产品图片-->
+										<div class="SortContentRightPic">
+											<img v-bind:src="item2.img">
+										</div>
+
+										<!--产品描述-->
+										<div class="ProductDescWrap">
+											<div class="ListHBothB ProductDescName">
+												<span class="fontSize26 fontColor333 weight500 span_1">{{item2.name}}</span>
+												<span class="ListHCentent fontSize28 span_2" style="flex: 1;">
+															<em class="red fontSize20 em_1">￥</em>
+															<em class="fontSize30 red weight500 em_2">{{item2.shop_price}}</em>
+														</span>
+											</div>
+											<div class="ListHBothB ProductDescLabel">
+												<span class="">
+															<em class="fontColor666 fontSize22">{{item2.spec_name}}</em>
+															<em class="fontColor666 fontSize22" v-if="item2.is_free==0"></em>
+															包邮</em></span>
+												<span class="fontColor666 fontSize22">x{{item2.num}}</span>
+											</div>
+											<div class="SendTimeWrap">
+												<span class="fontSize20 fontColorFF913D">{{item2.fa}}</span>
+
+											</div>
+
+										</div>
+									</div>
+
+
+								</div>
+
+								<div class=" MoneyData">
+									<span class="fontSize28 fontColor434743 span_1">
+												邮费￥{{item.express_free}},优惠￥{{item.full_money}},商品总价￥{{item.goods_amount}},实付款￥{{item.money_paid}}</span>
+								</div>
+
+								<div class="ListHRight ViewStatusBtnWrap">
+									<div v-if="item.order_status_type.status==5" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										已评价
+									</div>
+									<div v-on:click="_GlobalFun.goToPage('comment.html','comment',{'id':item.id})" v-if="item.order_status_type.status==4" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										评价
+									</div>
+									<div v-on:click="confirmReceiptBtn(index)" v-if="item.order_status_type.status==3" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										确认收货
+									</div>
+									<div v-if="item.order_status_type.status==2" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										未发货
+									</div>
+									<div v-on:click="viewLogistics(index)" v-if="item.order_status_type.status >2 && item.order_status_type.status!=7" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										查看物流
+									</div>
+									<div v-on:click="refundBtn(index)" v-if="item.order_status_type.status==2 || item.order_status_type.status==3" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										退款退货
+									</div>
+									<div v-if="item.order_status_type.status==6" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										已完成
+									</div>
+									<div v-if="item.order_status_type.status==7" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										已取消
+									</div>
+									<div v-if="item.order_status_type.status==8" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										退款中
+									</div>
+									<div v-if="item.order_status_type.status==9" class="fontColor717171 fontSize26 ViewStatusBtnList Select">
+										退款中
+									</div>
+									<div v-if="item.order_status_type.status==1" class="fontColor717171 fontSize26 ViewStatusBtnList Select" v-on:click="continuePaymentBtn(index)">
+										重新支付
+									</div>
+									<div v-if="item.order_status_type.status==1" class="fontColor717171 fontSize26 ViewStatusBtnList Select" v-on:click="cancelOrder(index)">
+										取消订单
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="ZnoData" v-if="orderList==''">
+						<img src="../../image/nodata/nodata.png" alt="">
+						<span>
+									暂无数据
+								</span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class=" tui-bg" @click="animateWidth('company_name','blur')" :class="isClickRefund?'Select':''">
+			<div class="tuihuoliyou ">
+				<input id="tuihuoliyou" v-model="liyouContent" v-on:keyup.13=" comfBtn(curIndex)" type="text" placeholder="请输入退款退货理由">
+				<div @click="comfBtn(curIndex)" class="tui-btn ">
+					提交
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+	<script type="text/javascript" src="../../script/public.js"></script>
+
+
+
+</body>
+
+<script>
+	_GlobalFun.IsAPI(function() {
+
+		VueFun();
+
+	})
+
+
+	function VueFun() {
+		var mescroll;
+		var vue = new Vue({
+			el: ".Wrap",
+			data: {
+
+
+				orderList: [],
+				//idx   0全部1待付款2待发货3待收货4待评价
+				curStatusList: [{
+					name: '全部',
+					selected: true,
+					idx: 0
+				}, {
+					name: '待付款',
+					selected: false,
+					idx: 1
+				}, {
+					name: '待发货',
+					selected: false,
+					idx: 2
+				}, {
+					name: '待收货',
+					selected: false,
+					idx: 3
+				}, {
+					name: '待评价',
+					selected: false,
+					idx: 4
+				}],
+
+				//记录选择的状态
+				selectStic: 0,
+
+				isClickRefund: false,
+
+				liyouContent: '',
+
+				curIndex: 0,
+				start: 1,
+
+			},
+
+			methods: {
+				//取消订单
+				cancelOrder(index) {
+					var _this = this;
+					_GlobalFun.Confirm('是否取消订单？', '', function() {
+						_GlobalFun.postAjax('user', 'post_user_order_cancel', {
+							oid: _this.orderList[index].id
+						}, function(data) {
+							if (data.code == 0) {
+								_this.getOrderListAPI(_this.selectStic, 0);
+								_GlobalFun.alert('已取消');
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						})
+					})
+
+				},
+
+				//获取订单列表
+				getOrderListAPI(type, start) {
+					var _this = this;
+					_GlobalFun.getAjax('user', 'post_user_order_list', {
+						type: type,
+						start: start,
+					}, function(data) {
+						if (data.code == 0) {
+
+							if (_this.start == 0) {
+								_this.orderList = data.data;
+							} else {
+								_this.orderList = _this.orderList.concat(data.data);
+							}
+						} else {
+							if (_this.start == 1) {
+								_this.orderList = [];
+							}
+
+						}
+					})
+
+				},
+
+				//查看物流
+				viewLogistics(index) {
+					var _this = this;
+
+					_GlobalFun.postAjax('user', 'post_order_wu_liu', {
+						order_id: _this.orderList[index].id
+					}, function(data) {
+						if (data.code == 0) {
+							_GlobalFun.goToPage('../order/videoLogistics.html', 'cxwl', {
+								url: data.url
+							})
+						} else {
+							_GlobalFun.alert(data.msg);
+						}
+					})
+
+				},
+
+
+				//确认收货
+				confirmReceiptBtn(index) {
+					var _this = this;
+
+					_GlobalFun.postAjax('user', 'post_order_ok_huo', {
+						order_id: _this.orderList[index].id
+					}, function(data) {
+						if (data.code == 0) {
+							_this.getOrderListAPI(_this.selectStic, 0);
+							_GlobalFun.alert('已确认');
+						} else {
+							_GlobalFun.alert(data.msg);
+						}
+					})
+
+				},
+
+
+				//继续支付按钮
+				continuePaymentBtn(index) {
+					var _this = this;
+					var _list = _this.orderList;
+
+					_GlobalFun.goToPage('orderDtl.html', 'qjxzf1', {
+						id: _list[index].id
+					})
+
+
+
+				},
+
+
+				//去订单详情
+				goToOrderDtl(index) {
+
+					var _this = this;
+					var _list = _this.orderList;
+
+					_GlobalFun.goToPage('orderDtl.html', 'ddxqym2', {
+						id: _list[index].id
+					})
+
+
+
+				},
+
+				//退款退货
+				refundBtn(index) {
+
+					var _this = this;
+					var _list = _this.orderList;
+
+					_this.isClickRefund = true;
+					_this.curIndex = index;
+					setTimeout(function() {
+						document.getElementById('tuihuoliyou').focus()
+					}, 200);
+				},
+
+				//监听输入框事件
+				animateWidth(name, type) {
+					var _this = this;
+					if (name == "company_name") {
+						if (type == "blur") {
+
+							_this.isClickRefund = false;
+						}
+					}
+
+				},
+
+
+				//确认理由
+				comfBtn(index) {
+					var _this = this;
+					var _list = _this.orderList;
+					if (_this.liyouContent != "") {
+						_GlobalFun.postAjax('user', 'post_order_push_money', {
+							oid: _list[index].id,
+							mark: _this.liyouContent,
+						}, function(data) {
+							if (data.code == 0) {
+								_GlobalFun.alert('已提交退款退货申请');
+								_this.liyouContent = "";
+								_this.getOrderListAPI(_this.selectStic, 0);
+								_this.animateWidth('company_name', 'blur');
+								if (_GlobalVar.IsAPICloud) {
+									api.sendEvent({
+										name: 'djqzf',
+										extra: {
+											msg: '点击去支付'
+										}
+									});
+								}
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						})
+					} else {
+						_GlobalFun.alert('请输入退货退款理由');
+					}
+
+				},
+
+				//切换状态
+				curStatus(index) {
+					var _this = this;
+					if (index == undefined || index == '') {
+						index = 0
+					}
+					_this.start = 1;
+					for (var _i = 0; _i < _this.curStatusList.length; _i++) {
+						_this.curStatusList[_i].selected = false;
+					}
+					_this.curStatusList[index].selected = true;
+
+					_this.getOrderListAPI(_this.curStatusList[index].idx, 0);
+
+					_this.selectStic = _this.curStatusList[index].idx;
+
+
+				},
+
+
+
+
+			},
+
+			created() {
+
+				var _this = this;
+
+				// _GlobalFun.ReturnBtn();
+				if (_GlobalVar.IsAPICloud) {
+					api.addEventListener({
+						name: 'djqzf'
+					}, function(ret, err) {
+						_this.getOrderListAPI(_GlobalFun.getPageParam('id'), 0);
+					});
+				}
+
+				_this.curStatus(_GlobalFun.getPageParam('id'), 0);
+				api.execScript({
+					name: 'root',
+					frameName: 'my',
+					script: 'window.location.reload()'
+				})
+				api.addEventListener({
+					name: 'scrolltobottom',
+					extra: {
+						threshold: 50
+					}
+				}, function(ret, err) {
+					_this.start++;
+					_this.getOrderListAPI(_this.selectStic, _this.orderList.length);
+				});
+
+			},
+
+		});
+
+	}
+</script>
+
+
+</html>

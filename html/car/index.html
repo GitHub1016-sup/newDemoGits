@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>购物车</title>
+		<link rel="stylesheet" href="../../css/reset.css" />
+		<link rel="stylesheet" href="../../css/animate.css" />
+		<link rel="stylesheet" href="../../css/public.css" />
+		<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../../script/vue.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<style>
+			.HeaderWrap {
+            background: #fff;
+			
+        }
+		
+
+        .SortContent {
+            height: auto;
+            margin-top: 0;
+            border-top: 0;
+            padding-top: 0;
+        }
+
+
+
+        .SortContentRightIn {
+            height: auto;
+            overflow: initial;
+            margin-top: 0;
+        }
+
+        .SortContentRight {
+            margin-bottom: 0;
+            padding-bottom: 0 !important;
+        }
+
+        .BuyTick {
+            margin: 0;
+        }
+
+         .SortContentRightList:last-child {
+            border-bottom: 0;
+        }
+
+        .SortContentRightList.Select .BuyTick {
+            color: var(--ThemeColor);
+        }
+
+
+        .SortContentRightPic {
+            margin-right: 1rem;
+			width: 12rem;
+			height: 12rem;
+			overflow: hidden;
+			border-radius: 0.625rem;
+        }
+
+        .RecWrap {
+            margin-top: 0;
+        }
+
+        .RecInner {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .GuessTitle {
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .ProductFooterList2 {
+            background: none;
+        }
+
+        .payOrder {
+            border-radius:3rem;
+            width: 12.9375rem;
+            height: 5rem;
+            text-align: center;
+            line-height: 5rem;
+        }
+   
+
+        .ProductFooterList1.Select .span_1 {
+            color: var(--ThemeColor);
+        }
+
+        .payOrder.Select {
+            background: var(--ThemeColor);
+        }
+
+        .qxan.Select img:nth-child(1),
+        .BuyTick.Select img:nth-child(1) {
+            display: none;
+        }
+
+        .qxan.Select img:nth-child(2),
+        .BuyTick.Select img:nth-child(2) {
+            display: block;
+        }
+
+        .qxan.Select,
+        .BuyTick.Select {
+            color: var(--ThemeColor);
+        }
+
+        .GuessTitle {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .NoDataMod {
+			width: 100vw;
+			background-color: #F5F5F5;
+            padding-bottom: 1rem;
+        }
+
+        .NoDataModPic {
+            width: 26.5rem;
+            margin: auto;
+        }
+
+        .NoDataModPicText {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .NoData_GoBuy {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .NoData_GoBuy span {
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+
+        .NodataDtl {
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .ProductDescWrap {
+            width: 26rem;
+        }
+
+        .SortContentRightList {
+            background: #fff;
+            margin-bottom: 0;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+
+		.have_one1 {
+			-webkit-appearance: none;
+			vertical-align: middle;
+			margin-top: 0;
+			background: #fff;
+			border: #999 solid 1px;
+			border-radius: 10px;
+			height: 20px;
+			width: 20px;
+		}
+
+		.have_one1:checked {
+			background: var(--ThemeColor);
+			border: var(--ThemeColor) solid 1px;
+		}
+
+		.have_one1:checked::after {
+			content: '';
+			top: 3px;
+			left: 3px;
+			position: absolute;
+			background: transparent;
+			border: #fff solid 2px;
+			border-top: none;
+			border-right: none;
+			height: 6px;  
+			width: 10px;
+			-moz-transform: rotate(-45deg);
+			-ms-transform: rotate(-45deg);
+			-webkit-transform: rotate(-45deg);
+			transform: rotate(-45deg);
+		}
+
+		.have_one1 {
+			color: #666;
+			text-align: center;
+			position: relative;
+			margin-top: 0.7rem;
+			
+		}
+
+		.have_one1.active {
+			color: var(--ThemeColor);
+		}
+		.check,.allcheck{
+			width: 10vw;
+		}
+		.allcheck input{
+			position: relative;
+			top: -0.6rem;
+		}
+		.check input{
+			position: relative;
+			top: 3.5rem;
+			left: 50%;
+			transform: translate(-50%,0);
+		}
+		.cart-body{
+			margin-top: 1rem;
+			width: 94vw;
+			margin-left: 2vw;
+			padding: 1rem 0.5rem;
+			border-radius: 0.625rem;
+		}
+		.item_name{
+			width: 18rem;
+			word-break: break-all;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-line-clamp: 2; /* 这里是超出几行省略 */
+			overflow: hidden;
+		}
+					
+
+    </style>
+	</head>
+
+
+	<body>
+
+
+		<div class="Wrap" v-cloak>
+			<div id="apiHeader" class="HeaderWrap fy-head">
+
+				<div class="ListHBothB HeaderInner">
+
+					<div class="ListHCentent fontSize36 fontColor333 weight500 HeaderTitleDesc" style="width: auto;">
+						<!-- <em class="iconfont fontColorFF913D fontSize45">&#xe7a3;</em> -->
+						购物车
+					</div>
+					<div :class="goods==''?'NodataDtl':''" style="width: auto;padding-right: 0;" class="HeaderRightBtn  fontColor666 fontSize24"
+					 @click="delet">删除
+					</div>
+				</div>
+
+			</div>
+
+			<div class="c-body backColorF5F5F5 fy-body">
+				<div class="cart-body backColor255 " v-for="(itemd,index) in list">
+					<div class="ListHTop">
+						<div class="check flex0">
+							<input @click="lichange" type="checkbox" v-model="dataList" :value="itemd" class="have_one1">
+						</div>
+						<div class="SortContentRightPic flex0">
+							<img :src="itemd.img" alt="">
+						</div>
+						<div class="ListV flex0">
+							<div class="ListHBothB margin-b20">
+								<p class="fontSize28 fontColor333 item_name">{{itemd.name}}</p>
+								<div class="ListHLeftBottom">
+									<span class="red fontSize22 span_1">￥</span>
+									<span class="red fontSize30 span_2">{{itemd.shop_price}}</span>
+								</div>
+							</div>
+							<div class="ListHBothB  margin-b20">
+								<span class="fontColor666 fontSize22" v-show="itemd.spec_name">规格:{{itemd.spec_name}}</span>
+								<div class="fontSize26 fontColor999">x{{itemd.num}}</div>
+							</div>
+
+							<div class="PulDelWrap">
+								<div class="div_1 Js_Cut" @click="prev(itemd,1)">
+									<span class="backColor4D4D4D AddLine AddLine1"></span>
+								</div>
+
+								<input @input="input(itemd,2)" class="fontColorFF913D fontSize32 weight500 div_2 " v-model="itemd.num">
+
+								<div class="div_3 Js_Add" @click="prev(itemd,2)">
+									<span class="backColor4D4D4D AddLine AddLine1"></span>
+									<span class="backColor4D4D4D AddLine AddLine2"></span>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+
+				<div v-if="list==''" class="backColor255 NoDataMod">
+					<div class="NoDataModPic">
+						<img src="../../image/nodata/nocart.png">
+					</div>
+					<div class="NoDataModPicText">
+						<p class="fontSize24 fontColorFF913D">购物车里空空如也</p>
+					</div>
+					<div class="NoData_GoBuy">
+						<span class="fontSize26 fontColor255 backColorFF913D Js_Stro" v-on:click="_GlobalFun.ReturnHome()">去逛逛</span>
+					</div>
+				</div>
+
+			</div>
+
+
+
+			<div v-if="list!=''" class="backColor255 CarFooterWrap ListHBothB fy-foot">
+
+				<div class="ListHLeft">
+					<div class="allcheck">
+						<input type="checkbox" v-model="allcheck" class="have_one1 " @change="checkChange()">
+					</div>
+
+					<span class="fontSize28 weight500 fontColor333 ">全选</span>
+				</div>
+
+				<div class=" ">
+					<span class="fontColor333 fontSize28  ">合计:</span>
+					<span class="red fontSize28 ">¥</span>
+					<span class="red fontSize40 ">{{getSum()}}</span>
+				</div>
+
+				<div class="backColorE0E0E0 payOrder" :class="getSum()>0?'Select':''" v-on:click="submit">
+					<span class="fontColor255 fontSize34 ">去结算</span>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<script type="text/javascript" src="../../script/public.js"></script>
+
+
+	</body>
+
+	<script>
+		_GlobalFun.IsAPI(function() {
+			VueFun();
+		})
+
+		function VueFun() {
+			var vue = new Vue({
+				el: ".Wrap",
+				data: {
+
+					RecList: [],
+					//存放被选择的数据
+					isKeyPayBtn: true,
+
+					del: false,
+					nodata: false,
+					list: [],
+					goods: [],
+					allcheck: false,
+					dataList: [],
+					countGoods: 0,
+				},
+
+				methods: {
+					delet() {
+						var _this = this;
+						var str = [];
+						if (this.dataList.length == 0) return;
+						custConfirm('是否删除？', function() {
+
+							for (var i in _this.dataList) {
+								str.push(_this.dataList[i].cart_id);
+								if ((parseInt(i) + 1) == _this.dataList.length) {
+									getShop('post_shop_car_del', {
+										//you参数
+										id: str.toString(),
+									}, function(ret) {
+										_GlobalFun.alert(ret.msg)
+										// console.log(JSON.stringify(ret))
+										if (ret.code == 0) {
+											_this.dataList = [];
+											_this.nodata = false;
+											_this.load();
+										}
+									});
+								}
+							}
+
+						})
+					},
+					submit() {
+						var str = [];
+						if (this.dataList.length == 0) return;
+						for (var i in this.dataList) {
+							str.push(this.dataList[i].cart_id);
+							if ((parseInt(i) + 1) == this.dataList.length) {
+								_GlobalFun.goToPage('../order/submit.html', 'ddtjym', {
+									carid: str.toString(),
+								});
+							}
+						}
+					},
+					// 计算总价
+					getSum() {
+						var _this = this;
+						var sum = 0;
+						if (_this.dataList.length == 0) return 0.00;
+						for (var i in this.dataList) {
+							sum += parseFloat(_this.dataList[i].shop_price) * parseInt(_this.dataList[i].num);
+						}
+						return sum.toFixed(2);
+					},
+					// 全选和全不选
+					checkChange() {
+						var _this = this;
+						if (this.allcheck == true) {
+							_this.dataList = [];
+							for (var i in _this.list) {
+								_this.dataList = _this.dataList.concat(_this.list[i])
+							}
+						} else {
+							this.dataList = []
+						}
+					},
+					// li改变全选 
+					lichange() {
+						setTimeout(() => {
+							if (this.countGoods == this.dataList.length) {
+								this.allcheck = true
+							} else {
+								this.allcheck = false
+							}
+						}, 10);
+
+					},
+					// 数量-
+					prev(data, type) {
+						var _this = this;
+						var n_data = data;
+						if (type == 1) {
+
+							if (data.num <= 1) return;
+							_this.up_cart(data, type, function() {
+								data.num--;
+								if (data.num <= 1) {
+									data.num = 1
+								}
+							})
+						} else {
+							_this.up_cart(data, type, function() {
+								data.num++;
+							})
+						}
+					},
+					input(params) {
+						var _this = this;
+						if (!params.num) {
+							return;
+						}
+	
+						getShop('up_num_user_cart', {
+							//you参数
+							cart_id: params.cart_id,
+							good_id: params.goods_id,
+							num: params.num,
+						}, function(ret) {
+							_GlobalFun.alert(ret.msg)
+							if (ret.code == 0) {
+
+							}
+						});
+					},
+					up_cart(params, type, func) {
+						var _this = this;
+						getShop('up_num_user_cart', {
+							//you参数
+							cart_id: params.cart_id,
+							good_id: params.goods_id,
+							num: type == 1 ? (params.num - 1) : (params.num + 1),
+						}, function(ret) {
+							_GlobalFun.alert(ret.msg)
+							if (ret.code == 0) {
+								func()
+							}
+						});
+					},
+					openNext(name, url, data) {
+						openUnLogin(name, url, data)
+					},
+
+					load() {
+						var _this = this;
+						getShop('get_shop_cart_list', {
+							//you参数
+							// token: token
+						}, function(ret) {
+							// console.log(JSON.stringify(ret));
+							if (ret.code == 0) {
+								_this.nodata = false;
+								_this.list = ret.data;
+								_this.countGoods = _this.list.length;
+
+							} else {
+								_this.nodata = true;
+								_this.list = [];
+							}
+						});
+					},
+					loadgood() {
+						var _this = this;
+						getHome('get_user_like_list', {
+							//you参数
+							// token: token
+						}, function(ret) {
+							// console.log(JSON.stringify(ret))
+							if (ret.code == 0) {
+								_this.goods = ret.data;
+							} else {
+
+							}
+						});
+					},
+
+
+					godetail(id) {
+						_GlobalFun.goToPage('../product/productDtl.html', 'qcqxqy22', {
+							'id': id
+						})
+					},
+
+
+
+				},
+
+
+				mounted() {
+					var _this = this;
+					this.load();
+					this.loadgood();
+
+					api.addEventListener({
+						name: 'djqzf'
+					}, function(ret, err) {
+						_this.load();
+					});
+
+
+				},
+
+
+			});
+
+
+		}
+	</script>
+
+
+</html>

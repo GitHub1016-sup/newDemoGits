@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>商品详情</title>
+	<link rel="stylesheet" href="../../css/reset.css" />
+	<link rel="stylesheet" href="../../css/animate.css" />
+	<link rel="stylesheet" href="../../css/mui.min.css" />
+	<link rel="stylesheet" href="../../css/swiper.min.css" />
+	<link rel="stylesheet" href="../../css/public.css" />
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../script/swiper.min.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+	<style>
+		.Main {
+			margin-top: 0;
+		}
+
+		.SendCommentPopHead {
+			padding: 0rem 2rem;
+			border-top-left-radius: 2rem;
+			border-top-right-radius: 2rem;
+			height: 6rem;
+			line-height: 6rem;
+		}
+
+		.SortContentRightBox,
+		.SpecificationCon {
+			padding: 0 3rem;
+		}
+
+		.SpecificationBox {
+			max-height: 30vh;
+			overflow-y: scroll;
+		}
+
+		.SpecificationCon {
+			margin-bottom: 3rem;
+		}
+
+		.SpecificationBox {
+			margin-top: 2rem;
+		}
+
+		.SpecificationList {
+			padding: 0.7rem 1.5rem;
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 1rem;
+			margin-bottom: 1rem;
+			border: 1px solid transparent;
+		}
+
+		.SpecificationList.Select {
+			background: #ffe5d2;
+			border: 1px solid #ff913d;
+			border-radius: 2px;
+		}
+
+		.SpecificationList.no-active {
+			color: #999999;
+			position: relative;
+		}
+
+		.SpecificationList.no-active::after {
+			content: '';
+			width: 90%;
+			height: 0.1rem;
+			background-color: #999999;
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);
+			left: 5%;
+		}
+
+
+		.c-head .c-img {
+			width: 30px !important;
+			height: 30px !important;
+			border-radius: 30px;
+			margin-right: 5px;
+		}
+
+		.c-body {
+			padding: 15px;
+			background-color: #FFFFFF;
+			/* padding-top: 50px; */
+		}
+
+		.c-bottom {
+			height: 1.875rem;
+			line-height: 1.875rem;
+		}
+
+		.c-bottom p {
+			margin-bottom: 2px;
+		}
+
+		.c-head {
+			margin-bottom: 15px;
+		}
+
+		.c-content {
+			width: 100%;
+			word-wrap: break-word;
+			margin-bottom: 10px;
+		}
+
+		.c-b-img img:first-child {
+			margin-left: 0;
+			;
+		}
+
+		.c-b-img {
+			width: 100%;
+			display: flex;
+			overflow-y: scroll;
+		}
+
+		.c-b-img img {
+			flex: 1;
+			max-height: 50vw;
+			flex-grow: initial;
+			margin-left: 5px;
+			border-radius: 5px;
+			margin-bottom: 5px;
+		}
+
+		.right {
+			font-size: 12px;
+			color: #999999;
+			float: right;
+			line-height: 100%;
+		}
+
+		.right .iconfont {
+			float: right;
+		}
+
+
+
+		.ProductHeaderInnerLeft {
+			background-color: rgba(0, 0, 0, 0.7);
+			border-radius: 100%; 
+		}
+
+		.shop_cart {
+			height: 13.75rem;
+			padding: 1.875rem 3.75rem;
+			margin: 1.25rem 0 0;
+		}
+
+		.shop_img {
+			width: 5rem;
+			height: 5rem;
+			border-radius: 1rem;
+			overflow: hidden;
+		}
+
+		.shop_img img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.shop_btn {
+			padding: 0.875rem 1.75rem;
+			border-radius: 2rem;
+		}
+
+		.shop_btn_r {
+			border: 0.0625rem solid var(--ThemeColor);
+		}
+
+		.HomeItemWrap {
+			background-color: #F5F5F5;
+		}
+	</style>
+
+</head>
+
+
+<body>
+
+	<div class="chanpin Wrap" v-cloak>
+		<!-- <div class="Clear"></div> -->
+		<div class=" Main">
+			<div class="DtlTopProductShow">
+				<div class="DtlTopProductShowInner">
+					<div class="DtlTopProductShowCon Js_DtlTopProductShowCon Js_DtlTopProductShowCon1">
+						<div class="DtlTopProductShow  ProductDtlBanner swiper-container BannerWrap">
+							<div class="swiper-wrapper BannerInner">
+								<div v-for="(item,index) in list.detail" class="swiper-slide BannerList">
+									<img v-bind:src="list.detail[index]" alt="">
+								</div>
+							</div>
+							<div class="PageNumber swiper-pagination RwSlideRoundWrap RwSlideRoundWrap1 BannerPageWrap">
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="ProductDtlTempWrap ProductDtlInfoWrap">
+				<div class="ProductDtlInfoInner">
+					<div class="ListHBothB ProductDtlInfoBox ProductDtlInfoBox1">
+						<div class="ListHBottom ProductDtlInfoBox1Left">
+							<div class="div_1">
+								<span class="fontSize30 red weight600 span_1">￥</span>
+								<span class="fontSize45 red weight500 span_2">{{list.shop_price}}</span>
+							</div>
+							<div class="div_2">
+								<span class="span_2">
+									<em class="fontSize24 fontColor999 weight400 em_1"> ￥ </em>
+									<em class="fontSize24 fontColor999 weight400 em_2">{{list.market_price}}</em>
+								</span>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="ProductDtlInfoBox ProductDtlInfoBox2">
+						<div class="">
+							<span class="fontColor333 weight500 fontSize28">{{list.name}}</span>
+						</div>
+					</div>
+					<div class="ListHBothB ProductDtlInfoBox ProductDtlInfoBox3">
+						<div class="">
+							<span class="fontSize24 fontColor666 weight500">月销量</span>
+							<span class="fontSize24 fontColor666 weight500">{{list.sales}}</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="ProductDtlTempWrap backColor255">
+				<span class="fontSize24 weight500 fontColor999">配送</span>
+				<span class="fontSize24 fontColor333">{{list.wuliu}}</span>
+			</div>
+
+			<div v-show="list.pinglun != ''" style="margin-bottom: 0;"
+				class="fontColor333 weight500 fontSize28 ProductDtlTempWrap ProductDtlTempTjWrap ">
+				宝贝评价
+				<span @click="_GlobalFun.goToPage('comment.html','msqcp',{'id':list.id})" v-show="list.pinglun!=''"
+					class="right">查看更多<i class="iconfont fontSize26  rightback">&#xe753;</i></span>
+			</div>
+
+			<div class="c-body" v-show="list.pinglun != ''">
+
+				<div class="c-content fontSize26 fontColor999">
+					{{list.pinglun.content}}
+				</div>
+				<div class="c-head ListHLeft">
+					<img class="c-img" :src="list.pinglun.headimg">
+					<div class="c-bottom">
+						<p class="fontColor333">{{list.pinglun.nickname}}</p>
+						<p class="fontColor999 fontSize16">{{list.pinglun.create_time}}
+							{{list.pinglun.spec_name?'| 规格:'+list.pinglun.spec_name:''}}</p>
+
+
+					</div>
+				</div>
+			</div>
+	
+			<div class="fontColor333 weight500 fontSize30 ProductDtlTempWrap ProductDtlTempTjWrap HomeItemWrap">
+				宝贝详情
+			</div>
+
+			<div class="BabyDtlWrap">
+				<div v-html="list.info">
+
+				</div>
+			</div>
+
+			<div class="fontColor333 weight500 fontSize28 ProductDtlTempWrap ProductDtlTempTjWrap HomeItemWrap">
+				推荐商品
+			</div>
+
+			<!--推荐-->
+			<div class="TempWrap RecWrap">
+				<div class="RecCon">
+					<div class="ListHBothB RecInner" style="padding-top: 0;">
+						<div :id="item.id" v-for="(item,index) in RecList" class="RecList">
+							<div v-on:click="_GlobalFun.goToPage('index.html','msqcp',{id:item.id})"
+								class="RecPic">
+								<img v-bind:src="item.img">
+							</div>
+							<div class="RecBottom">
+								<div class="RecName">
+									<span class="fontSize28 fontColor333 span_2">{{item.name}}</span>
+								</div>
+								<div class=" ListHBothB LimitedTimeFooterWrap">
+									<div class="ListHJstBottom MoneyList Money1">
+										<span class="red fontSize20">￥</span>
+										<span class="red fontSize36">{{item.shop_price}}</span>
+									</div>
+									<span class="fontSize18 fontColor999 span_2">{{item.sales}}人付款</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div id="apiHeader" class="backColor255 ProductHeaderWrap">
+			<div class="ListHBothB ProductHeaderInner">
+				<div class="ProductHeaderInnerLeft Js_HeadReturnBtn" @click="back">
+					<div class="iconfont fontColor255 fontSize45 ProductHeaderIcon Js_HeadReturnBtn">&#xe748;</div>
+				</div>
+
+				<div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="backColor255 ProductFooterWrap">
+			<div class="ListHJstCentent ProductFooterInner">
+				<div class="ProductFooterList1" :class="list.collect?'fontColorFF913D':'fontColor999'"
+					v-on:click="colle(list.collect)">
+					<i class="iconfont fontSize36">&#xe779;</i>
+					<span class="fontSize20">收藏</span>
+				</div>
+				<div class="ProductFooterList1" v-on:click="gocar">
+					<i class="iconfont fontColor999 fontSize36">&#xe76d;</i>
+					<span class="fontColor999 fontSize20">购物车</span>
+				</div>
+
+				<div class=" ProductFooterList ProductFooterList2 fontColor333" v-on:click="JoinCarBtn">
+					<span class=" fontSize30 span_1">加入购物车</span>
+				</div>
+				<div class=" ProductFooterList ProductFooterList3 themeBkColor fontColor255" v-on:click="onceBuy">
+					<span class=" fontSize30 span_1">立即购买</span>
+				</div>
+
+			</div>
+		</div>
+
+		<!--产品规格-->
+		<div class="SpecificationPopWrap Js_SpecificationPopWrap" v-show="spePop"
+			style="display: none;height: 100%;bottom: 0;">
+			<div class="SpecificationPopMask" v-on:click="spePop=false"></div>
+			<div class="backColor255 SpecificationPopInner BottomToTopAnimate">
+				<div class=" ListHBothB SendCommentPopHead">
+					<div></div>
+					<div class="iconfont fontColor888 fontSize30 SendCommentPopHeadClose" v-on:click="spePop=false">
+						&#xe755;</div>
+				</div>
+
+				<div class="SortContentRightBox">
+					<div class="ListHTop SortContentRightList">
+
+						<!--产品图片-->
+						<div class="SortContentRightPic ">
+							<img :src="list.img" alt="">
+						</div>
+
+						<!--产品描述-->
+						<div class="ProductDescWrap ListV" style="flex: 1;">
+							<div class="ProductDescName" >
+								<span class="fontSize30 fontColor333 span_1">
+									{{list.name}}
+								</span>
+							</div>
+							<div class=" ListHBottom LimitedTimeFooterWrap">
+								<span class="red fontSize20 span_1">￥</span>
+								<span class="red fontSize36 span_2">
+									{{list.shop_price}}
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="SpecificationCon ListHBothB">
+					<div class="fontColor333 fontSize28 SpecificationTitle">
+						购买数量
+						<span class="fontSize22 fontColor999">库存{{list.number}}件</span>
+					</div>
+					<div class="PulDelWrap">
+						<div class="div_1 Js_Cut" @click="changeNum(1)">
+							<span class="backColor4D4D4D AddLine AddLine1"></span>
+						</div>
+						<div class="fontColorFF913D fontSize32 weight500 div_2 ">
+							<input v-model="selectArr.num">
+						</div>
+						<div class="div_3 Js_Add" @click="changeNum(2)">
+							<span class=" AddLine AddLine1"></span>
+							<span class=" AddLine AddLine2"></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="TextAlign Car_ConfirmBtnWrap" v-on:click="join_Confirm()">
+					<div class="fontSize32 fontColor255 Car_ConfirmBtnInner backColorFF913D">
+						确定
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<script type="text/javascript" src="../../script/public.js"></script>
+
+
+</body>
+
+<script>
+	_GlobalFun.IsAPI(function () {
+		VueFun();
+	}, function () {
+		if (api.statusBarAppearance) {
+			var header = $api.byId('apiHeader');
+			var Main = $('.Main');
+			$api.fixStatusBar(header);
+
+			$("#apiHeader").css({
+				"margin-top": api.safeArea.top - 15
+			});
+		}
+	})
+
+	function VueFun() {
+
+		var vue = new Vue({
+			el: ".Wrap",
+			data: {
+				iosShow: $api.getStorage('iosShow'),
+				spePop: false,
+				isJoin: true,
+
+				//详情信息
+				list: {
+					'spec_list': [{ 'shop_price': 0 }],
+					'shop': {},
+					'pinglun': {},
+					'detail': []
+				},
+				spec_select_index: 0,
+
+				//推荐列表
+				RecList: [],
+
+				num: 1,
+				selectArr: {
+					good_id: _GlobalFun.getPageParam('id'),
+					num: 1,
+					spec: 0,
+				},
+
+			},
+
+			methods: {
+				//获取商品信息
+				colle() {
+					var _this = this;
+					_GlobalFun.postAjax('user', 'post_collection_info', {
+						sid: _GlobalFun.getPageParam("id")
+					}, function (data) {
+						if (data.code == 0) {
+							_this.list.collect = !_this.list.collect;
+						}
+						_GlobalFun.alert(data.msg);
+					})
+				},
+
+				back: function () {
+					api.closeWin()
+				},
+
+				changeNum: function (index) {
+					if (index == 1 && this.selectArr.num >= 2) {
+						this.selectArr.num--;
+					}
+					if (index == 2) {
+						this.selectArr.num++;
+					}
+				},
+				//获取猜你喜欢列表
+				getLikeListAPI() {
+					var _this = this;
+					_GlobalFun.getAjax('home', 'get_user_like_list', '', function (data) {
+						if (data.code == 0) {
+							_this.RecList = data.data;
+						} else {
+							_GlobalFun.alert(data.msg);
+						}
+					});
+				},
+
+				gocar: function () {
+					api.closeToWin({name:'root'})
+					api.sendEvent({
+						name: 'gocar',
+						extra: {
+							msg: '底部菜单'
+						}
+					});
+
+				},
+				//获取商品信息
+				getProductInfoAPI() {
+					var _this = this;
+					// alert( _GlobalFun.getPageParam("id"))
+					_GlobalFun.postAjax('shop', 'post_goods_info', {
+						id: _GlobalFun.getPageParam("id")
+					}, function (data) {
+						if (data.code == 0) {
+							_this.list = data.data;
+							_this.pinglun = data.data.pinglun;
+
+							setTimeout(function () {
+								var swiper = new Swiper('.swiper-container', {
+									pagination: {
+										el: '.RwSlideRoundWrap1',
+										clickable: true,
+										type: 'fraction',
+									},
+								});
+							}, 200);
+
+						} else {
+							_GlobalFun.alert(data.msg);
+						}
+					})
+				},
+
+
+
+				JoinCarBtn() {
+					var _this = this;
+					if (_GlobalVar.userLoginIDVar == undefined) {
+						_GlobalFun.goToPage('../login/index.html', 'qdlym', '');
+						return;
+					}
+					_this.isJoin = true;
+					// 为true 打开购物车页面
+					_this.spePop = true;
+				},
+
+				join_Confirm() {
+					var _this = this;
+					if (_this.isJoin) {
+						_GlobalFun.postAjax('shop', 'add_user_cart', {
+							good_id: _this.selectArr.good_id,
+							num: _this.selectArr.num,
+							spec: _this.selectArr.spec
+						}, function (data) {
+							_GlobalFun.alert(data.msg);
+							if (data.code == 0) {
+								_this.spePop = false;
+								if (_GlobalVar.IsAPICloud) {
+									api.sendEvent({
+										name: 'djqzf',
+										extra: {
+											msg: '点击去支付'
+										}
+									});
+								}
+							}
+						});
+
+					} else {
+						_this.goOrderSubAPI();
+					}
+				},
+				// 立即购买
+				onceBuy() {
+					var _this = this;
+					if (!$api.getStorage('userLoginID')) {
+						_GlobalFun.goToPage('../login/indspePopex.html', 'qdlym', '');
+						return;
+					}
+					_this.spePop = true;
+					_this.isJoin = false;
+					// _this.goOrderSubAPI();
+				},
+				//去提交订单页面
+				goOrderSubAPI() {
+					var _this = this;
+					var _list = _this.list;
+					_this.spePop = false;
+					
+					_GlobalFun.goToPage('../order/submit.html', 'qddtjdym', {
+						dis_id: 0,
+						id: _list.id,
+						spec_id: _this.selectArr.spec,
+						aid: 0,
+						num: _this.selectArr.num,
+						is_use: 0,
+						is_collage: 0,
+						is_buynow: 1,
+					})
+
+				},
+
+			},
+
+			mounted() {
+				var _this = this;
+				_GlobalFun.ReturnBtn();
+				_this.getProductInfoAPI();
+				_this.getLikeListAPI();
+
+			},
+
+		})
+
+	}
+</script>
+
+</html>

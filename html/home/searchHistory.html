@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>搜索历史</title>
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/reset.css" />
+		<link rel="stylesheet" href="../../css/animate.css" />
+		<!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+		<link rel="stylesheet" href="../../css/public.css" />
+		<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+		<!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+		<script type="text/javascript" src="../../script/vue.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+
+		<style>
+			html,
+        body,
+        .Wrap {
+            width: 100%;
+            height: 100%;
+        }
+
+        .Wrap {
+            background: #fff;
+        }
+
+
+        .BottomNav {
+            display: none;
+        }
+
+        .HeaderWrap {
+            /* top: 3rem; */
+            background: #fff;
+            /* padding: 1rem 2rem; */
+        }
+
+        .Main {
+            padding-bottom: 0;
+        }
+
+        .HeaderWrap .mui-search input {
+            padding-left: 4.87rem;
+        }
+
+        .ShoppingCart {}
+
+        .mui-placeholder span:nth-child(2) {
+            font-size: 1.63rem;
+        }
+
+
+        .SearchHistoryWrap {
+            padding: 0 2rem 0 3rem;
+        }
+
+        .SearchHistoryWrap1 {
+            /* margin-top: 6rem; */
+
+        }
+
+        .SearchHistoryTitle {
+            margin-top: 2rem;
+        }
+
+        .SearchHistoryTitle .span_1 {}
+
+        .SearchHistoryTitle .span_2 {}
+
+        .SearchHistoryCon {
+            margin-top: 1rem;
+        }
+
+        .SearchHistoryList {
+            padding: 0rem 1.5rem;
+            background: #F5F5F5;
+            display: inline-block;
+            border-radius: 0.5rem;
+            margin-right: 0.8rem;
+            position: relative;
+            margin-bottom: 2rem;
+            height: 3.5rem;
+            line-height: 3.5rem;
+        }
+
+
+        .SearchHistoryList.Popular {
+            background: #F5F5F5;
+
+            padding: 0rem 2rem;
+        }
+
+        .SearchHistoryList img {
+            width: 0;
+        }
+
+        .SearchHistoryList.Popular img {
+            width: 0.8rem;
+            height: 0.93rem;
+            position: absolute;
+            right: 0.3rem;
+            bottom: 0.3rem;
+        }
+		.a-c{
+			color: #6A9DFC;
+		}
+
+    </style>
+	</head>
+
+
+	<body>
+
+		<div class="Wrap" v-cloak>
+			<div id="apiHeader" class="HeaderWrap">
+
+				<div class="ListHBothB HeaderInner">
+					<!-- <div class="fontColor255 fontSize36 HeaderTitle">登录</div> -->
+					<div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"></div>
+					<div class="mui-input-row mui-search">
+						<input type="search" v-model="searchContent" v-on:keyup.13="SearchBtn" class=" fontColor666 mui-input-clear SearchInputContent"
+						 placeholder="请输入商品名称">
+						<div class="SearchIcon">
+							<i class="iconfont fontSize30 fontColor666">&#xe741;</i>
+						</div>
+					</div>
+					<div class="fontColor333 fontSize30 weight500 ShoppingCart Js_GoSearchResult" v-on:click="SearchBtn">搜索
+					</div>
+				</div>
+
+			</div>
+			<div>
+
+				<div class="SearchHistoryWrap SearchHistoryWrap1" v-if="historySearchList!='' ">
+					<div class="Clear"></div>
+					<div class="ListHBothB SearchHistoryTitle">
+						<span class="span_1 fontColor333 fontSize30 weight500">历史搜索</span>
+						<span class="iconfont fontColorFF913D fontSize30 span_2 Js_DelHistory" v-on:click="clearSearch">&#xe750;</span>
+					</div>
+					<div class="SearchHistoryCon">
+						<div v-on:click="clickHistory(index)" v-for="(item,index) in historySearchList" class=" weight400 fontColor666 fontSize26 SearchHistoryList ">{{item.key}}</div>
+					</div>
+				</div>
+
+				<div class="SearchHistoryWrap SearchHistoryWrap2">
+					<div class="Clear"></div>
+					<div class="ListHBothB SearchHistoryTitle">
+						<span class="span_1 fontColor333 fontSize30 weight500">热门搜索</span>
+						<!-- <span class="iconfont fontColorFF913D fontSize54 span_2">&#xe74e;</span> -->
+					</div>
+					<div class="SearchHistoryCon">
+						<div v-on:click="clickHot(index)" v-for="(item,index) in hotList" class="weight400 a-c fontSize26 SearchHistoryList Popular">
+							{{item.key}}
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="ListHBothB RecInner">
+
+				<div v-on:click="godetail(item.id)" v-for="(item,index) in RecList" class="RecList">
+					<div class="RecPic">
+						<img v-bind:src="item.img">
+					</div>
+					<div class="RecBottom">
+						<div class="RecName">
+							<span class="fontSize30 fontColor333 span_1">{{item.name}}</span>
+						</div>
+						<div class="BuyNum ListHJstBottom">
+							<div class="">
+								<span class="fontSize22 fontColor999 span_1">{{item.unit_name}}</span>
+							</div>
+							<div class="">
+								<span class="fontSize22 fontColor999">销量 {{item.sales}}</span>
+							</div>
+						</div>
+						<div class=" ListHJstBottom LimitedTimeFooterWrap">
+							<div class="ListHCentent MoneyWrap">
+								<div class="ListHCentent  MoneyList Money1">
+									<span class=" fontSize24 red span_1">￥</span>
+									<span class=" fontSize42 red span_2">{{item.shop_price}}</span>
+								</div>
+								<div class="ListHCentent MoneyList Money2" style="text-decoration: none;">
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+
+
+		</div>
+
+
+		<script type="text/javascript" src="../../script/public.js"></script>
+
+
+
+	</body>
+
+	<script>
+		_GlobalFun.IsAPI(function() {
+
+			VueFun();
+
+		})
+
+
+
+
+		function VueFun() {
+
+			var vue = new Vue({
+				el: ".Wrap",
+				data: {
+
+					historySearchList: "",
+					hotList: "",
+					searchContent: '',
+					RecList: [],
+
+				},
+				methods: {
+
+					godetail(id) {
+						_GlobalFun.goToPage('../product/index.html', 'qcqxqy2', {
+							id: id
+						})
+					},
+					getList() {
+						var _this = this;
+						_GlobalFun.getAjax('home', 'get_keyword_search', '', function(data) {
+							if (data.code == 0) {
+
+								// _this.historySearchList = data.data.list;
+
+								_this.historySearchList = data.data.list;
+
+								_this.hotList = data.data.hot_list;
+
+							} else {
+								alert(data.msg);
+							}
+						})
+						_GlobalFun.getAjax('home', 'get_home_often_buy', '', function(data) {
+							if (data.code == 0) {
+								_this.RecList = data.data;
+							}
+						})
+					},
+
+					clearSearch() {
+						var _this = this;
+						_GlobalFun.Confirm('是否清除历史记录?', '', function() {
+
+							_GlobalFun.getAjax('home', 'del_keyword_search', '', function(data) {
+								if (data.code == 0) {
+									_this.historySearchList = "";
+									// alert(data.msg);
+								} else {
+									// _this.historySearchList = "";
+									_GlobalFun.alert(data.msg);
+								}
+							})
+
+						})
+
+
+					},
+
+					SearchBtn() {
+						var _this = this;
+						_this.searchContent = $.trim(_this.searchContent);
+						if (_this.searchContent != "") {
+							// _this.searchContent = encodeURI(_this.searchContent);
+							_GlobalFun.goToPage('searchResult.html', 'qssjgym2', {
+								key: _this.searchContent,
+								start: 0,
+							})
+							_this.searchContent = "";
+							_GlobalFun.closeWin();
+						} else {
+							_GlobalFun.alert("请输入搜索内容");
+						}
+
+					},
+
+
+					clickHistory(index) {
+						var _this = this;
+						var _list = _this.historySearchList;
+						_GlobalFun.goToPage('searchResult.html', 'qssjgym2', {
+							key: _list[index].key,
+							start: 1,
+						})
+
+
+					},
+
+					clickHot(index) {
+						var _this = this;
+						var _list = _this.hotList;
+						_GlobalFun.goToPage('searchResult.html', 'qssjgym2', {
+							key: _list[index].key,
+							start: 1,
+						})
+
+
+					},
+
+
+
+				},
+
+				mounted() {
+
+					// _GlobalFun.ReturnBtn();
+
+					this.getList();
+
+					setTimeout(function() {
+						$('.SearchInputContent').focus();
+					}, 500);
+
+
+				},
+
+			});
+
+		}
+	</script>
+
+
+</html>

@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>Hello APP</title>
+	<link rel="stylesheet" href="./css/reset.css" />
+	<link rel="stylesheet" href="./css/animate.css" />
+	<link rel="stylesheet" href="./css/mui.min.css" />
+	<link rel="stylesheet" href="./css/public.css" />
+	<script type="text/javascript" src="./script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="./script/api.js"></script>
+	<style>
+		#BottomNav {
+			background: #fff;
+			border: 0;
+			padding-bottom: 1.5rem;
+		}
+
+		#BottomNav,
+		#BottomNav .mui-tab-item {
+			height: 6.12rem;
+		}
+
+		#BottomNav .mui-tab-item .iconfont {
+			width: 2.875rem;
+			height: 2.875rem;
+			position: relative;
+			margin: 0.625rem auto;
+		}
+
+		#BottomNav .mui-tab-item.mui-active .iconfont {
+			color: var(--ThemeColor);
+		}
+
+		#BottomNav .mui-tab-item.mui-active .iconfont .icon1 {
+			display: none;
+		}
+
+		#BottomNav .mui-tab-item.mui-active .iconfont .icon2 {
+			display: block;
+		}
+
+		#BottomNav .mui-tab-item .iconfont .icon2 {
+			display: none;
+		}
+
+		#BottomNav .mui-tab-item .iconfont .icon1 {
+			display: block;
+		}
+
+		#BottomNav .mui-tab-item.mui-active .mui-tab-label {
+			color: var(--ThemeColor);
+		}
+
+		#BottomNav .mui-tab-item .iconfont img {
+			transition: 300ms cubic-bezier(0.42, 0, 0.41, 1.34) all;
+			transform: scale(1);
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	</style>
+</head>
+
+<body>
+
+	<nav id="BottomNav" class="mui-bar mui-bar-tab">
+		<a class="mui-tab-item mui-active">
+			<div class="iconfont">
+				<img class="icon1" src="image/public/1.png">
+				<img class="icon2" src="image/public/11.png">
+			</div>
+			<span class="fontSize22 mui-tab-label">首页</span>
+		</a>
+		<a class="mui-tab-item">
+			<div class="iconfont">
+				<img class="icon1" src="image/public/2.png">
+				<img class="icon2" src="image/public/22.png">
+			</div>
+			<span class="fontSize22 mui-tab-label">分类</span>
+		</a>
+
+		<a class="mui-tab-item">
+			<div class="iconfont">
+				<img class="icon1" src="image/public/3.png">
+				<img class="icon2" src="image/public/33.png">
+			</div>
+			<span class="fontSize22 mui-tab-label">购物车</span>
+		</a>
+		<a class="mui-tab-item">
+			<div class="iconfont">
+				<img class="icon1" src="image/public/4.png">
+				<img class="icon2" src="image/public/44.png">
+			</div>
+			<span class="fontSize22 mui-tab-label">我的</span>
+		</a>
+	</nav>
+
+	<script type="text/javascript" src="./script/public.js"></script>
+
+</body>
+<script type="text/javascript">
+	apiready = function () {
+		_GlobalFun.getAjax('home', 'free_hide', '', function (data) {
+			if (data.code == 0) {
+				// alert(data.close)
+				$api.setStorage('iosShow', data.close);
+			} else {
+				_GlobalFun.alert(data.msg);
+			}
+		});
+		//菜单入口页配置
+		api.openFrameGroup({
+			name: 'BottomNav',
+			scrollEnabled: false,
+			bounces: true,
+			rect: {
+				marginBottom: $api.dom('#BottomNav').offsetHeight
+			},
+			index: 0, //默认第1个tab显示
+			preload: 0,
+			frames: [{
+				name: 'home',
+				url: './html/home/index.html',
+				historyGestureEnabled: false,
+			}, {
+				name: 'sort',
+				url: './html/sort/index.html',
+				historyGestureEnabled: false,
+			}, {
+				name: 'car',
+				url: './html/car/index.html',
+				historyGestureEnabled: false,
+			}, {
+				name: 'my',
+				url: './html/my/index.html',
+				historyGestureEnabled: false,
+			}]
+		}, function (ret, err) {
+
+		})
+
+		//点击底部菜单切换页面
+		$("#BottomNav a").click(function () {
+
+			var _index = $(this).index();
+			if (!$api.getStorage('userLoginID')) {
+				if (_index > 1) {
+					_GlobalFun.goToPage('./html/login/index.html', 'qdlym', '');
+					return;
+				}
+			}
+			if ($(this).hasClass('mui-active')) return;
+			if (_index == 1) {
+				api.setFrameAttr({
+					name: 'goodsList',
+					hidden: false
+				});
+			} else {
+				api.setFrameAttr({
+					name: 'goodsList',
+					hidden: true
+				});
+			}
+			if (_index == 3) {
+				api.sendEvent({
+					name: 'xgnc',
+					extra: {
+						msg: '底部菜单'
+					}
+				});
+			}
+			$(this).addClass("mui-active").siblings().removeClass("mui-active");
+
+			api.setFrameGroupIndex({
+				name: 'BottomNav',
+				index: _index,
+				reload: false,
+			});
+
+		});
+
+		api.addEventListener({
+			name: 'fhsypage'
+		}, function (ret, err) {
+
+			$("#BottomNav a").eq(0).trigger('click');
+
+			// api.setFrameGroupIndex({
+			//     name: 'BottomNav',
+			//     index: 0,
+			//     // scroll: true,
+			//     reload: false,
+			// });
+
+		});
+		api.addEventListener({
+			name: 'gocar'
+		}, function (ret, err) {
+			$("#BottomNav a").eq(2).trigger('click');
+		});
+
+		function ExitApp() {
+			var ci = 0;
+			var time1, time2;
+			api.addEventListener({
+				name: 'keyback'
+			}, function (ret, err) {
+				if (ci == 0) {
+					time1 = new Date().getTime();
+					ci = 1;
+					api.toast({
+						msg: '再按一次返回键退出'
+					});
+
+				} else if (ci == 1) {
+					time2 = new Date().getTime();
+					if (time2 - time1 < 3000) {
+						api.closeWidget({
+							id: api.appId,
+							retData: {
+								name: 'closeWidget'
+							},
+							silent: true
+						});
+					} else {
+						ci = 0;
+						api.toast({
+							msg: '再按一次返回键退出'
+						});
+					}
+				}
+			});
+		}
+		ExitApp();
+
+		function Permission() {
+			var resultList = api.hasPermission({
+				list: ['storage']
+			});
+			if ($api.getStorage('Permission') == 1) {
+				return;
+			}
+			api.confirm({
+				title: '提醒',
+				msg: '照片存储权限未开通，是否前往设置？',
+				buttons: ['去设置', '取消']
+			}, function (ret, err) {
+				if (1 == ret.buttonIndex) {
+					$api.setStorage('Permission', 1);
+
+					api.requestPermission({
+						list: ['camera', 'photos', 'storage-r', 'storage-w'],
+						code: 1
+					}, function (ret, err) {
+
+					});
+				} else {
+
+				}
+			});
+
+		}
+		setTimeout(function () {
+			Permission();
+		}, 5000)
+
+	}
+</script>
+
+</html>

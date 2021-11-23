@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>提交评价</title>
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <link rel="stylesheet" href="../../css/mui.min.css" />
+    <!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+    <link rel="stylesheet" href="../../css/public.css" />
+    <script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+    <!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+    <script type="text/javascript" src="../../script/vue.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+    <style>
+        body {
+            background: #fff;
+        }
+
+        .HeaderWrap {
+            background: #fff;
+        }
+
+        .Wrap {
+            text-align: center;
+
+        }
+
+        .PaySuccessIcon {
+            font-size: 10rem;
+            margin-top: 8rem;
+        }
+
+        .PaySuccessText {
+            margin-top: 3rem;
+        }
+
+        .PaySuccessBtn {
+            width: 43.88rem;
+            height: 4.97rem;
+            line-height: 4.97rem;
+            margin: auto;
+            margin-top: 8rem;
+            border-radius: 0.5rem;
+        }
+
+        .PaySuccessBtn span {
+            display: block;
+        }
+		.text{
+			border: none;
+			color: #333;
+		}
+		.c-img{
+			display: flex;
+			flex-wrap: wrap;
+		}
+		.pp{
+			width: 100px;
+			height: 100px;
+			margin-left: 15px;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			
+		}
+		.jia{
+			background-color: #FAFAFA;
+			padding: 20px;
+		}
+		.cover{
+			position: relative;
+		}
+		.close{
+			background-color: rgba(0,0,0,0.7);
+			width: 20px;
+			border-radius: 20px;
+			padding: 3px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: 10;
+		}
+		
+    </style>
+</head>
+
+
+<body>
+
+    <div class="Con">
+        <div class="Wrap" v-cloak>
+			
+			<div id="apiHeader" class="HeaderWrap">
+			    <div class="ListHBothB HeaderInner">
+			        <div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"></div>
+			        <div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">提交评价</div>
+			        <div class="fontColorFF913D iconfont ShoppingCart"
+			            style="pointer-events: none;opacity: 0;font-size: 3rem;">
+			            &#xe760;</div>
+			    </div>
+			</div>
+            <div class="">
+				<textarea rows="7" placeholder="请填写评价" v-model="form.content" class="text"></textarea>
+
+                <div class="backColorFF913D PaySuccessBtn">
+                    <span @click="comm" class="fontSize36 fontColor255 Js_GoHome">提交评价</span>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+    <script type="text/javascript" src="../../script/public.js"></script>
+
+
+</body>
+
+<script>
+
+    _GlobalFun.IsAPI(function () {
+
+        VueFun();
+
+    })
+
+
+
+    function VueFun() {
+        var vue = new Vue({
+            el: ".Wrap",
+            data: {
+				form:{
+					content:'物美价廉，下次我还来买~',
+					img:[],
+					order_id:_GlobalFun.getPageParam('id'),
+				}
+			},
+            methods: {
+				delimg:function(index){
+					this.form.img.splice(index,1);
+				},
+				// 上传图片
+				upimg:function(){
+					var that = this;
+
+				    api.actionSheet({
+				        cancelTitle: '取消',
+				        buttons: ['从相册选择', '拍照'],
+				        style: {
+				            fontNormalColor: '#000',
+				        }
+				    }, function(ret, err) {
+				        var index = ret.buttonIndex;
+				        if (index == 1) {
+							that.getpic('album');
+				        } else if (index == 2) {
+							that.getpic('camera');
+				        }
+				    });
+				},
+					getpic: function(t) {
+				    var that = this;
+				    api.getPicture({
+				        sourceType: t,
+				        encodingType: 'pic',
+				        mediaValue: 'img',
+				        destinationType: 'url',
+						videoQuality:'high',
+				        allowEdit: true,
+				        quality: 100,
+				        saveToPhotoAlbum: true
+				    }, function(ret, err) {
+				        if (ret) {
+				            if (ret.data == "") {
+				                api.toast({
+				                    msg: '请选择'
+				                });
+				                return false;
+				            }
+				            var head = ret.data
+				            api.ajax({
+								url: _GlobalVar.ajaxUrl + 'home/post_home_up_img',
+								method: 'post',
+								data: {
+									files: {
+										files: head
+									}
+								}
+							}, function(ret, err) {
+								if(ret) {
+									if(ret.code == 0) {	
+										
+										that.form.img.push(ret.data.url);
+									}
+								}
+							})
+				
+				
+				        } else {
+				            api.toast({
+				                msg: '请重试'
+				            });
+				        }
+				    });
+				},
+				comm:function(){
+					var that = this;
+					
+					api.ajax({
+						url: _GlobalVar.ajaxUrl + 'user/post_order_ping_jia',
+						method: 'post',
+						data: {
+							values:{
+								order_id:that.form.order_id,
+								img:that.form.img.toString(),
+								content:that.form.content
+							}
+						}
+					}, function(ret, err) {
+						api.toast({
+						    msg: ret.msg
+						});
+						if(ret) {
+							if(ret.code == 0) {
+								api.execScript({
+									name:'qwddd',
+									
+									script:'window.location.reload()'
+								})
+								setTimeout(function(){
+									api.closeWin();
+								},1000)
+							}
+						}
+					})
+				}
+            },
+            mounted() {
+				
+                // _GlobalFun.ReturnBtn();
+
+                if (_GlobalVar.IsAPICloud) {
+                    api.sendEvent({
+                        name: 'closeSubmit',
+                        extra: {
+                            msg: '关闭提交订单页面'
+                        }
+                    });
+
+                    api.sendEvent({
+                        name: 'djqzf',
+                        extra: {
+                            msg: '点击去支付'
+                        }
+                    });
+
+                }
+
+            },
+        });
+    }
+
+
+</script>
+
+
+</html>

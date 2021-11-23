@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>退款售后</title>
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <link rel="stylesheet" href="../../css/mui.min.css" />
+    <!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+    <link rel="stylesheet" href="../../css/public.css" />
+    <script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+    <!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+    <script type="text/javascript" src="../../script/vue.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+    <style>
+        .HeaderWrap {
+            background: #fff;
+        }
+
+        .Group.SortContent {
+            height: auto;
+            margin-top: 0;
+            padding-top: 0;
+        }
+
+        .SortContentRight {
+            padding: 0;
+            border-left: 1rem solid #f5f5f5;
+            border-right: 1rem solid #f5f5f5;
+        }
+
+        .SortContentRightIn {
+            height: auto;
+            overflow: initial;
+        }
+
+        .Group .SortContentRightList {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .Group .SortContentRightList:last-child {
+            border-bottom: 0;
+        }
+
+        .Group .SortContentRightList.Select .BuyTick {
+            color: var(--ThemeColor);
+        }
+
+
+        .Group .SortContentRightPic {
+            margin-right: 2rem;
+        }
+
+
+        .ProductDescName {
+            text-indent: 0;
+        }
+
+
+
+        .ProductFooterList2 {
+            background: none;
+            width: 25rem;
+        }
+
+        .ProductFooterList3 {
+            border-radius: 0.5rem;
+            width: 17.5rem;
+            height: 6.63rem;
+            text-align: center;
+            line-height: 6.63rem;
+        }
+
+
+        .ProductFooterList1.Select .span_1 {
+            color: var(--ThemeColor);
+        }
+
+        .ProductFooterList3.Select {
+            background: var(--ThemeColor);
+        }
+
+
+        .ProductDescName {
+            margin-bottom: 0.5rem;
+        }
+
+        .ProductDescLabel {
+            margin-bottom: 1rem;
+        }
+
+        .ProductDescName span.span_1 {
+            width: 23rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .SortContentRight {
+            border: 0;
+        }
+
+        .ShippingAddressWrap {
+            margin-top: 0.5rem;
+            padding: 1rem 2rem 2rem 2rem;
+            position: relative;
+        }
+
+        .ShippingAddressWrap::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0rem;
+            width: 100%;
+            height: 0.25rem;
+            background: url(../../image/order/Bod.jpg) repeat-x;
+            background-size: 5.6rem 0.25rem;
+        }
+
+        .ShippingAddressLeft {
+            font-size: 3rem;
+            margin-right: 2rem;
+        }
+
+        .ShippingAddressRight {}
+
+        .ShippingAddressBox1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .StoreName {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .StoreNameIcon {
+            width: 2.15rem;
+            height: 2.13rem;
+            margin-right: 1rem;
+        }
+
+        .StoreNameText {}
+
+        .MoneyData {
+            padding-left: 3rem;
+            padding-right: 2rem;
+            margin-top: 1rem;
+            margin-left: -1rem;
+            margin-right: -1rem;
+            text-align: right;
+        }
+
+        .HomeItemWrap {
+            padding: 0rem 3rem;
+            margin-bottom: 1rem;
+        }
+        .HomeItemWrap::after,.HomeItemWrap::before{
+            width: 0;
+        }
+
+        .HomeItemList {
+            position: relative;
+            padding: 2rem 0rem;
+        }
+
+        .HomeItemList.Select {
+            color: var(--ThemeColor);
+        }
+
+        .HomeItemList.Select::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 0.5rem;
+            background: var(--ThemeColor);
+            bottom: 15%;
+            left: 0;
+            border-radius: 2rem;
+        }
+
+        .ViewStatusBtnWrap {
+            padding: 0 2rem;
+            margin-top: 2rem;
+        }
+
+        .ViewStatusBtnList {
+            padding: 0.8rem 1rem;
+            border-radius: 0.5rem;
+            border: 0.13rem solid #979797;
+            box-sizing: border-box;
+            margin: 0 1rem;
+        }
+
+        .ViewStatusBtnList.Select {
+            color: var(--ThemeColor);
+            border: 0.13rem solid var(--ThemeColor);
+        }
+        .ProductDescName span.span_1 {
+            width: 23rem !important;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+       .SortContentRightPic {
+           margin-right: 1rem;
+       }
+       
+       .ProductDescWrap {
+         width: auto;
+       }
+       .SortContentRightPic{
+         margin-right: 1rem;
+       }
+       .SortContentRightListIn{
+       
+       }
+       .SortContentRightList{
+         padding-top: 0.7rem;
+       }
+    </style>
+</head>
+
+
+<body>
+
+
+    <div class="Wrap" v-cloak>
+     <div id="apiHeader" class="HeaderWrap">
+
+            <div class="ListHBothB HeaderInner">
+                <!-- <div class="fontColor255 fontSize36 HeaderTitle">登录</div> -->
+                <div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"></div>
+                <div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">退款售后</div>
+                <div class="fontColorFF913D iconfont ShoppingCart"
+                    style="pointer-events: none;opacity: 0;font-size: 3rem;">
+                    &#xe760;</div>
+            </div>
+
+        </div>
+
+        <div   >
+
+            <div class="ToLine"></div>
+
+            <div class="backColor255 ListHBothB HomeItemWrap ">
+                <div v-for="(item,index) in curStatusList" class="fontColor666 fontSize30 transition HomeItemList  "
+                    v-on:click="curStatus(index)" :class="item.selected?'Select':''">{{item.name}}</div>
+            </div>
+
+            <div class=" Group SortContent" style="background: none;">
+
+                <div v-for="(item,index) in orderList" v-show="item.goods.length>0" class="SortContentRight"
+                    style="background: #fff;padding-top: 0.5rem;">
+
+                    <div class="ScrollOpacity SortContentRightIn">
+
+                        <div class="SortContentRightBox">
+
+                            <div class=" SortContentRightList Js_BuyCarList " v-for="item2 in item.goods">
+                                <div v-on:click="goToOrderDtl(index)" class="ListHTop SortContentRightListIn">
+                                    <!--产品图片-->
+                                    <div class="SortContentRightPic">
+                                        <img v-bind:src="item2.img">
+                                    </div>
+
+                                    <!--产品描述-->
+                                    <div class="ProductDescWrap">
+                                        <div class="ListHBothB ProductDescName">
+                                            <span class="fontSize26 fontColor333 weight500 span_1">{{item2.name}}</span>
+                                            <span class="ListH fontSize28 fontColor333 span_2">
+                                                <em class="fontColor333 fontSize20 em_1">￥</em>
+                                                <em
+                                                    class="fontSize30 fontColor333 weight500 em_2">{{item2.shop_price}}</em>
+                                            </span>
+                                        </div>
+                                        <div class=" ProductDescLabel">
+                                            <span class="">
+                                                <em class="fontColor666 fontSize22">{{item2.spec_name}}</em>
+                                            </span>
+                                        </div>
+                                        <div class="ListHBothB ProductDescLabel">
+         
+                                            <span class="fontColor666 fontSize22">x{{item2.num}}</span>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                                <div class=" MoneyData">
+                                    <span class="fontSize24 fontColor666 span_1">
+                                        合计: ￥{{item.money_paid}}</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <div class="ZnoData" v-if="orderList.length==0">
+                    <img src="../../image/nodata/nodata.png" alt="">
+                    <span>
+                        暂无数据
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+   
+        <div v-show="isShowReturnTop" class="ReturnTopBtn">
+            <img src="../../image/timg.png" alt="">
+        </div>
+
+
+    </div>
+
+    <script type="text/javascript" src="../../script/public.js"></script>
+
+
+
+</body>
+
+<script>
+
+    _GlobalFun.IsAPI(function () {
+
+        VueFun();
+
+    })
+
+
+    function VueFun() {
+        var vue = new Vue({
+            el: ".Wrap",
+            data: {
+
+
+                orderList: [],
+                //idx   0全部1待付款2待发货3待收货4待评价
+                curStatusList: [
+                    { name: '审核中', selected: true, idx: 1 },
+                    { name: '退款成功', selected: false, idx: 3 },
+                    { name: '退款失败', selected: false, idx: 2 },
+                ],
+
+                //记录选择的状态
+                selectStic: 1,
+
+
+                isShowReturnTop: false,
+            },
+
+            methods: {
+
+
+                //获取退货退款订单列表
+                getOrderListAPI(type, start) {
+                    var _this = this;
+                    _GlobalFun.getAjax('user', 'post_order_push_list', {
+                        type: type,
+                        start: start,
+                    }, function (data) {
+						// alert(JSON.stringify(data))
+                        if (data.code == 0) {
+                            _this.orderList = data.data;
+					
+                        } else {
+                            _this.orderList = [];
+                        }
+                    })
+
+                },
+
+
+
+                //去订单详情
+                goToOrderDtl(index) {
+
+                    var _this = this;
+                    var _list = _this.orderList;
+                    _GlobalFun.goToPage('../order/orderDtl.html', 'qjxzf', {
+                        id: _list[index].id
+                    })
+
+                },
+
+
+                //切换状态
+                curStatus(index) {
+                    var _this = this;
+                    if (index == undefined || index == '') {
+                        index = 0
+                    }
+                    for (var _i = 0; _i < _this.curStatusList.length; _i++) {
+                        _this.curStatusList[_i].selected = false;
+                    }
+                    _this.curStatusList[index].selected = true;
+
+                    _this.getOrderListAPI(_this.curStatusList[index].idx, 1);
+
+                    _this.selectStic = _this.curStatusList[index].idx;
+
+                    _GlobalVar.loadMore = 1;
+                },
+
+
+            },
+
+            mounted() {
+                var _this = this;
+
+
+
+
+                _this.curStatus(0); 
+
+
+
+                _GlobalFun.UpLoadMore(function () {
+
+                    _GlobalVar.loadMore = _GlobalVar.loadMore + 1;
+
+                    _GlobalFun.getAjax('user', 'post_order_push_list', {
+                        type: _this.selectStic,
+                        start: _GlobalVar.loadMore,
+                    }, function (data) {
+                        if (data.code == 0) { 
+                            _this.orderList = _this.orderList.concat(data.data);
+                        } else {
+                            _GlobalFun.alert('没有更多了');
+                        }
+                    })
+
+                })
+
+                _GlobalFun.ScrollValue(document, function (e) {
+                    if (e > 1200) {
+                        _this.isShowReturnTop = true;
+                    } else {
+                        _this.isShowReturnTop = false;
+                    }
+                })
+
+
+            },
+
+        });
+
+    }
+
+
+
+
+</script>
+
+
+</html>

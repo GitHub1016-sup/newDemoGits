@@ -1,0 +1,64 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+ul,
+ol,
+li {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  vertical-align: top;
+  font-size: 1rem;
+}
+img {
+  width: 100%;
+  display: block;
+}
+body,
+div,
+span,
+p,
+img,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+em,
+tr,
+td,
+input,
+label,
+select,
+iframe {
+  margin: 0;
+  outline: medium none;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: PingFangSC-Regular,PingFang SC;
+  font-style: normal;
+  font-size: 1rem;
+}
+a {
+  font-size: 1rem;
+  text-decoration: none;
+  outline: none;
+  font-family:PingFangSC-Regular,PingFang SC;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+div {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+a:hover {
+  text-decoration: none;
+}
+select {
+  background: none;
+  background: transparent;
+  -webkit-appearance: none;
+}

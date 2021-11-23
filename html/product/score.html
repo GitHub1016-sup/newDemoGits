@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>商品详情</title>
+	<link rel="stylesheet" href="../../css/reset.css" />
+	<link rel="stylesheet" href="../../css/animate.css" />
+	<link rel="stylesheet" href="../../css/mui.min.css" />
+	<link rel="stylesheet" href="../../css/swiper.min.css" />
+	<link rel="stylesheet" href="../../css/public.css" />
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../script/swiper.min.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+	<style>
+		.Main {
+			margin-top: 0;
+		}
+
+		.SendCommentPopHead {
+			padding: 0rem 2rem;
+			border-top-left-radius: 2rem;
+			border-top-right-radius: 2rem;
+			height: 6rem;
+			line-height: 6rem;
+		}
+
+		.SortContentRightBox,
+		.SpecificationCon {
+			padding: 0 3rem;
+		}
+
+		.SpecificationBox {
+			max-height: 30vh;
+			overflow-y: scroll;
+		}
+
+		.SpecificationCon {
+			margin-bottom: 3rem;
+		}
+
+		.SpecificationBox {
+			margin-top: 2rem;
+		}
+
+		.SpecificationList {
+			padding: 0.7rem 1.5rem;
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 1rem;
+			margin-bottom: 1rem;
+			border: 1px solid transparent;
+		}
+
+		.SpecificationList.Select {
+			background: #ffe5d2;
+			border: 1px solid #ff913d;
+			border-radius: 2px;
+		}
+
+		.SpecificationList.no-active {
+			color: #999999;
+			position: relative;
+		}
+
+		.SpecificationList.no-active::after {
+			content: '';
+			width: 90%;
+			height: 0.1rem;
+			background-color: #999999;
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);
+			left: 5%;
+		}
+
+
+		.c-head .c-img {
+			width: 30px !important;
+			height: 30px !important;
+			border-radius: 30px;
+			margin-right: 5px;
+		}
+
+		.c-body {
+			padding: 15px;
+			background-color: #FFFFFF;
+			/* padding-top: 50px; */
+		}
+
+		.c-bottom {
+			height: 1.875rem;
+			line-height: 1.875rem;
+		}
+
+		.c-bottom p {
+			margin-bottom: 2px;
+		}
+
+		.c-head {
+			margin-bottom: 15px;
+		}
+
+		.c-content {
+			width: 100%;
+			word-wrap: break-word;
+			margin-bottom: 10px;
+		}
+
+		.c-b-img img:first-child {
+			margin-left: 0;
+			;
+		}
+
+		.c-b-img {
+			width: 100%;
+			display: flex;
+			overflow-y: scroll;
+		}
+
+		.c-b-img img {
+			flex: 1;
+			max-height: 50vw;
+			flex-grow: initial;
+			margin-left: 5px;
+			border-radius: 5px;
+			margin-bottom: 5px;
+		}
+
+		.right {
+			font-size: 12px;
+			color: #999999;
+			float: right;
+			line-height: 100%;
+		}
+
+		.right .iconfont {
+			float: right;
+		}
+
+
+
+		.ProductHeaderInnerLeft {
+			background-color: rgba(0, 0, 0, 0.7);
+			border-radius: 100%; 
+		}
+
+		.shop_cart {
+			height: 13.75rem;
+			padding: 1.875rem 3.75rem;
+			margin: 1.25rem 0 0;
+		}
+
+		.shop_img {
+			width: 5rem;
+			height: 5rem;
+			border-radius: 1rem;
+			overflow: hidden;
+		}
+
+		.shop_img img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.shop_btn {
+			padding: 0.875rem 1.75rem;
+			border-radius: 2rem;
+		}
+
+		.shop_btn_r {
+			border: 0.0625rem solid var(--ThemeColor);
+		}
+
+		.HomeItemWrap {
+			background-color: #F5F5F5;
+		}
+	</style>
+
+</head>
+
+
+<body>
+
+	<div class="chanpin Wrap" v-cloak>
+		<!-- <div class="Clear"></div> -->
+		<div class=" Main">
+
+			<div class="DtlTopProductShow">
+
+				<div class="DtlTopProductShowInner">
+
+					<div class="DtlTopProductShowCon Js_DtlTopProductShowCon Js_DtlTopProductShowCon1">
+						<div class="DtlTopProductShow  ProductDtlBanner swiper-container BannerWrap">
+							<div class="swiper-wrapper BannerInner">
+								<div v-for="(item,index) in list.detail" class="swiper-slide BannerList">
+									<img v-bind:src="list.detail[index]" alt="">
+								</div>
+							</div>
+							<div class="PageNumber swiper-pagination RwSlideRoundWrap RwSlideRoundWrap1 BannerPageWrap">
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+
+
+			<div class="ProductDtlTempWrap ProductDtlInfoWrap">
+				<div class="ProductDtlInfoInner">
+					<div class="ListHBothB ProductDtlInfoBox ProductDtlInfoBox1">
+						<div class="ListHBottom ProductDtlInfoBox1Left">
+							<div class="div_1">
+								<span class="fontSize30 red weight600 span_1">积分：</span>
+								<span class="fontSize45 red weight500 span_2">{{list.shop_price}}</span>
+							</div>
+
+
+						</div>
+					</div>
+
+					<div class="ProductDtlInfoBox ProductDtlInfoBox2">
+						<div class="">
+							<span class="fontColor333 weight500 fontSize28">{{list.name}}</span>
+						</div>
+					</div>
+					<div class="ListHBothB ProductDtlInfoBox ProductDtlInfoBox3">
+						<div class="">
+							<span class="fontSize24 fontColor666 weight500">月销量</span>
+							<span class="fontSize24 fontColor666 weight500">{{list.sales}}</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+	
+			<div class="fontColor333 weight500 fontSize30 ProductDtlTempWrap ProductDtlTempTjWrap HomeItemWrap">
+				宝贝详情
+			</div>
+
+			<div class="BabyDtlWrap">
+				<div v-html="list.info">
+
+				</div>
+			</div>
+
+
+			
+
+		</div>
+
+		<div id="apiHeader" class="backColor255 ProductHeaderWrap">
+
+			<div class="ListHBothB ProductHeaderInner">
+
+				<div class="ProductHeaderInnerLeft Js_HeadReturnBtn" @click="back">
+					<div class="iconfont fontColor255 fontSize45 ProductHeaderIcon Js_HeadReturnBtn">&#xe748;</div>
+				</div>
+
+				<div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="backColor255 ProductFooterWrap">
+			<div class="ListHJstCentent ProductFooterInner">
+				<div class="div_1">
+					<span class="fontSize30 red weight600 span_1">积分：</span>
+					<span class="fontSize45 red weight500 span_2">{{list.shop_price}}</span>
+				</div>
+				<div class=" ProductFooterList ProductFooterList3 themeBkColor fontColor255" v-on:click="onceBuy">
+					<span class=" fontSize30 span_1">立即购买</span>
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+
+	<script type="text/javascript" src="../../script/public.js"></script>
+
+
+</body>
+
+<script>
+	_GlobalFun.IsAPI(function () {
+		VueFun();
+	}, function () {
+		if (api.statusBarAppearance) {
+			var header = $api.byId('apiHeader');
+			var Main = $('.Main');
+			$api.fixStatusBar(header);
+
+			$("#apiHeader").css({
+				"margin-top": api.safeArea.top - 15
+			});
+		}
+	})
+
+	function VueFun() {
+
+		var vue = new Vue({
+			el: ".Wrap",
+			data: {
+				//详情信息
+				list: {
+					'shop': {},
+					'pinglun': {},
+					'detail': []
+				},
+
+				selectArr: {
+					good_id: _GlobalFun.getPageParam('id'),
+					num: 1,
+					spec: 0,
+				},
+
+			},
+
+			methods: {
+	
+				back: function () {
+					api.closeWin()
+				},
+	
+				//获取商品信息
+				getProductInfoAPI() {
+					var _this = this;
+					_GlobalFun.postAjax('shop', 'post_goods_info', {
+						id: _GlobalFun.getPageParam("id")
+					}, function (data) {
+						if (data.code == 0) {
+							_this.list = data.data;
+
+							setTimeout(function () {
+								var swiper = new Swiper('.swiper-container', {
+									pagination: {
+										el: '.RwSlideRoundWrap1',
+										clickable: true,
+										type: 'fraction',
+									},
+								});
+							}, 200);
+
+						} else {
+							_GlobalFun.alert(data.msg);
+						}
+					})
+				},
+
+				// 立即购买
+				onceBuy() {
+					var _this = this;
+					var _list = _this.list;
+					if (_GlobalVar.userLoginIDVar == undefined) {
+						_GlobalFun.goToPage('../login/index.html', 'qdlym', '');
+						return;
+					}
+
+					_this.goOrderSubAPI();
+			
+				},
+				//去提交订单页面
+				goOrderSubAPI() {
+					var _this = this;
+					var _list = _this.list;
+	
+					_GlobalFun.goToPage('../order/submit_score.html', 'submit_score', {
+						dis_id: 0,
+						id: _list.id,
+						aid: 0,
+						num: 1,
+						is_buynow: 1,
+					})
+
+				},
+
+			},
+
+			mounted() {
+				var _this = this;
+				_GlobalFun.ReturnBtn();
+				_this.getProductInfoAPI();
+
+			},
+
+		})
+
+	}
+</script>
+
+</html>

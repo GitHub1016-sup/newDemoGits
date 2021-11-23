@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>订单详情</title>
+		<link rel="stylesheet" href="../../css/reset.css" />
+		<link rel="stylesheet" href="../../css/animate.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+		<link rel="stylesheet" href="../../css/public.css" />
+		<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+		<!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+		<script type="text/javascript" src="../../script/vue.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+		<style>
+			.HeaderWrap {
+            background: #fff;
+        }
+
+        .Group.SortContent {
+            height: auto;
+            margin-top: 0;
+            padding-top: 0;
+            margin-top: 1rem;
+        }
+
+        .SortContentRight {
+            padding: 0;
+            border-left: 1rem solid #f5f5f5;
+            border-right: 1rem solid #f5f5f5;
+        }
+
+        .SortContentRightIn {
+            height: auto;
+            overflow: initial;
+        }
+
+        .Group .SortContentRightList {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .Group .SortContentRightList:last-child {
+            border-bottom: 0;
+        }
+
+        .Group .SortContentRightList.Select .BuyTick {
+            color: var(--ThemeColor);
+        }
+
+
+     
+
+
+        .ProductDescName {
+            text-indent: 0;
+        }
+
+
+
+        .ProductFooterList2 {
+            background: none;
+            width: 25rem;
+        }
+
+        .ProductFooterList3 {
+            border-radius: 0.5rem;
+            width: 17.5rem;
+            height: 6.63rem;
+            text-align: center;
+            line-height: 6.63rem;
+        }
+
+
+        .ProductFooterList1.Select .span_1 {
+            color: var(--ThemeColor);
+        }
+
+        .ProductFooterList3.Select {
+            background: var(--ThemeColor);
+        }
+
+
+        .ProductDescName {
+            margin-bottom: 0.5rem;
+        }
+
+        .ProductDescLabel {
+            margin-bottom: 1rem;
+        }
+
+
+
+        .SortContentRight {
+            border: 0;
+        }
+
+        .ShippingAddressWrap {
+            margin-top: 0.5rem;
+            padding: 1rem 2rem 2rem 2rem;
+            position: relative;
+        }
+
+        .ShippingAddressWrap::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0rem;
+            width: 100%;
+            height: 0.25rem;
+            background: url(../../image/order/Bod.jpg) repeat-x;
+            background-size: 5.6rem 0.25rem;
+        }
+
+        .ShippingAddressLeft {
+            font-size: 2rem;
+            margin-right: 2rem;
+        }
+
+        .ShippingAddressRight {}
+
+        .ShippingAddressBox1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .StoreName {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .StoreNameIcon {
+            width: 2.15rem;
+            height: 2.13rem;
+            margin-right: 1rem;
+        }
+
+        .StoreNameText {}
+
+        .MoneyData {
+            padding-left: 3rem;
+            padding-right: 2rem;
+            margin-top: 1rem;
+            margin-left: -1rem;
+            margin-right: -1rem;
+        }
+
+        .MoneyData3 {
+            padding-top: 1rem;
+            margin-bottom: 0;
+            border-top: 0.06rem solid rgba(237, 237, 237, 1);
+            position: relative;
+        }
+
+        .MoneyData3::after {
+            content: "";
+            position: absolute;
+            right: 4rem;
+            top: -0.6rem;
+            width: 1rem;
+            height: 1rem;
+            border: 0.06rem solid rgba(237, 237, 237, 1);
+            border-top: 0;
+            border-left: 0;
+            background: #fff;
+            transform: rotate(45deg);
+        }
+
+        .PaymentWrap {
+            margin-top: 1rem;
+            padding: 0 2rem;
+        }
+
+        .PaymentList {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 1.5rem 2rem;
+            border-bottom: 0.06rem solid rgba(237, 237, 237, 1);
+        }
+
+        .Dg {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translate(0, -50%);
+            display: none;
+        }
+
+        .PaymentList.Select .Dg {
+            display: block;
+        }
+
+        .PaymentIcon {
+            width: 3.75rem;
+            margin-right: 1rem;
+        }.ProductDescWrap {
+          width: auto;
+        }
+        .SortContentRightPic{
+          margin-right: 1rem;
+        }
+        .SortContentRightListIn{
+
+        }
+        .SortContentRightList{
+          padding-top: 0.7rem;
+        }
+		.ProductFooterList2,
+		.ProductFooterList3 {
+			border: none;
+		}
+    </style>
+	</head>
+
+
+	<body>
+
+		<div class="Con">
+
+			<div class="Wrap" v-cloak>
+				<div id="apiHeader" class="HeaderWrap">
+
+					<div class="ListHBothB HeaderInner">
+						<div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"></div>
+						<div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">订单详情</div>
+						<div class="fontColorFF913D iconfont ShoppingCart" style="pointer-events: none;opacity: 0;font-size: 3rem;">
+							&#xe760;</div>
+					</div>
+
+				</div>
+				<div class="">
+
+					<div class="backColor255 ShippingAddressWrap">
+
+						<div class="ListHBoth ShippingAddressInner">
+
+							<div class="iconfont themeColor  ShippingAddressLeft">
+								&#xe765;
+							</div>
+							<div class="ShippingAddressRight" style="flex: 1;">
+								<div class="ShippingAddressBox1">
+									<span class="fontSize32 weight500 fontColor333 span_1">{{orderInfoArr.order.consignee}}</span>
+									<span class="fontColor333 fontSize26 span_2">{{orderInfoArr.order.phone}}</span>
+								</div>
+								<div class="fontSize26 fontColor333 ShippingAddressBox2">
+									{{orderInfoArr.order.province}} {{orderInfoArr.order.city}}
+									{{orderInfoArr.order.district}} {{orderInfoArr.order.address}}
+								</div>
+							</div>
+
+						</div>
+
+
+
+					</div>
+
+					<div class="ListHBothB Group SortContent">
+
+						<div class="SortContentRight">
+
+							<div class="ScrollOpacity SortContentRightIn">
+
+								<div class="SortContentRightBox">
+
+									<div v-for="(item,index) in shangpinArr" class=" SortContentRightList Js_BuyCarList ">
+			
+										<div class="fontSize26 fontColor333" style="text-align: right;margin: 1rem 0;">
+											{{orderInfoArr.order.status}}
+										</div>
+										<div class="ListHBothB SortContentRightListIn" style="margin-bottom: 1rem;">
+											<!--产品图片-->
+											<div class="SortContentRightPic">
+												<img v-bind:src="item.img">
+											</div>
+
+											<!--产品描述-->
+											<div class="ProductDescWrap">
+												<div class="ListHBothB ProductDescName">
+													<span class="fontSize26 fontColor333 weight500 span_1">{{item.name}}</span>
+													<span class=" fontSize28 fontColor333 span_2">
+														<em class="fontColor333 fontSize20 em_1">￥</em>
+														<em class="fontSize30 fontColor333 weight500 em_2">{{item.shop_price}}</em>
+													</span>
+												</div>
+												<div class="ListHBothB ProductDescLabel">
+													<span class="fontColor666 fontSize22"></span>
+													<span class="fontColor666 fontSize22">x1</span>
+												</div>
+												<div class="ListHBothB ProductDescLabel">
+													
+												</div>
+
+												<div class="SendTimeWrap" v-show="orderInfoArr.order.pay_id==1">
+													<span class="fontSize20 fontColorFF913D">积分商品</span>
+													<!-- <span class="fontSize20 fontColorFF913D">包邮</span> -->
+												</div>
+
+											</div>
+										</div>
+
+
+									</div>
+
+
+									<div class="jiagemiaoshu">
+									
+										<div class="ListHBothB MoneyData">
+											<span class="fontSize24 fontColor666 span_1">商品总价</span>
+											<span class="span_2">
+												<em class="fontSize20 fontColor666 em_1">￥</em>
+												<em class="fontSize28 fontColor666 em_2">{{orderInfoArr.order.goods_amount}}</em>
+											</span>
+										</div>
+
+										<div class="ListHBothB MoneyData MoneyData3">
+											<span class="fontSize28 fontColor666 weight500 span_1">实付款</span>
+											<span class="span_2">
+												<em class="fontSize20 fontColorFF913D em_1">￥</em>
+												<em class="fontSize30 fontColorFF913D em_2">{{orderInfoArr.order.money_paid}}</em>
+											</span>
+										</div>
+										<div v-show="orderInfoArr.order.info != 0" class="ListHBothB MoneyData MoneyData3">
+											<span class="fontSize28 fontColor666 weight500 span_1">备注</span>
+											<span class="span_2">
+												<em class="fontSize30 fontColorFF913D em_2">{{orderInfoArr.order.info}}</em>
+											</span>
+										</div>
+									</div>
+
+								</div>
+
+								<div class="jiagemiaoshu" style="border-top: 20px solid #F5F5F5;">
+									<div class="title fontSize30 fontColor444" style="padding: 10px;">
+										订单信息
+									</div>
+									<div class="ListHBothB MoneyData">
+										<span class="fontSize24 fontColor666 span_1">订单编号</span>
+										<span class="span_2">
+
+											<em class="fontSize24 fontColor666 em_2">{{orderInfoArr.order.order_sn}}</em>
+										</span>
+									</div>
+
+									<div class="ListHBothB MoneyData MoneyData3">
+										<span class="fontSize24 fontColor666 weight500 span_1">下单时间</span>
+										<span class="span_2">
+											<em class="fontSize24 fontColor666 em_2">{{orderInfoArr.order.add_time}}</em>
+										</span>
+									</div>
+								</div>
+								<!-- <div class="NoDataWrap">
+                        <div class="fontSize26 fontColorCCC NoDataText">我是底线</div>
+                    </div> -->
+
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="backColor255 PaymentWrap" v-if="orderInfoArr.order.order_status_type.status==1">
+
+						<div class="PaymentInner">
+							<div class="PaymentList" v-for="(item,index) in selectPayArr" v-on:click="selectPayCh(index)" :class="item.selected?'Select':''">
+								<div class="PaymentIcon">
+									<img v-bind:src="item.icon">
+								</div>
+								<div class="fontSize30 fontColor333 PaymentText">{{item.name}}</div>
+								<div class="iconfont fontSize36 fontColorFF913D Dg">
+									&#xe74a;
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+
+
+				<div class="backColor255 CarFooterWrap" v-if="orderInfoArr.order.order_status_type.status==1">
+
+					<div class="ListHJstCentent CarFooterInner">
+						<!-- 
+                            <div class="ListH ProductFooterList ProductFooterList1">
+                                <span class="iconfont fontColorEBEBEB fontSize54 span_1">&#xe7da;</span>
+                                <span class="fontSize28 weight500 fontColor333 span_2">全选</span>
+                            </div> -->
+						<div class=" ProductFooterList ProductFooterList2">
+
+
+
+							<span class="fontColor333 fontSize28  span_1">实付款:</span>
+							<span class="fontColorFF913D fontSize28 span_2">¥</span>
+							<span class="fontColorFF913D fontSize40 span_3">{{orderInfoArr.order.money_paid}}</span>
+						</div>
+						<div class="backColorE0E0E0 ProductFooterList ProductFooterList3 Select " v-on:click="goPayBtn">
+							<span class="fontColor255 fontSize34 span_1">立即付款</span>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+		</div>
+
+		<script type="text/javascript" src="../../script/public.js"></script>
+		<link rel="stylesheet" href="../../pwdinput/pwdInput.css">
+		<script src="../../pwdinput/pwdInput.js"></script>
+
+	</body>
+
+	<script>
+		_GlobalFun.IsAPI(function() {
+			VueFun();
+		})
+
+		function VueFun() {
+			var vue = new Vue({
+				el: ".Wrap",
+				data: {
+					orderInfoArr: {
+						order: {
+							consignee: "",
+							province: "",
+							city: "",
+							district: "",
+							address: "",
+							phone: "",
+							goods_amount: "",
+							full_money: "",
+							money_paid: "",
+							you_money: "",
+							order_status_type: {
+								status: "",
+								text: ""
+							},
+							status: "",
+							btn: ""
+						},
+						cart: [{
+							goods_id: "",
+							num: "",
+							shop_price: "",
+							spec_name: "",
+							name: "",
+							img: "",
+							shop_id: "",
+							is_free: "",
+							fa: "",
+							comment: []
+						}]
+					},
+					shangpinArr: [],
+					payFangshi: 3, //支付方式 1余额支付 2支付宝 3微信 4信用支付
+					payOrderInfo: '',
+					pwd: '',
+					selectPayArr: [{
+							icon: '../../image/order/PaymentIcon1.png',
+							name: '微信支付',
+							selected: true,
+							payIndex: 3
+						},
+						{
+							icon: '../../image/order/PaymentIcon2.png',
+							name: '支付宝',
+							selected: false,
+							payIndex: 2
+						},{
+                        icon: '../../image/order/PaymentIcon3.png',
+                        name: '线下付款',
+                        selected: false,
+                        payIndex: 1
+                    },
+					],
+				},
+				methods: {
+					goToProductDtl(id) {
+						_GlobalFun.goToPage('../product/productDtl.html', 'qcqxqy2', {
+							id: id
+						})
+					},
+					//获取信息
+					getInfoAPI() {
+						var _this = this;
+						_GlobalFun.postAjax('user', 'order_detail', {
+							order_id: _GlobalFun.getPageParam('id')
+						}, function(data) {
+							if (data.code == 0) {
+								// alert(JSON.stringify(data))
+								_this.orderInfoArr = data;
+								_this.shangpinArr = data.cart;
+							}
+						});
+					},
+
+					//重新付款 立即支付 API
+					immPayAPI(payChannel, order_id) {
+						var _this = this;
+						// if (payChannel == 3) {
+						// 	_GlobalFun.alert('微信支付通道暂未开通');
+						// 	return;
+						// }
+						// 1余额支付-2支付宝-3微信	
+						_GlobalFun.postAjax('shop', 'post_cart_order_reload', {
+							oid: order_id,
+							type: payChannel,
+						}, function(data) {
+							if (data.code == 0) {
+								//余额支付
+								if (payChannel == 1 || payChannel == 4) {
+									_this.payScc();
+									if (_GlobalVar.IsAPICloud) {
+										api.sendEvent({
+											name: 'djqzf',
+											extra: {
+												msg: '点击去支付'
+											}
+										});
+									}
+								}
+								//支付宝
+								if (payChannel == 2) {
+									_this.payOrderInfo = data.str;
+									_this.payMoney(payChannel, _this.payOrderInfo);
+								}
+								//微信
+								if (payChannel == 3) {
+									var orderaa = data.data;
+									_this.payOrderInfo = {
+										apiKey: orderaa.appid,
+										orderId: orderaa.prepayid,
+										mchId: orderaa.partnerid,
+										nonceStr: orderaa.noncestr,
+										timeStamp: orderaa.timestamp,
+										package: orderaa.package,
+										sign: orderaa.sign,
+									};
+									_this.payMoney(payChannel, _this.payOrderInfo);
+								}
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						})
+					},
+
+					//支付API
+					payMoney(payChannel, orderInfo) {
+						var _this = this;
+						//微信支付
+						if (payChannel == 3) {
+							if (_GlobalVar.IsAPICloud) {
+								var wxPayPlus = api.require('wxPayPlus');
+								wxPayPlus.payOrder(orderInfo, function(ret, err) {
+									if (ret.status) {
+										_this.payScc();
+										if (_GlobalVar.IsAPICloud) {
+											api.sendEvent({
+												name: 'djqzf',
+												extra: {
+													msg: '点击去支付'
+												}
+											});
+										}
+									}
+								});
+
+							} else {
+								_GlobalFun.alert("支付成功");
+							}
+						}
+						//支付宝支付
+						else if (payChannel == 2) {
+							if (_GlobalVar.IsAPICloud) {
+								var aliPayPlus = api.require('aliPayPlus');
+								// alert(orderInfo);
+								aliPayPlus.payOrder({
+									orderInfo: orderInfo
+								}, function(ret, err) {
+									if (ret.code == 9000) {
+										_this.payScc();
+									}
+									if (_GlobalVar.IsAPICloud) {
+										api.sendEvent({
+											name: 'djqzf',
+											extra: {
+												msg: '点击去支付'
+											}
+										});
+									}
+								});
+							} else {
+								_GlobalFun.alert("支付成功");
+							}
+						} else if (payChannel == 1) { //余额支付
+							_GlobalFun.alert('余额支付暂未开通');
+						} else if (payChannel == 4) { //信用支付
+							_GlobalFun.alert('信用支付暂未开通');
+						} else {
+							_GlobalFun.alert('系统繁忙，请刷新重试');
+						}
+					},
+
+					//选择支付方式
+					selectPayCh(index) {
+						var _this = this;
+						for (var _i = 0; _i < _this.selectPayArr.length; _i++) {
+							_this.selectPayArr[_i].selected = false;
+						}
+						_this.selectPayArr[index].selected = true;
+						_this.payFangshi = _this.selectPayArr[index].payIndex;
+					},
+
+					//支付成功
+					payScc() {
+						var _this = this;
+						_GlobalFun.goToPage('success.html', 'qzfcgym', '')
+					},
+					goPayBtn() {
+						var _this = this;
+						_this.immPayAPI(_this.payFangshi, _GlobalFun.getPageParam('id'));
+					},
+
+				},
+				mounted() {
+					var _this = this;
+					// _GlobalFun.ReturnBtn();
+					this.getInfoAPI();
+					if (_GlobalVar.IsAPICloud) {
+						api.addEventListener({
+							name: 'closeSubmit'
+						}, function(ret, err) {
+							_this.getInfoAPI();
+						});
+					}
+				},
+			});
+
+		}
+	</script>
+
+
+</html>

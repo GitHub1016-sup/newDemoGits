@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>首页</title>
+	<link rel="stylesheet" href="../../css/reset.css" />
+	<link rel="stylesheet" href="../../css/animate.css" />
+	<link rel="stylesheet" href="../../css/mui.min.css" />
+	<link rel="stylesheet" href="../../css/swiper.min.css" />
+	<link rel="stylesheet" href="../../css/public.css" />
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="../../script/swiper.min.js"></script>
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/mui.min.js"></script>
+	<!-- 快报弹出层样式 -->
+
+	<style>
+		.Wrap {
+			height: 100vh;
+			overflow-y: scroll;
+		}
+
+		.HeaderWrap {
+			position: sticky !important;
+			top: 0 !important;
+			height: 11vh !important;
+		}
+
+		.mescroll {
+			/* position: fixed;
+			top: 11vh;
+			bottom: 0; */
+			height: 89vh;
+			width: 100vw;
+		}
+
+		.BannerWrap {
+			height: 16.25rem;
+			border-radius: 0.625rem;
+		}
+
+		.BannerBg {
+			padding: 0.3125rem 2.5rem;
+			margin-top: -30vw;
+
+		}
+
+		.banner-bg {
+			background: #ff526f;
+			width: 100vw;
+			height: 30vw;
+			border-radius: 0 0 40% 40%;
+		}
+
+		.BannerPageWrap .swiper-pagination-bullet {
+			width: 1rem;
+			height: 1rem;
+		}
+
+		/*******分类Star**********/
+
+		.SortWrap {
+			padding: 3.125rem 1.0625rem 0;
+			margin-bottom: .625rem;
+			font-size: 0;
+			text-align: center;
+			display: flex;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+		}
+
+		.SortList {
+			text-align: center;
+			position: relative;
+			width: 2.875rem;
+			display: inline-block;
+			box-sizing: border-box;
+			flex: 0 0 25%;
+			text-align: center;
+			margin-bottom: 1rem;
+		}
+
+		.SortIcon {
+			height: 5.75rem;
+			width: 5.75rem;
+			overflow: hidden;
+			position: relative;
+			left: 50%;
+			transform: translate(-50%, 0);
+		}
+
+		.SortIcon img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.SortName {
+			white-space: nowrap;
+			width: 100%;
+			text-align: center;
+			margin-top: 1rem;
+			font-weight: 400;
+		}
+
+		/*******分类End**********/
+
+
+		.Bannergg {
+			height: 3rem;
+			line-height: 3rem;
+			text-align: left;
+		}
+
+		.swiper-slide {
+			text-align: left;
+			width: 20em;
+		}
+
+		.sticky {
+			position: sticky;
+			top: 11vh;
+			z-index: 5;
+			background-color: #F5F5F5;
+		}
+
+		.HomeItemWrap1 {
+			padding: 1.125rem 2.875rem;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+		}
+
+		.HomeItemWrap1 img {
+			width: 3.125rem;
+			height: 3.125rem;
+			margin-right: 1rem;
+		}
+
+		.brandImg {
+			margin: 0 1.75rem;
+		}
+
+
+		/* 首页中间选项 */
+		.title_mind {
+			width: 90vw;
+			height: 6rem;
+			margin-top: 1rem;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			background-color: #ffffff;
+			margin: 1rem auto 0;
+		}
+
+		.mind_children {
+			/* width: 20vw; */
+			height: 40%;
+			/* border: 1px solid red; */
+			background-color: #ffffff;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.children_title {
+			font-size: 1.6rem;
+			font-weight: bold;
+		}
+
+
+		/* 中间广告栏 */
+		.banner_mind {
+			width: 92vw;
+			height: 45rem;
+			/* border: 1px solid black; */
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.banner_mind_top {
+			width: 100%;
+			height: 30rem;
+			/* border: 1px solid red; */
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.banner_mind_top div {
+			width: 46%;
+		}
+
+		.banner_mind_top_right {
+			background-color: red;
+			border-radius: 2rem;
+		}
+
+		.banner_mind_top_left {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.banner_mind_top_left div {
+			width: 100%;
+			height: 47%;
+			/* border: 1px solid red; */
+			background-color: red;
+			border-radius: 2rem;
+		}
+
+		.banner_mind_bottom {
+			width: 100%;
+			height: 30%;
+			/* border: 1px solid green; */
+			display: flex;
+			justify-content: space-between;
+			margin-top: 1.5rem;
+		}
+
+		.banner_mind_bottom div {
+			width: 46%;
+			height: 100%;
+			/* border: 1px solid blue; */
+			background-color: blue;
+			border-radius: 2rem;
+		}
+
+
+		/* 快报 */
+		.newsflash {
+			width: 90%;
+			height: 5rem;
+			/* border: 1px solid red; */
+			background-color: #ffffff;
+			margin: 3rem auto;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.newsflash_title,
+		.newsflash_cont,
+		.newsflash_more {
+			font-size: 2rem;
+		}
+		.newsflash_cont{
+			width: 60%;
+		}
+
+		.newsflash_title {
+			width: 20%;
+			height: 40%;
+			border-right: 1px solid #ccc;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: cadetblue;
+		}
+
+		.newsflash_more {
+			margin-right: 2rem;
+			color: #ccc;
+		}
+
+		/* 商品详情 限时秒杀 */
+		.RecBottom_time_add {
+			/* border: 1px solid red; */
+			height: 4rem;
+			display: flex;
+			align-items: center;
+		}
+
+		.RecBottom_time_add div {
+			font-size: 1.5rem;
+			background-color: #E54D42;
+			color: white;
+			margin-right: 0.4rem;
+
+		}
+
+		.RecBottom_time_add_one,
+		.RecBottom_time_add_two {
+			padding: 0.5rem;
+			border-radius: 0.5rem;
+		}
+
+		.RecBottom_time_add_three {
+			padding: 0 0.5rem;
+			border-radius: 0.5rem;
+		}
+
+		/* 商品添加 */
+		.shopping_add {
+			height: 4rem;
+			/* border: 1px solid red; */
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.shopping_add_nums {
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.shopping_add_nums div {
+			width: 4rem;
+			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #F2F3F5;
+			margin: 0 0.1rem;
+			font-size: 1.8rem;
+		}
+
+		.shopping_add_nums_ {
+			color: #2F2F31;
+		}
+
+		.shopping_add_nums_a {
+			color: #C4C5C9;
+		}
+
+		/* 快报详细内容 */
+		.kuaibao_cont{
+			width: 80%;
+			height: 80%; 
+			border: 1px solid red;
+		}
+
+		.visible{
+			display:-webkit-box;/**对象作为伸缩盒子模型展示**/
+            -webkit-box-orient:vertical;/**设置或检索伸缩盒子对象的子元素的排列方式**/
+            -webkit-line-clamp:1;/**显示的行数**/
+            overflow:hidden;/**隐藏超出的内容**/
+		}
+
+
+		.Main {
+			margin-top: 0;
+		}
+
+		.SendCommentPopHead {
+			padding: 0rem 2rem;
+			border-top-left-radius: 2rem;
+			border-top-right-radius: 2rem;
+			height: 6rem;
+			line-height: 6rem;
+		}
+
+		.SortContentRightBox,
+		.SpecificationCon {
+			padding: 0 3rem;
+		}
+
+		.SpecificationBox {
+			max-height: 30vh;
+			overflow-y: scroll;
+		}
+
+		.SpecificationCon {
+			margin-bottom: 3rem;
+		}
+
+		.SpecificationBox {
+			margin-top: 2rem;
+		}
+
+		.SpecificationList {
+			padding: 0.7rem 1.5rem;
+			display: inline-block;
+			vertical-align: middle;
+			margin-right: 1rem;
+			margin-bottom: 1rem;
+			border: 1px solid transparent;
+		}
+
+		.SpecificationList.Select {
+			background: #ffe5d2;
+			border: 1px solid #ff913d;
+			border-radius: 2px;
+		}
+
+		.SpecificationList.no-active {
+			color: #999999;
+			position: relative;
+		}
+
+		.SpecificationList.no-active::after {
+			content: '';
+			width: 90%;
+			height: 0.1rem;
+			background-color: #999999;
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);
+			left: 5%;
+		}
+
+
+		.c-head .c-img {
+			width: 30px !important;
+			height: 30px !important;
+			border-radius: 30px;
+			margin-right: 5px;
+		}
+
+		.c-body {
+			padding: 15px;
+			background-color: #FFFFFF;
+			/* padding-top: 50px; */
+		}
+
+		.c-bottom {
+			height: 1.875rem;
+			line-height: 1.875rem;
+		}
+
+		.c-bottom p {
+			margin-bottom: 2px;
+		}
+
+		.c-head {
+			margin-bottom: 15px;
+		}
+
+		.c-content {
+			width: 100%;
+			word-wrap: break-word;
+			margin-bottom: 10px;
+		}
+
+		.c-b-img img:first-child {
+			margin-left: 0;
+			;
+		}
+
+		.c-b-img {
+			width: 100%;
+			display: flex;
+			overflow-y: scroll;
+		}
+
+		.c-b-img img {
+			flex: 1;
+			max-height: 50vw;
+			flex-grow: initial;
+			margin-left: 5px;
+			border-radius: 5px;
+			margin-bottom: 5px;
+		}
+
+		.right {
+			font-size: 12px;
+			color: #999999;
+			float: right;
+			line-height: 100%;
+		}
+
+		.right .iconfont {
+			float: right;
+		}
+
+
+
+		.ProductHeaderInnerLeft {
+			background-color: rgba(0, 0, 0, 0.7);
+			border-radius: 100%; 
+		}
+
+		.shop_cart {
+			height: 13.75rem;
+			padding: 1.875rem 3.75rem;
+			margin: 1.25rem 0 0;
+		}
+
+		.shop_img {
+			width: 5rem;
+			height: 5rem;
+			border-radius: 1rem;
+			overflow: hidden;
+		}
+
+		.shop_img img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.shop_btn {
+			padding: 0.875rem 1.75rem;
+			border-radius: 2rem;
+		}
+
+		.shop_btn_r {
+			border: 0.0625rem solid var(--ThemeColor);
+		}
+
+		.HomeItemWrap {
+			background-color: #F5F5F5;
+		}
+
+		
+	</style>
+</head>
+
+<body>
+	<div class="Wrap" v-cloak>
+		<!--顶部操作栏-->
+		<div id="apiHeader" class="HeaderWrap themeBkColor">
+
+			<div class="ListHBothB HeaderInner">
+				<!--搜索框-->
+				<div class="SearchWrap " style="height: 4rem;border-radius: 2rem;"
+					v-on:click="_GlobalFun.goToPage('searchHistory.html','去搜索页','')">
+					<div class="SearchInner">
+						<input style="pointer-events: none;" type="text" placeholder="请输入商品名称" />
+					</div>
+					<div class="SearchIcon">
+						<i class="iconfont fontSize30 fontColor666">&#xe741;</i>
+					</div>
+				</div>
+
+				<!--联系Icon-->
+				<div class="ContactIcon Js_ContactIcon" v-on:click="_GlobalFun.goToPage('notice.html','去公告2','')">
+					<img src="../../image/home/imgage_news.png">
+				</div>
+			</div>
+		</div>
+
+		<div id="mescroll" class="mescroll backColorF5F5F5">
+
+			<div>
+				<div class="banner-bg">
+
+				</div>
+				<!-- 首页 -->
+				<div class="BannerBg">
+					<div class="swiper-container BannerWrap ">
+						<div class="swiper-wrapper BannerInner">
+							<div v-on:click="topSlideHref(item.url,item.id,item.status,item.title)" :id="item.id"
+								:keywords="item.keywords" :status="item.status" :url="item.url"
+								v-for="(item,index) in topSlideList" class="swiper-slide BannerList">
+								<img :title="item.title" v-bind:src="item.pic" alt="">
+							</div>
+						</div>
+						<div class="swiper-pagination BannerPageWrap"> </div>
+					</div>
+				</div>
+				<!-- banner图下面的推送 -->
+				<div class="title_mind">
+					<div class="mind_children" v-for="(item,index) in items_mind_title" :id="item.id"
+						:style="index!=3?'border-right:1px solid #ccc':''">
+
+						<div class="children_title" style="margin-left:0.5rem;">
+							{{ item.message }}
+						</div>
+						<div>
+							<img :src="item.image" alt="" style="max-width: 2.5rem;margin: 0 0.5rem;">
+						</div>
+
+					</div>
+				</div>
+
+				<!--分类-->
+				<div class=" SortWrap">
+
+					<div :id="item.id" v-for="(item,index) in sortList" v-on:click="goToSortList(index,item.id)"
+						class="SortList">
+						<div class="SortIcon">
+							<img v-bind:src="item.icon" alt="">
+						</div>
+						<div class="SortName fontColor333 fontSize24">{{item.name}}</div>
+					</div>
+
+				</div>
+
+				<!-- 推销 -->
+
+				<div class="banner_mind">
+					<div class="banner_mind_top">
+						<div class="banner_mind_top_left">
+							<div class="banner_mind_top_left_top">
+								<img src="../../image/home/promote/4.png" alt="" style="height: 100%;">
+							</div>
+							<div class="banner_mind_top_left_bottom" style="margin-top: 1.7rem;">
+								<img src="../../image/home/promote/3.png" alt="" style="height: 100%;">
+							</div>
+						</div>
+						<div class="banner_mind_top_right">
+							<img src="../../image/home/promote/5.png" alt="" style="height: 100%;">
+						</div>
+					</div>
+					<div class="banner_mind_bottom">
+						<div class="banner_mind_bottom_left">
+							<img src="../../image/home/promote/2.png" alt="" style="height: 100%;">
+						</div>
+						<div class="banner_mind_bottom_right">
+							<img src="../../image/home/promote/1.png" alt="" style="height: 100%;">
+						</div>
+					</div>
+				</div>
+
+				<!-- 快报 -->
+				<div class="newsflash">
+					<div class="newsflash_title">快报</div>
+					<!-- <div class="newsflash_cont visible" v-on:click="visible = true">{{ kuaibao_cont.title }}</div> -->
+					<div class="newsflash_cont visible" v-on:click="_GlobalFun.openNew('detail.html','yhxy2','快报详情',{'id':2})">{{ kuaibao_cont.title }}</div>
+					<!-- <div class="newsflash_more" v-on:click="visible_list = true">更多</div> -->
+					<div class="newsflash_more" v-on:click="_GlobalFun.openNew('newfalsh_list.html','yhxy2','更多',{'id':2})">更多</div>
+				</div>
+
+				<!-- <el-dialog :visible.sync="visible" :title="kuaibao_cont.title" width="80%" :close-on-click-modal="true" >
+					<p >
+						{{ kuaibao_cont.content }}
+					</p>
+				</el-dialog>
+
+				<el-dialog :visible.sync="visible_conts_list" :title="kuaibao_cont_list.title" width="80%" :close-on-click-modal="true" >
+					<p style="height: 400px; overflow:scroll">
+						{{ kuaibao_cont_list.content }}
+					</p>
+				</el-dialog> -->
+			
+				<!-- <el-dialog :visible.sync="visible_list" title="所有快报" width="80%" class="visible" style="max-height: 50% !important;" :close-on-click-modal="true">
+					<p v-for="(item,index) in kuaibao_list" @click="get_kuaibao_list_cont(item)" style="border: 1px solid #ccc;height: 5rem;line-height: 5rem;overflow: hidden;white-space:nowrap;text-overflow:ellipsis;">
+						{{ item.title }}	
+					</p>
+				</el-dialog> -->
+
+				<!-- 中部广告图 -->
+				<div class=" ModeSortWrap">
+
+					<div class=" ModeSortBox ModeSortBox2">
+						<div v-for="item in brand" style="padding-left: 0;" class=" ModeSortList" :id="item.id"
+							:type="item.type">
+							<div class="HomeItemWrap1 fontColor444 fontSize36 sticky">
+								<img :src="item.icon"> {{item.brand_name}}
+							</div>
+							<div v-on:click="goGroupSort(item.id,item.brand_name,item.adv_id,item.img)"
+								class="brandImg">
+								<img v-bind:src="item.img">
+							</div>
+
+
+							<div class="ListHBothB RecInner-nowrap">
+
+								<div :id="item.id" v-for="(item,index) in item.sorts" class="RecList"
+									style="margin-right:5px">
+									<div v-on:click="goToProductDtl(item.id)" class="RecPic">
+										<img v-bind:src="item.img" alt="">
+									</div>
+									<div class="RecBottom">
+										<div class="RecName">
+											<span class="fontSize28 fontColor333 span_1">{{item.name}}</span>
+											<!-- <span class="fontSize22 fontColor666 span_2">{{item.desc}}</span> -->
+										</div>
+										<div class="BuyNum ListHJstBottom">
+											<div class="">
+												<span class="fontSize16 fontColor999 span_1">{{item.unit_name}}</span>
+											</div>
+											<div class="">
+
+											</div>
+										</div>
+										<div class=" ListHJstBottom LimitedTimeFooterWrap">
+											<div class="ListHCentent MoneyWrap">
+												<div class="ListHCentent MoneyList Money1">
+													<span class=" fontSize24 red span_1">￥</span>
+													<span class=" fontSize42 red span_2">{{item.shop_price}}</span>
+												</div>
+												<div class="ListHCentent MoneyList Money2"
+													style="text-decoration: none;">
+
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+
+				<!-- 商品列表 -->
+				<div class="TempWrap RecWrap">
+
+					<div class="RecCon">
+
+						<div class="HomeItemWrap1 fontColor333 weight600 fontSize32 sticky">
+							<img src="../../image/home/jingpina.png"> 精选推荐
+						</div>
+
+						<div class="ListHBothB RecInner">
+							<div :id="item.id" v-for="(item,index) in recList"
+								class="RecList">
+								<div class="RecPic"  v-on:click="goToProductDtl(item.id)">
+									<img v-bind:src="item.img" alt="">
+								</div>
+								<div class="RecBottom" >
+									<div class="RecBottom_time_add" class="RecPic"  v-on:click="goToProductDtl(item.id)">
+										<div class="RecBottom_time_add_one">赠</div>
+										<div class="RecBottom_time_add_two">秒杀</div>
+										<div class="RecBottom_time_add_three">抢限量20000</div>
+									</div>
+									<div class="RecName"  class="RecPic"  v-on:click="goToProductDtl(item.id)">
+										<span class="fontSize30 fontColor333 span_1">{{item.name}}</span>
+									</div>
+
+									<div class="BuyNum ListHJstBottom">
+
+										<div class="">
+											<span class="fontSize22 fontColor999 span_1">{{item.unit_name}}</span>
+										</div>
+										<div class="">
+											<span class="fontSize22 fontColor999">销量 {{item.sales}}</span>
+										</div>
+									</div>
+									<div class=" ListHJstBottom LimitedTimeFooterWrap">
+										<div class="ListHCentent MoneyWrap">
+											<div class="ListHCentent  MoneyList Money1">
+												<span class=" fontSize24 red span_1">￥</span>
+												<span class=" fontSize42 red span_2">{{item.shop_price}}</span>
+											</div>
+											<div class="ListHCentent MoneyList Money2" style="text-decoration: none;">
+
+											</div>
+										</div>
+
+									</div>
+
+									<div class="shopping_add">
+										<div class="shopping_add_nums">
+
+											<!-- <div class="shopping_add_nums_" v-if="shopping_nums != 1"
+												v-on:click="shopping_nums_reduce">-</div>
+											<div class="shopping_add_nums_a" v-else v-on:click="shopping_nums_reduce">-
+											</div> -->
+
+
+											<div class="shopping_add_nums_" v-if="item.nums != 1"
+												v-on:click="recList_reduce(item)">-</div>
+											<div class="shopping_add_nums_a" v-else>-
+											</div>
+
+											<div>{{ item.nums }}</div>
+											<!-- recList -->
+											<!-- <div v-on:click="shopping_nums_add">+</div> -->
+											<div v-on:click="recList_add(item)">+</div>
+										</div>
+										<div  v-on:click="join_Confirm(item)">
+											<img src="../../image/home/promote/ShoppingCart.png" alt=""
+												style="max-width: 3rem;">
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+
+
+				<!-- 选择规格页面 -->
+				
+				<div class="SpecificationPopWrap Js_SpecificationPopWrap" v-show="spePop"
+				style="display: none;height: 100%;bottom: 0;">
+				<div class="SpecificationPopMask" v-on:click="spePop=false"></div>
+				<div class="backColor255 SpecificationPopInner BottomToTopAnimate">
+					<div class=" ListHBothB SendCommentPopHead">
+						<div></div>
+						<div class="iconfont fontColor888 fontSize30 SendCommentPopHeadClose" v-on:click="spePop=false">
+							&#xe755;</div>
+					</div>
+	
+					<div class="SortContentRightBox">
+						<div class="ListHTop SortContentRightList">
+	
+							<!--产品图片-->
+							<div class="SortContentRightPic ">
+								<img :src="list.img" alt="">
+							</div>
+							
+							<!--产品描述-->
+							<div class="ProductDescWrap ListV" style="flex: 1;">
+								<div class="ProductDescName" >
+									<span class="fontSize30 fontColor333 span_1">
+										{{list.name}}
+									</span>
+								</div>
+								<div class=" ListHBottom LimitedTimeFooterWrap">
+									<span class="red fontSize20 span_1">￥</span>
+									<span class="red fontSize36 span_2">
+										{{list.shop_price}}
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+	
+	
+	
+					<div class="SpecificationCon ListHBothB">
+						<div class="fontColor333 fontSize28 SpecificationTitle">
+							购买数量
+							<span class="fontSize22 fontColor999">库存{{list.number}}件</span>
+						</div>
+						<div class="PulDelWrap">
+							<div class="div_1 Js_Cut" @click="shopping_nums_reduce">
+								<span class="backColor4D4D4D AddLine AddLine1"></span>
+							</div>
+							<div class="fontColorFF913D fontSize32 weight500 div_2 ">
+								<input v-model="shopping_nums">
+							</div>
+							<div class="div_3 Js_Add" @click="shopping_nums_add">
+								<span class=" AddLine AddLine1"></span>
+								<span class=" AddLine AddLine2"></span>
+							</div>
+						</div>
+					</div>
+	
+					<div class="TextAlign Car_ConfirmBtnWrap" v-on:click="join_Confirm()">
+						<div class="fontSize32 fontColor255 Car_ConfirmBtnInner backColorFF913D">
+							确定
+						</div>
+					</div>
+	
+				</div>
+	
+			</div>
+	
+
+
+				<!-- ！！！！！！！！！！ -->
+
+
+			</div>
+		</div>
+
+
+		<!--隐私政策浮层-->
+		<div class="PopWrap PrivacyPopWrap Js_PrivacyPopWrap" style="display: block;z-index: 30;" v-if="isNew">
+
+			<div class="backColor255 PrivacyPopInner">
+
+				<div class="PrivacyPopBox">
+
+					<div class="PrivacyPopCon">
+
+						<div class="fontSize34 PrivacyPopTitle">用户隐私保护提示</div>
+						<div class="fontSize28 fontColor666 PrivacyPopDesc">
+							亲爱的用户,在您使用我们的产品/服务时,需要确保已连接移动网络或WLAN,并可能产生流量费用,具体标准请咨询当地运营商。
+						</div>
+						<div class="PrivacyPopTyPri">
+							<span class="fontColor666 fontSize28">请您在使用前务必仔细阅读</span>
+							<span class="fontColorFF913D fontSize28"
+								v-on:click="_GlobalFun.openNew('../article/detail.html','qysym1','隐私政策',{'id':1})">《隐私政策》</span>
+							<span class="fontColorFF913D fontSize28"
+								v-on:click="_GlobalFun.openNew('../article/detail.html','yhxy2','用户协议',{'id':2})">及《用户服务协议》。</span>
+						</div>
+						<div class="fontSize28 PrivacyPopTitle2">重点关注以下内容:</div>
+						<div class="PrivacyPopDesc2">
+							<p class="fontSize28 fontColor666">1、基于具体业务场景下您的授权,我们会收集和使用您的个人信息及相关权限；</p>
+							<p class="fontSize28 fontColor666">2、您可以访问、更正、删除您的个人信息,我们提供账户注销功能；</p>
+							<p class="fontSize28 fontColor666">3、我们会采取合理可行的措施保护您的个人信息；</p>
+						</div>
+
+					</div>
+
+
+					<div class="PrivacyPopBtnWrap">
+						<div class="fontSize28 fontColor255 PrivacyPopBtnList" v-on:click="disagree"
+							style="background: #C6C6C6;">
+							不同意并退出</div>
+						<div class="fontSize28 fontColor255 PrivacyPopBtnList backColorFF913D" v-on:click="isagree">同意
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div v-show="isShowReturnTop" class="ReturnTopBtn">
+			<img src="../../image/timg.png" alt="">
+		</div>
+	</div>
+	<script type="text/javascript" src="../../script/public.js"></script>
+
+</body>
+<script>
+	_GlobalFun.IsAPI(function () {
+		VueFun();
+	})
+
+	function VueFun() {
+		var mescroll;
+		var vue = new Vue({
+			el: ".Wrap",
+			data: {
+				topSlideList: [],
+				sortList: [],
+				brand: [],
+				recList: [],
+				isNew: false,
+				isShowReturnTop: false,
+				page: 0,
+				items_mind_title: [
+					{ id: 1, message: '精品专销', image: '../../image/home/images/Diamonds.png', shu: '../../image/home/shu.png' },
+					{ id: 2, message: '平台保障', image: '../../image/home/images/security.png', shu: '../../image/home/shu.png' },
+					{ id: 3, message: '票据齐全', image: '../../image/home/images/bill.png', shu: '../../image/home/shu.png' },
+					{ id: 4, message: '售后无忧', image: '../../image/home/images/service.png', shu: '../../image/home/shu.png' },
+				],
+				shopping_nums: 1,
+				visible: false,
+				visible_list: false,
+				visible_conts_list:false,
+				kuaibao_list:[],
+				kuaibao_cont:[],
+				kuaibao_cont_list:[],
+				spePop:false,
+				shopping_card:[],
+				list: {
+					'spec_list': [{ 'shop_price': 0 }],
+					'shop': {},
+					'pinglun': {},
+					'detail': []
+				},
+				selectArr: {
+					good_id:0,
+					num: 1,
+					spec: 0,
+				},
+				isJoin:true
+			},
+			 
+
+			methods: {
+				//去提交订单页面
+				goOrderSubAPI() {
+					var _this = this;
+					var _list = _this.list;
+					_this.spePop = false;
+					
+					_GlobalFun.goToPage('../order/submit.html', 'qddtjdym', {
+						dis_id: 0,
+						id: _list.id,
+						spec_id: _this.selectArr.spec,
+						aid: 0,
+						num: _this.shopping_nums,
+						is_use: 0,
+						is_collage: 0,
+						is_buynow: 1,
+					})
+
+				},
+				JoinCarBtn() {
+					var _this = this;
+					if (_GlobalVar.userLoginIDVar == undefined) {
+						_GlobalFun.goToPage('../login/index.html', 'qdlym', '');
+						return;
+					}
+					_this.isJoin = true;
+					// 为true 打开购物车页面
+					_this.spePop = true;
+				},
+				
+				// 打开购物车
+				JoinCarBtn(id) {
+					var _this = this;
+					_this.selectArr['good_id'] = id;
+					if (_GlobalVar.userLoginIDVar == undefined) {
+						_GlobalFun.goToPage('../login/index.html', 'qdlym', '');
+						return;
+					}
+
+					_GlobalFun.getAjax('shop', 'post_goods_info', {
+						id: id
+					}, function (data) {
+						if (data.code == 0) {
+							_this.list = data.data;
+							_this.selectArr['spec'] = data.data.spec;
+						} else {
+							// console.log("商品获取失败：" + id);
+							_GlobalFun.alert(data.msg);
+						}
+					})
+
+					// 为true 打开购物车页面
+					_this.spePop = true;
+					_this.isJoin = true;
+				},
+				join_Confirm(item) {
+					// _this.isJoin = true;
+					var _this = this;
+					// console.log("商品ID："+_this.selectArr.good_id);
+					if (_this.isJoin) {
+						_GlobalFun.postAjax('shop', 'add_user_cart', {
+							good_id: item.id,
+							num: item.nums,
+							spec: _this.selectArr.spec
+						}, function (data) {
+							_GlobalFun.alert(data.msg);
+							if (data.code == 0) {
+								_this.spePop = false;
+								if (_GlobalVar.IsAPICloud) {
+									api.sendEvent({
+										name: 'djqzf',
+										extra: {
+											msg: '点击去支付'
+										}
+									});
+								}
+							}
+							//_this.spePop = false;
+						});
+
+					} else {
+						_this.goOrderSubAPI();
+					}
+				},
+				// 查看快报详细内容
+				get_kuaibao_list_cont(item){
+					var _this = this;
+					// console.log("相信内容",item.id);
+					_this.visible_list = false;
+					_this.kuaibao_cont_list = item;
+					_this.visible_conts_list = true;
+				},
+				
+				shopping_nums_reduce() {
+					if (this.shopping_nums == 1) return false;
+					this.shopping_nums = this.shopping_nums - 1;
+				},
+
+				recList_add(item){
+					item['nums'] += 1;
+				},
+
+				recList_reduce(item){
+					item['nums'] -= 1;
+				},
+
+				shopping_nums_add() {
+					this.shopping_nums += 1;
+				},
+				goToSortList(index, id) {
+					_GlobalFun.goToPage('searchResult.html', 'qssjgym2', {
+						cate_top: id,
+						start: 0,
+					})
+				},
+				get_home_brand() {
+					var _this = this;
+					_GlobalFun.getAjax('home', 'get_home_brand', {},
+						function (data) {
+
+							if (data.code == 0) {
+								_this.brand = data.data;
+								for (var i = 0; i < _this.brand.length; i++) {
+									_this.post_home_trand_list(i, _this.brand[i].id);
+								}
+							}
+						})
+				},
+				post_home_trand_list(index, id) {
+					var _this = this;
+					_GlobalFun.getAjax('home', 'post_home_trand_list', {
+						id: id
+					},
+						function (data) {
+
+							_this.brand[index].sorts = [];
+							if (data.code == 0) {
+								_this.brand[index].sorts = data.data;
+							}
+						})
+				},
+				//获取分类列表
+				get_home_top_cate() {
+					var _this = this;
+					_GlobalFun.getAjax('home', 'get_home_top_cate', '', function (data) {
+						if (data.code == 0) {
+							_this.sortList = data.data.index_list;
+						}
+					})
+				},
+
+				// 获取快报详细内容
+				get_kuaibao_list(){
+					// console.log("获取详细内容");
+					var _this = this;
+					_GlobalFun.getAjax('home', 'get_kuaibao_list', '', function (data) {
+						if (data.code == 0) {
+							_this.kuaibao_list = data.data;
+						}
+					})
+				},
+
+				// 获取快报列表
+				get_kuaibao_content(){
+					//  console.log("获取快报");
+					 var _this = this;
+					_GlobalFun.getAjax('home', 'get_kuaibao_content', '', function (data) {
+						if (data.code == 0) {
+							_this.kuaibao_cont = data.data;
+							
+						}
+					})
+				},
+
+				getGoodList() {
+					var _this = this;
+					_GlobalFun.getAjax('home', 'post_cate_goods_list', {
+						cate_top: 0,
+						// 0默认 1desc 2asc
+						times: _this.times,
+						price: _this.price,
+						volume: _this.volume,
+						bi: _this.bi,
+						key: 0,
+						start: _this.page,
+					},
+						function (data) {
+							if (data.code == 0) {
+								if (_this.page == 0) {
+									for(var leni = 0 ; leni < data.data.length ; leni++){
+										data.data[leni].nums = 1;
+									}
+									_this.recList = data.data;
+								} else {
+									for(var leni = 0 ; leni < data.data.length ; leni++){
+										data.data[leni].nums = 1;
+									}
+									_this.recList = _this.recList.concat(data.data);
+								}
+							} else {
+								if (_this.page == 0) {
+									_this.recList = [];
+								}
+							}
+						})
+				},
+				//获取头部轮播
+				get_play_food_cate_adv() {
+					var _this = this;
+					_GlobalFun.postAjax('home', 'get_play_food_cate_adv', {
+						cid: 1,
+					}, function (data) {
+						if (data.code == 0) {	
+							_this.topSlideList = data.data;
+							setTimeout(function () {
+								var swiper = new Swiper('.BannerWrap', {
+									autoplay: true,
+									delay: 3000,
+									loop: true,
+									pagination: {
+										el: '.swiper-pagination',
+										clickable: true,
+									},
+									navigation: {
+										nextEl: '.swiper-button-next',
+										prevEl: '.swiper-button-prev',
+									},
+									on: {
+										touchStart: function (swiper, event) {
+											api.setFrameAttr({
+												bounces: false
+											});
+										},
+										touchEnd: function (swiper, event) {
+											//你的事件
+											api.setFrameAttr({
+												bounces: true
+											});
+										},
+									},
+
+								});
+							}, 500)
+						}
+					})
+
+				},
+
+				//是否同意
+				isagree() {
+					var _this = this;
+					_this.isNew = false;
+					if (_GlobalVar.IsAPICloud) {
+						$api.setStorage('isagree', true);
+					}
+					_GlobalFun.IsBanScroll(false)
+				},
+				//获取活动图
+				getActiveImg() {
+					var _this = this;
+					_GlobalFun.postAjax('home', 'get_play_food_cate_adv', {
+						cid: 16,
+					}, function (data) {
+
+
+						if (data.code == 0) {
+							var data = data.data[0];
+							var id = data.url;
+							if (id == $api.getStorage('bouns_id')) return;
+							api.download({
+								url: data.pic
+							}, function (ret, err) {
+								if (ret.state == 1) {
+									var dialogBox = api.require('dialogBox');
+									dialogBox.discount({
+										rect: {
+											w: 270,
+											h: 318
+										},
+										tapClose: true,
+										styles: {
+											bg: '#FFF',
+											image: {
+												path: ret.savePath,
+												marginB: 162
+											},
+											cancel: {
+												icon: 'widget://image/close1.png',
+												w: 31,
+												h: 31,
+												marginB: 116,
+											}
+										}
+									}, function (ret) {
+										if (ret.eventType == 'image') {
+											_GlobalFun.postAjax('home', 'post_home_new_coupon', {
+												id: id
+											}, function (data) {
+												_GlobalFun.alert(data.msg);
+												$api.setStorage('bouns_id', id);
+												// if (data.code == 0) {
+												//     _this.getGoldListAPI();
+												// }
+											});
+										}
+										dialogBox.close({
+											dialogName: 'discount'
+										});
+									});
+								}
+							});
+
+						}
+					})
+
+				},
+
+				//不同意并退出
+				disagree() {
+					var _this = this;
+					if (_GlobalVar.IsAPICloud) {
+						api.closeWin();
+					} else { }
+				},
+
+				//头部轮播跳转链接 2商品详情3外联4活动
+				topSlideHref(url, id, status, title) {
+					if (status == 3) {
+						api.openTabLayout({
+							name: title,
+							url: url,
+							title: title,
+							hideNavigationBar: false,
+							navigationBar: {
+								background: '#FFF',
+								color: '#333',
+
+							}
+						});
+
+					}
+					if (status == 2) {
+						this.goToProductDtl(url);
+					} else {
+
+					}
+				},
+
+
+
+				//去产品详情页
+				goToProductDtl(id) {
+					_GlobalFun.goToPage('../product/index.html', 'qcqxqy2', {
+						id: id
+					})
+				},
+				//跳转到组团分类
+				goGroupSort(id, brand_name, cid, img) {
+					_GlobalFun.goToPage('../field/hmSort.html', 'tzztfl', {
+						id: id,
+						brand_name: brand_name,
+						cid: cid,
+						img: img
+					})
+				},
+				// 快报跳转详情页
+				newfluash() {
+					_GlobalFun.goToPage('/hmSort.html')
+				},
+			},
+
+			mounted() {
+				
+				var _this = this;
+
+				_this.get_play_food_cate_adv();
+				_this.get_home_top_cate();
+				_this.get_home_brand();
+				_this.getGoodList();
+				_this.get_kuaibao_list();
+				_this.get_kuaibao_content();
+
+				var _isagree = $api.getStorage('isagree');
+
+				if (!_isagree) {
+					_this.isNew = true;
+					_GlobalFun.IsBanScroll(true)
+				}
+				api.addEventListener({
+					name: 'scrolltobottom',
+					extra: {
+						threshold: 50
+					}
+				}, function (ret, err) {
+					_this.page = _this.recList.length
+					_this.getGoodList();
+				});
+				api.setRefreshHeaderInfo({
+					loadingImg: 'widget://image/refresh.png',
+					bgColor: '#ccc',
+					textColor: '#fff',
+					textDown: '下拉刷新...',
+					textUp: '松开刷新...'
+				}, function (ret, err) {
+					//在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+					api.refreshHeaderLoading();
+					_this.page = 0;
+					_this.get_play_food_cate_adv();
+					_this.get_home_top_cate();
+					_this.get_home_brand();
+					_this.getGoodList();
+					_this.get_kuaibao_list();
+					_this.get_kuaibao_content();
+					setTimeout(function () {
+						api.refreshHeaderLoadDone();
+					}, 1000);
+				});
+
+				_GlobalFun.ScrollValue(document, function (e) {
+					if (e > 1200) {
+						_this.isShowReturnTop = true;
+					} else {
+						_this.isShowReturnTop = false;
+					}
+				})
+				api.addEventListener({
+					name: 'loginload'
+				}, function (ret, err) {
+					window.location.reload();
+				});
+				setTimeout(function () {
+					_GlobalFun.getAjax('user', 'get_user_info', '', function (data) {
+						if (data.code == 0) {
+							// console.log(JSON.stringify(data))
+							if (data.data.is_new == 1) {
+
+							} else {
+								_this.getActiveImg()
+							}
+
+						}
+					})
+
+				}, 3000);
+			},
+		})
+	}
+</script>
+
+
+</html>

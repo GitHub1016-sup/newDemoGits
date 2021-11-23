@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>我的</title>
+		<link rel="stylesheet" href="../../css/reset.css" />
+		<link rel="stylesheet" href="../../css/animate.css" />
+		<link rel="stylesheet" href="../../css/public.css" />
+		<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../../script/vue.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<style>
+			.HeaderWrap{
+			 border-radius: 0 0 30% 30%;
+		}
+        .MyTopWrap {
+            position: relative;
+            padding-bottom: 2.875rem;
+			height: 15vh;
+            margin-top: 1.875rem;
+        }
+
+
+        .MyTopBox1 {
+            padding: 0 2rem 0 2rem;
+        }
+
+
+        .UserHead {
+            width: 7.1875rem;
+            height: 7.1875rem;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 2rem;
+            position: relative;
+            margin-bottom: .3125rem;
+        }
+
+        .UserHead img {
+            width: auto;
+            height: 100%;
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+      
+
+        .MyOrderWrap {
+            padding-top: 3rem;
+            
+            position: relative;
+            padding-bottom: 3.625rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+            border-radius: 1rem;
+			z-index: 100;
+        }
+		.mart-8h{
+			margin-top: -7.5vh;
+		}
+
+        .MyOrderBox3,
+        .MyOrderBox1,
+        .MyOrderBox5 {
+            padding: 0 3rem;
+        }
+
+
+
+        .MyOrderBox2 {
+            margin-top: 2rem;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+
+        .MyOrderBox2List {
+            text-align: center;
+            margin: auto;
+            position: relative;
+        }
+
+        .MyOrderBox2List.Select .MyOrderBox2ListNum {
+            display: block;
+        }
+
+        .MyOrderBox2ListIcon {
+            color: #FF913D;
+            /* font-size: 3rem; */
+            margin: auto;
+            width: 3.3rem;
+            height: 3.3rem;
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .MyOrderBox2ListNum {
+            width: 1.88rem;
+            height: 1.88rem;
+            background: linear-gradient(165deg, rgba(255, 131, 124, 1) 0%, rgba(234, 60, 54, 1) 100%);
+            position: absolute;
+            top: -0.7rem;
+            right: -0.3rem;
+            font-size: 1.13rem;
+            font-weight: 600;
+            color: #fff;
+            border-radius: 50%;
+            display: none;
+            line-height: 1.88rem;
+        }
+
+        .MyOrderBox4 {
+            margin-top: 2.1875rem;
+            /* padding: 0 3rem; */
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            /* flex-direction: column; */
+            /* flex-shrink: 0; */
+        }
+
+        .MyOrderBox4List {
+            flex: 0 0 25%;
+            margin-bottom: 2rem;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+
+        .MyOrderBox4ListIcon {
+            width: 4.1rem;
+            height: 4.1rem;
+            margin: auto;
+            margin-bottom: 1.2rem;
+        }
+
+        .MyOrderBox4ListIcon img {
+            width: 100%;
+        }
+
+        .MyOrderBox5 {
+            padding-top: 1.125rem;
+            margin-top: 1.25rem;
+            padding-bottom: 1.125rem;
+        }
+
+        .MyTopBox1Right img {
+            width: 3rem;
+        }
+
+        .cent img {
+            width: 2.1875rem;
+            margin-left: 1.875rem;
+            margin-right: .3125rem;
+        }
+		.orange{
+			color: #FF7C2E;
+			margin-left: 1.875rem;
+		}
+		.green{
+			background: linear-gradient(135deg, #15C891, #0AAF7C);
+		}
+		.kf img{
+			width: 2.875rem;
+			margin: 0 3rem;
+		}
+
+
+      
+    </style>
+	</head>
+
+
+	<body>
+
+		<div class="Wrap" v-cloak>
+			<div id="apiHeader" class="HeaderWrap green">
+				<div class="MyTopWrap">
+					<div class="ListHBothB MyTopBox1">
+						<div class="ListH MyTopBox1Left">
+							<div class="UserHead" :style="{'background':'url('+userInfo.headimg+') no-repeat center/cover'}">
+							</div>
+							<div class="ListV">
+								<div class="cent fontColor717171 ListHJstCentent margin-b20">
+									<span class="fontColor333 UserName fontSize34">{{userInfo.nickname}}</span>
+									<div v-show="userInfo.state==0 || userInfo.state==3" v-on:click="_GlobalFun.goToPage('zizhi.html','zizhi','')" class="fontSize28 orange">{{userInfo.state==0?'资质认证':'资质认证失败'}}
+									</div>
+									<div class="fontSize28 orange" v-show="userInfo.state==1 || userInfo.state==2">{{userInfo.state==1?'认证中':'已认证'}}
+									</div>
+								</div>
+								<span class="fontSize26 fontColor666 margin-r40">ID:{{userInfo.id}}</span>
+								<span class="fontSize26 fontColor666">积分:{{userInfo.points}}</span>
+							</div>
+						</div>
+						<div class="iconfont fontColor333 MyTopBox1Right" v-on:click="_GlobalFun.goToPage('set.html','grzxsz','')">
+							<i class="iconfont fontSize40">&#xe75d;</i>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="backColor255 MyOrderWrap margin-b20 mart-8h">
+
+				<div class="ListHBothB MyOrderBox1">
+					<div class="weight500 fontColor333 fontSize32 MyOrderBox1Left">
+						我的订单
+					</div>
+					<div class="ListHLeft weight500 fontColor999 fontSize22 MyOrderBox1Right" v-on:click="_GlobalFun.goToPage('../order/myOrder.html','ckqbdd',{id:0})">
+						查看全部订单 <i class="iconfont fontSize26">&#xe753;</i>
+					</div>
+				</div>
+				<div class="line-height30"></div>
+				<div class="ListHCentent MyOrderBox2">
+
+					<div class="MyOrderBox2List" :class="orderNumList.dai!=0?'Select':''" v-on:click="_GlobalFun.goToPage('../order/myOrder.html','qwddd',{
+                    id:1
+                })">
+						<div class=" MyOrderBox2ListIcon">
+							<img src="../../image/my/daizhifu.png" alt="">
+						</div>
+						<div class="fontColor666 fontSize24 MyOrderBox2ListText">待付款</div>
+						<span class="MyOrderBox2ListNum">{{orderNumList.dai}}</span>
+					</div>
+					<div class="MyOrderBox2List" :class="orderNumList.fa!=0?'Select':''" v-on:click="_GlobalFun.goToPage('../order/myOrder.html','qwddd',{
+                    id:2
+                })">
+						<div class=" MyOrderBox2ListIcon">
+							<img src="../../image/my/peisongzhong.png" alt="">
+						</div>
+						<div class="fontColor666 fontSize24 MyOrderBox2ListText">待发货</div>
+						<span class="MyOrderBox2ListNum">{{orderNumList.fa}}</span>
+					</div>
+					<div class="MyOrderBox2List " :class="orderNumList.shou!=0?'Select':''" v-on:click="_GlobalFun.goToPage('../order/myOrder.html','qwddd',{
+                    id:3
+                })">
+						<div class=" MyOrderBox2ListIcon">
+							<img src="../../image/my/daiziti.png" alt="">
+						</div>
+						<div class="fontColor666 fontSize24 MyOrderBox2ListText">待收货</div>
+						<span class="MyOrderBox2ListNum">{{orderNumList.shou}}</span>
+					</div>
+					<div class="MyOrderBox2List " :class="orderNumList.ping!=0?'Select':''" v-on:click="_GlobalFun.goToPage('../order/myOrder.html','qwddd',{
+                    id:4
+                })">
+						<div class=" MyOrderBox2ListIcon">
+							<img src="../../image/my/wodejizan.png" alt="">
+						</div>
+						<div class="fontColor666 fontSize24 MyOrderBox2ListText">待评价</div>
+						<span class="MyOrderBox2ListNum">{{orderNumList.ping}}</span>
+					</div>
+					<div class="MyOrderBox2List" :class="orderNumList.tui!=0?'Select':''" v-on:click="_GlobalFun.goToPage('../order/refund.html','tkshym','')">
+						<div class=" MyOrderBox2ListIcon">
+							<img src="../../image/my/tuikuanshouhou.png" alt="">
+						</div>
+						<div class="fontColor666 fontSize24 MyOrderBox2ListText">退款售后</div>
+						<span class="MyOrderBox2ListNum">{{orderNumList.tui}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="backColor255 MyOrderWrap">
+				<div class="ListHBothB MyOrderBox3 ">
+					<div class="weight500 fontColor333 fontSize32 MyOrderBox1Left">
+						我的服务
+					</div>
+					<div class="weight500 fontColor333 fontSize22 MyOrderBox1Right">
+					</div>
+
+				</div>
+				<div class=" MyOrderBox4">
+					<div class="MyOrderBox4List" v-on:click="_GlobalFun.goToPage('../home/scorelist.html','scorelist','')">
+						<div class="MyOrderBox4ListIcon">
+							<img src="../../image/my/gouwu.png" alt="">
+						</div>
+						<div class="fontSize24 fontColor666 MyOrderBox4ListText">积分商城</div>
+					</div>
+					<div class="MyOrderBox4List" v-on:click="_GlobalFun.goToPage('addressList.html','收货地址','')">
+						<div class="MyOrderBox4ListIcon">
+							<img src="../../image/my/shouye.png" alt="">
+						</div>
+						<div class="fontSize24 fontColor666 MyOrderBox4ListText">收货地址</div>
+					</div>
+
+					<div class="MyOrderBox4List" v-on:click="_GlobalFun.openNew('../my/redPack.html','redPack','我的卡券','')">
+						<div class="MyOrderBox4ListIcon">
+							<img src="../../image/my/youhuiquan.png" alt="">
+						</div>
+						<div class="fontSize24 fontColor666 MyOrderBox4ListText">我的卡券</div>
+					</div>
+
+					<div class="MyOrderBox4List" v-on:click="_GlobalFun.goToPage('collect.html','我的收藏','')">
+						<div class="MyOrderBox4ListIcon">
+							<img src="../../image/my/shoucang.png" alt="">
+						</div>
+						<div class="fontSize24 fontColor666 MyOrderBox4ListText">我的收藏</div>
+					</div>
+					<div class="MyOrderBox4List"  v-on:click="_GlobalFun.goToPage('zizhi.html','zizhi','')">
+						<div class="MyOrderBox4ListIcon">
+							<img src="../../image/my/renz.png" alt="">
+						</div>
+						<div class="fontSize24 fontColor666 MyOrderBox4ListText">资质认证</div>
+					</div>
+					<div class="MyOrderBox4List" v-on:click="_GlobalFun.goToPage('../order/shenhe.html','待审核','')">
+						<div class="MyOrderBox4ListIcon">
+							<img src="../../image/my/shen.png" alt="">
+						</div>
+						<div class="fontSize24 fontColor666 MyOrderBox4ListText">待审核</div>
+					</div>
+
+				</div>
+				<div class="ListHLeft kf" @click="call(userInfo.tel)">
+					<img src="../../image/my/kefu-2.png" >
+					<span class="fontColor333 fontSize30 margin-r40">{{userInfo.tel}}</span>
+					<span class="themeColor fontSize28">拨打</span>
+				</div>
+
+			</div>
+
+
+
+
+
+		</div>
+
+		<script type="text/javascript" src="../../script/public.js"></script>
+
+	</body>
+
+	<script>
+		_GlobalFun.IsAPI(function() {
+			VueFun();
+		})
+
+		function VueFun() {
+			var vue = new Vue({
+				el: ".Wrap",
+				data: {
+					iosShow: $api.getStorage('iosShow'),
+					userInfo: {
+						id: null,
+					},
+					orderNumList: [],
+					recList: [],
+				},
+
+				methods: {
+					call(tel) {
+						api.call({
+						    type: 'tel_prompt',
+						    number: tel
+						});
+					},
+
+					//获取推荐
+					getRecList() {
+						var _this = this;
+						_GlobalFun.getAjax('home', 'get_user_like_list', '', function(data) {
+							if (data.code == 0) {
+								_this.recList = data.data;
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						});
+					},
+
+					//获取用户信息
+					getUserInfo() {
+						var _this = this;
+						_GlobalFun.getAjax('user', 'get_user_info', '', function(data) {
+							if (data.code == 0) {
+								$api.setStorage('userLoginID', data.data.id);
+								_this.userInfo = data.data;
+
+							} else {
+								_GlobalFun.alert(data.msg);
+								_GlobalVar.userInfo.isLogin = false;
+								_GlobalFun.goToPage('../login/index.html', 'qdlym', '');
+
+							}
+						})
+					},
+
+					//获取订单数量
+					getOrderNum() {
+						var _this = this;
+						_GlobalFun.getAjax('user', 'get_user_order_num', "", function(data) {
+							if (data.code == 0) {
+								_this.orderNumList = data.data;
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						});
+
+					},
+
+				},
+
+				mounted() {
+					var _this = this;
+					_this.getOrderNum();
+					this.getUserInfo();
+					this.getRecList();
+					if (_GlobalVar.IsAPICloud) {
+						api.addEventListener({
+							name: 'xgnc'
+						}, function(ret, err) {
+							_this.getUserInfo();
+							_this.getOrderNum();
+							_this.getRecList();
+						});
+						api.addEventListener({
+							name: 'txgg'
+						}, function(ret, err) {
+							_this.getUserInfo();
+							_this.getOrderNum();
+							_this.getRecList();
+						});
+						api.addEventListener({
+							name: 'djqzf'
+						}, function(ret, err) {
+							_this.getUserInfo();
+							_this.getOrderNum();
+							_this.getRecList();
+						});
+
+						api.addEventListener({
+							name: 'FooterMenu'
+						}, function(ret, err) {
+							_this.getOrderNum();
+							_this.getUserInfo();
+							_this.getRecList();
+						});
+						api.addEventListener({
+							name: 'loginload'
+						}, function(ret, err) {
+							window.location.reload();
+						});
+					}
+
+					if (_GlobalVar.userLoginIDVar == undefined) {
+						_GlobalFun.ReturnHome();
+					}
+
+
+
+				},
+			});
+		}
+	</script>
+
+
+</html>

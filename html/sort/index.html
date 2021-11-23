@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>分类</title>
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/reset.css" />
+		<link rel="stylesheet" href="../../css/animate.css" />
+		<link rel="stylesheet" href="../../css/public.css" />
+		<link rel="stylesheet" href="../../css/scroll.css" />
+		<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../../script/vue.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/mui.min.js"></script>
+		<script type="text/javascript" src="../../script/scroll.js"></script>
+		<style>
+			html,
+		body,
+		.Wrap {
+			width: 100%;
+			height: 100%;
+
+		}
+
+		.Main {
+			height: calc(100% - 5rem);
+			padding-bottom: 0;
+		}
+
+		.HeaderWrap {
+			/* top: 3rem; */
+			background: #fff;
+			/* padding: 1rem 2rem; */
+		}
+
+
+
+		.ShoppingCart {
+			font-size: 2rem;
+		}
+
+		.mui-placeholder span:nth-child(2) {
+			font-size: 1.63rem;
+		}
+
+		.SearchIcon {
+			position: absolute;
+			left: 5%;
+			top: 50%;
+			transform: translate(0, -50%);
+			pointer-events: none;
+		}
+
+		.ProductDescLabel,
+		.SendTimeWrap {
+			margin-bottom: 0.5rem;
+		}
+
+		.ProductDescWrap {
+			margin-left: 1rem;
+			width: 21rem;
+		}
+
+		.ProductDescName span.span_1 {
+			display: block;
+			width: 18.375rem;
+		}
+
+		.mui-pull-bottom-pocket {
+			display: none !important;
+		}
+
+		.SortContentRightPic {
+			width: 12.5rem;
+			height: 12.5rem;
+			overflow: hidden;
+		}
+
+		.SortContentRightPic img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.SortContentRightList {
+			width: 65vw;
+			box-shadow: 0px 2px 18px 0px rgba(0, 0, 0, 0.07);
+			border-radius: .3125rem;
+			align-items: flex-start;
+			padding: 0.75rem 0.625rem;
+			margin: 0 auto 0.625rem;
+			background-color: #FFFFFF;
+		}
+		.fy{
+			height: 88vh;
+		}
+		.MinSortWrap{
+			height: 13vh;
+		}
+		.mescroll{
+			position: fixed;
+			top: 25vh;
+			left: 30vw;
+			bottom: 0;
+			width: 70vw;
+			height: auto;
+			background-color: #F5F5F5;
+		}
+		.SortContent{
+			height: 75vh;
+		}
+		.SortContentLeft{
+			width: 30vw;
+		}
+		
+	</style>
+	</head>
+
+
+	<body>
+
+		<div class="Wrap" v-cloak>
+
+			<div id="apiHeader" class="HeaderWrap fy-head">
+				<div class="ListHBothB HeaderInner">
+					<div v-show="showBack" class=" mui-icon mui-icon-arrowleft fontColorFF913D  Js_HeadReturnBtn ">
+					</div>
+					<div class="mui-input-row mui-search" style="position: relative;" v-on:click="_GlobalFun.goToPage('../home/searchHistory.html','qssym5','')">
+						<input style="pointer-events:none;width: 100%;" type="input" class=" fontColor666" placeholder="搜索商品">
+						<div class="iconfont fontColor666 fontSize30 SearchIcon">
+							&#xe741;
+						</div>
+					</div>
+					<div class="fontColorFF913D iconfont ShoppingCart" v-on:click="gocar">&#xe76d;</div>
+				</div>
+			</div>
+			<div class="fy backColorF5F5F5">
+				<div class="MinSortWrap ScrollOpacity" ref="ScrollDom" @scroll="orderScroll">
+
+					<div class="MinSortInner">
+
+						<div :id="item.id" :class="item.id == top_id?'Select':'' " :index="index" @click="getSortLeftList(item.id)" v-for="(item,index) in minSortInnerList"
+						 class="MinSortList Js_MinSortList">
+							<div class="transition MinSortPic">
+								<img v-bind:src="item.icon">
+							</div>
+							<div class="transition fontColor434743 fontSize26 MinSortText">{{item.name}}</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="ListHBothB SortContent">
+
+					<div class="ScrollOpacity SortContentLeft">
+						<div class="fontSize24 fontColor666 transition SortContentList  " :class="left_id==0?'Select':''" @click="selectCur(0)">全部
+						</div>
+						<div @click="selectCur(item.id)" :id="item.id" :class="item.id == left_id?'Select':''" v-for="(item,index) in sortContentLeftList"
+						 class="fontSize24 fontColor666 transition SortContentList">{{item.name}}
+						</div>
+					</div> 
+
+					<div id="mescroll" class="mescroll">
+						<div>
+							<div id="last"></div>
+							<div class="ScrollOpacity SortContentRightIn Js_RightScroll" id="Js_RightScroll">
+					
+								<div class="SortContentRightBox">
+									<div @click="godetail(item.id)" :id="item.id" v-for="(item,index) in sortContentRightlist" class="liebiao SortContentRightList ListHCentent">
+										<!--产品图片-->
+										<div class="SortContentRightPic">
+											<img v-bind:src="item.img">
+										</div>
+					
+										<!--产品描述-->
+										<div class="ProductDescWrap">
+											<div>
+												<div class="ProductDescName">
+													<span class="fontSize28 fontColor333 span_1">{{item.name}}</span>
+												</div>
+												<div v-show="item.desc" class="ProductDescLabel">
+													<span class="fontColor666 fontSize26">{{item.unit_name}}</span>
+												</div>
+
+												<div class="">
+													<span class="fontColor666 fontSize22">月销量 {{item.sales}}</span>
+												</div>
+					
+											</div>
+											<div class=" ListHJstBottom LimitedTimeFooterWrap">
+												<div class="ListHCentent MoneyWrap">
+													<div class="ListHCentent MoneyList Money1">
+														<span class="red fontSize24 span_1">￥</span>
+														<span class="red fontSize30 span_2">{{item.shop_price}}</span>
+													</div>
+												</div>
+					
+											</div>
+					
+										</div>
+					
+					
+									</div>
+					
+								</div>
+					
+								<div class="NoDataWrap">
+									<div class="fontSize26 fontColorCCC NoDataText">我是底线</div>
+								</div>
+					
+							</div>
+					
+						</div>
+					
+					</div>
+
+				</div>
+			</div>
+
+
+			<div v-show="isShowReturnTop" class="ReturnTopBtn">
+				<img src="../../image/timg.png" alt="">
+			</div>
+
+		</div>
+
+
+		<script type="text/javascript" src="../../script/public.js"></script>
+
+
+	</body>
+
+	<script>
+		_GlobalFun.IsAPI(function() {
+
+			VueFun();
+
+		})
+
+		function VueFun() {
+			var mescroll;
+			//分类列表
+			var vue1 = new Vue({
+				el: ".Wrap",
+				data: {
+					_curWidth: '',
+					showBack: _GlobalFun.getPageParam('id') ? true : false,
+					minSortInnerList: "",
+
+					sortContentRightlist: [],
+
+					sortContentLeftList: [],
+
+					isAllBtn: true,
+
+					getOneID: _GlobalFun.getPageParam('id'),
+
+					getLeftID: 0,
+
+					selectSq: 0,
+
+					xiaoliangUp: 1,
+
+					jiageUp: 1,
+
+
+					isShowReturnTop: false,
+
+					muiRfs: '',
+					page: 0,
+					type: 0,
+					top_id: 0,
+					left_id: 0,
+					params: '',
+				},
+				methods: {
+					openGoods() {
+						var _this = this;
+						api.addEventListener({
+							name: 'goodsListChange'
+						}, function(ret, err) {
+							var params = ret.value;
+							_this.params = ret.value;
+							_this.page = params.page;
+							_this.getRightListAPI(params.id, params.s_id, params.price, params.sales)
+						});
+
+					},
+
+
+					gocar: function() {
+						if (this.showBack) {
+							api.closeWin()
+						}
+						api.sendEvent({
+							name: 'gocar',
+							extra: {
+								msg: '底部菜单'
+							}
+						});
+					},
+					//填充顶部列表
+					getTopSortList() {
+						var _this = this;
+						_GlobalFun.getAjax('home', 'get_home_one_cate', '', function(e) {
+							if (e.code == 0) {
+								_this.minSortInnerList = e.data;
+								_this.getSortLeftList(e.data[0].id);
+
+							} else {
+								_GlobalFun.alert(e.msg);
+							}
+						})
+
+					},
+					//获取二级分类
+					//填充左侧列表
+					getSortLeftList(id) {
+						var _this = this;
+						_this.top_id = id;
+						_GlobalFun.getAjax('home', 'get_home_two_cate?id=' + id, '', function(data) {
+							if (data.code == 0) {
+								_this.sortContentLeftList = data.data;
+
+								_this.selectCur(0, _this.top_id)
+							} else {
+								_this.selectCur(0, _this.top_id)
+								_this.sortContentLeftList = [];
+							}
+						});
+					},
+
+					//填充右侧列表
+					sendRightListAPI(id, s_id, price, sales) {
+						var _this = this;
+						_this.page = 0;
+						setTimeout(function() {
+							api.sendEvent({
+								name: 'goodsListChange',
+								extra: {
+									id: _this.top_id,
+									s_id: _this.left_id,
+									price: price,
+									sales: sales,
+									page: 0,
+								}
+							});
+						}, 100)
+
+					},
+
+					//点击查看全部按钮
+					viewAllListBtn() {
+						var _this = this;
+						_this.isAllBtn = true;
+						_this.getLeftID = 0;
+						_GlobalVar.loadMore = 1;
+						_this.type = 1;
+					},
+
+
+
+					//点击左侧列表
+					selectCur: function(id) {
+						var _this = this;
+						_this.selectSq = 0;
+						_this.left_id = id;
+						_this.sendRightListAPI(id, 0, 0, 0);
+					},
+
+					//点击综合
+					zongheClick() {
+						var _this = this;
+						_this.selectSq = 0;
+						_this.jiageUp = 1;
+						_this.sendRightListAPI(_this.getOneID, 1, 0, 0);
+
+					},
+
+					//点击销量
+					xiaoliangClick() {
+						var _this = this;
+						_this.selectSq = 1;
+						_this.jiageUp = 1;
+						if (_this.xiaoliangUp == 1) {
+							_this.xiaoliangUp = 2
+						} else {
+							_this.xiaoliangUp = 1
+						}
+						_this.sendRightListAPI(_this.getLeftID, 0, 0, _this.xiaoliangUp);
+					},
+
+					//点击价格
+					jiageClick() {
+						var _this = this;
+
+						_this.selectSq = 2;
+
+						if (_this.jiageUp == 1) {
+							_this.jiageUp = 2
+						} else {
+							_this.jiageUp = 1
+						}
+						_this.sendRightListAPI(_this.getLeftID, 0, _this.jiageUp, 0);
+					},
+
+
+
+					orderScroll(e) {
+						var _scrollLeft = this.$refs.ScrollDom.scrollLeft;
+					},
+
+					//填充右侧列表
+					getRightListAPI(id, s_id, price, sales) {
+						var _this = this;
+						// _this.page = 1;
+						_GlobalFun.postAjax('home', 'post_cate_goods_list', {
+							cate_top: id,
+							cate_son: s_id,
+							price: price,
+							volume: sales,
+							key: 0,
+							start: _this.page,
+						}, function(data) {
+
+							if (data.code == 0) {
+								mescroll.endErr();
+								if (_this.page == 0) {
+									_this.$nextTick(() => {
+										document.getElementById("last").scrollIntoView();
+									});
+									setTimeout(function() {
+										$('.mescroll').scrollTop(0);
+									}, 100)
+									_this.sortContentRightlist = data.data;
+									_this.page = _this.sortContentRightlist.length;
+								} else {
+									_this.sortContentRightlist = _this.sortContentRightlist.concat(data.data);
+									_this.page = _this.sortContentRightlist.length;
+								}
+
+							} else {
+								mescroll.endErr();
+								if (_this.page == 0) {
+									_this.sortContentRightlist = [];
+								}
+
+							}
+						})
+
+					},
+					godetail(id) {
+						_GlobalFun.goToPage('../product/index.html', 'qcqxqy22', {
+							'id': id
+						})
+					},
+					//增减数量
+					changeNum1(index) {
+						var _this = this;
+						var good = _this.sortContentRightlist[index];
+						if (good.cart_num <= 1) {
+							return
+						}
+						if (good.cart_num == '') return;
+						_this.carUpdateAPI(good.id, good.cart_id, good.cart_num -= 1);
+					},
+					inpue(index, num) {
+						var good = this.sortContentRightlist[index];
+						var _cart_num = good.cart_num;
+
+						if (_cart_num == '' || num == 0) return;
+
+						this.carUpdateAPI(good.id, good.cart_id, num);
+					},
+					changeNum2(index) {
+						var _this = this;
+						var good = _this.sortContentRightlist[index];
+						if (good.cart_num == '') return;
+						_this.carUpdateAPI(good.id, good.cart_id, good.cart_num += 1);
+					},
+					//购物车更新
+					carUpdateAPI(godid, carid, num) {
+						_GlobalVar.is_loading = false;
+						var _this = this;
+						_GlobalFun.postAjax('shop', 'up_num_user_cart', {
+							good_id: godid,
+							cart_id: carid,
+							num: num,
+						}, function(data) {
+							if (data.code == 0) {
+								api.sendEvent({
+									name: 'djqzf',
+									extra: {
+										msg: '点击去支付'
+									}
+								});
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						})
+					},
+					join_Confirm(is_spec, id, index) {
+						var _this = this;
+						if (is_spec == 1) {
+							_this.godetail(id);
+							return;
+						}
+						_GlobalFun.postAjax('shop', 'add_user_cart', {
+							good_id: id,
+							num: 1,
+							spec: 0
+						}, function(data) {
+							// alert(JSON.stringify(data))
+							if (data.code == 0) {
+								_this.sortContentRightlist[index].cart_num = 1;
+								_this.sortContentRightlist[index].cart_id = data.cart_id;
+								_this.sortContentRightlist[index].is_choose = 1;
+								_GlobalFun.alert("商品添加成功");
+								if (_GlobalVar.IsAPICloud) {
+									api.sendEvent({
+										name: 'djqzf',
+										extra: {
+											msg: '点击去支付'
+										}
+									});
+								}
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						});
+
+
+					},
+
+				},
+				created() {
+					var _this = this;
+					_this.openGoods();
+					_this.getTopSortList();
+
+				},
+				mounted() {
+
+					var _this = this;
+
+					document.addEventListener('scroll', this.Scroll);
+
+
+
+					_GlobalFun.ScrollValue('.Js_RightScroll', function(e) {
+						if (e > 500) {
+							_this.isShowReturnTop = true;
+						} else {
+							_this.isShowReturnTop = false;
+						}
+					})
+
+					_GlobalFun.ReturnTop('.Js_RightScroll');
+
+					if (_GlobalVar.IsAPICloud) {
+						if (_this.getOneID == '') {
+							_this.getOneID = 0;
+						}
+						api.addEventListener({
+							name: 'FooterMenu'
+						}, function(ret, err) {
+							window.location.reload();
+
+						});
+
+					}
+
+
+					mescroll = new MeScroll("mescroll", { //第一个参数"mescroll"对应上面布局结构div的id (1.3.5版本支持传入dom对象)
+						down: {
+							use: true,
+							auto: false,
+							callback: reCallback //下拉刷新的回调,别写成downCallback(),多了括号就自动执行方法了
+						},
+						up: {
+							use: true,
+							callback: downCallback, //上拉加载的回调
+							//以下是一些常用的配置,当然不写也可以的.
+							page: {
+								num: 0, //当前页 默认0,回调之前会加1; 即callback(page)会从1开始
+								size: 10 //每页数据条数,默认10
+							},
+							htmlNodata: '<p class="upwarp-nodata">-- END --</p>',
+							noMoreSize: 5, //如果列表已无数据,可设置列表的总数量要大于5才显示无更多数据;
+
+							toTop: {
+								//回到顶部按钮
+								src: "../../image/timg.png", //图片路径,默认null,支持网络图
+								offset: 500 //列表滚动1000px才显示回到顶部按钮
+							},
+
+
+						}
+					});
+					//上拉加载的回调
+					function downCallback() {
+						var params = _this.params;
+						_this.page = _this.sortContentRightlist.length;
+						_this.getRightListAPI(params.id, params.s_id, params.price, params.sales)
+
+					}
+
+					function reCallback() {
+						// _this.openGoods();
+						_this.selectSq = 0;
+						_this.sendRightListAPI(0, 0, 0, 0);
+					}
+
+					api.addEventListener({
+						name: 'loginload'
+					}, function(ret, err) {
+						window.location.reload();
+					});
+
+
+				},
+
+			})
+
+
+
+		}
+	</script>
+
+
+</html>

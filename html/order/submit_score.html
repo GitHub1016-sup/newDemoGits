@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title>提交订单</title>
+		<link rel="stylesheet" href="../../css/reset.css" />
+		<link rel="stylesheet" href="../../css/animate.css" />
+		<link rel="stylesheet" href="../../css/mui.min.css" />
+		<link rel="stylesheet" href="../../css/public.css" />
+		<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+		<script type="text/javascript" src="../../script/vue.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<style>
+			.HeaderWrap {
+            background: #fff;
+        }
+
+        .Group.SortContent {
+            height: auto;
+            margin-top: 0;
+            padding-top: 0;
+            margin-top: 1rem;
+        }
+
+        .SortContentRight {
+            padding: 0;
+            border-left: 1rem solid #f5f5f5;
+            border-right: 1rem solid #f5f5f5;
+        }
+
+        .SortContentRightIn {
+            height: auto;
+            overflow: initial;
+        }
+
+        .Group .SortContentRightList {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .Group .SortContentRightList:last-child {
+            border-bottom: 0;
+        }
+
+        .Group .SortContentRightList.Select .BuyTick {
+            color: var(--ThemeColor);
+        }
+
+
+
+
+
+        .ProductDescName {
+            text-indent: 0;
+        }
+
+
+
+        .ProductFooterList2 {
+            background: none;
+            width: 25rem;
+            text-align: left;
+        }
+
+        .ProductFooterList3 {
+            border-radius: 0.5rem;
+            width: 17.5rem;
+            height: 6.63rem;
+            text-align: center;
+            line-height: 6.63rem;
+        }
+
+
+        .ProductFooterList1.Select .span_1 {
+            color: var(--ThemeColor);
+        }
+
+        .ProductFooterList3.Select {
+            background: var(--ThemeColor);
+        }
+
+
+        .ProductDescName {
+            margin-bottom: 0.5rem;
+        }
+
+        .ProductDescLabel {
+            margin-bottom: 1rem;
+        }
+
+        .ProductDescName span.span_1 {
+            width: 23rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .SortContentRight {
+            border: 0;
+        }
+
+        .ShippingAddressWrap {
+            margin-top: 0.5rem;
+            padding: 1rem 2rem;
+            position: relative;
+        }
+		
+
+        .ShippingAddressLeft {
+            /* font-size: 3rem; */
+            margin-right: 2rem;
+        }
+
+
+
+        .ShippingAddressBox1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .StoreName {
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .StoreNameIcon {
+            width: 2.15rem;
+            height: 2.13rem;
+            margin-right: 1rem;
+        }
+
+
+        .MoneyData {
+            padding-left: 3rem;
+            padding-right: 2rem;
+            margin-top: 1rem;
+            height: 4rem;
+        }
+
+        .MoneyData3 {
+            padding-top: 1rem;
+            margin-bottom: 0;
+            border-top: 0.05rem solid #f5f5f5;
+            position: relative;
+
+        }
+
+        .MoneyData3::after {
+            content: "";
+            position: absolute;
+            right: 4rem;
+            top: -0.6rem;
+            width: 1rem;
+            height: 1rem;
+            border: 0.06rem solid rgba(237, 237, 237, 1);
+            border-top: 0;
+            border-left: 0;
+            background: #fff;
+            transform: rotate(45deg);
+        }
+
+        .PaymentWrap {
+            margin-top: 1rem;
+            padding: 0 2rem;
+        }
+
+        .PaymentList {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 1.5rem 2rem;
+            border-bottom: 0.06rem solid rgba(237, 237, 237, 1);
+        }
+
+        .Dg {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+
+        .PaymentIcon {
+            width: 3.75rem;
+            margin-right: 1rem;
+        }
+
+
+
+        .ProductDescName span {
+
+            text-overflow: initial;
+            white-space: initial;
+            overflow: auto;
+            display: inline;
+        }
+
+        .info {
+            border: none !important;
+            margin-bottom: 0 !important;
+            padding: 0 !important;
+            text-align: right;
+            font-size: 12px;
+            color: #666;
+            background-color: #FFFFFF;
+        }
+
+        .bouns {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background-color: rgba(0, 0, 0, 0.7);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .qbtn {
+            width: 90%;
+            background-color: var(--ThemeColor);
+            color: #FFFFFF;
+            height: 5rem;
+            border-radius: 10px;
+            font-size: 16px;
+            text-align: center;
+            line-height: 5rem;
+            margin: 20px auto;
+        }
+
+        .ProductDescWrap {
+          width: auto;
+        }
+        .SortContentRightPic{
+          margin-right: 1rem;
+        }
+        .SortContentRightListIn{
+			padding: 1rem;
+
+        }
+        .SortContentRightList{
+          margin-top: 0.7rem;
+        }
+		.CarFooterWrap{
+			height: 10vh;
+		}
+		.HeaderWrap{
+			height: 10vh;
+		}
+		.wrap-b{
+			height: 80vh;
+			position: fixed;
+			top: 10vh;
+			bottom: 10vh;
+			overflow: scroll;
+		}
+		
+		.mlr1rem{
+			margin-left: 1rem;
+			margin-right: 1rem;
+		}
+
+    </style>
+	</head>
+
+
+	<body>
+
+		<div class="Con">
+
+			<div class="Wrap" v-cloak>
+
+				<div id="apiHeader" class="HeaderWrap">
+
+					<div class="ListHBothB HeaderInner">
+						<div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"></div>
+						<div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">提交订单</div>
+						<div class="fontColorFF913D iconfont ShoppingCart" style="pointer-events: none;opacity: 0;font-size: 3rem;">&#xe760;</div>
+					</div>
+
+				</div>
+				<div class="wrap-b">
+
+					<div class="backColor255 ShippingAddressWrap mlr1rem">
+
+						<div v-if="user_address!=''" @click="goToSelectAdd()" class="ListHBoth ShippingAddressInner">
+
+							<div class="iconfont themeColor  ShippingAddressLeft fontSize30">
+								&#xe777;
+							</div>
+							<div class="ShippingAddressRight" style="flex: 1;">
+								<div class="ShippingAddressBox1">
+									<span class="fontSize32 weight500 fontColor333 span_1">{{user_address.name}}</span>
+									<span class="fontColor999 fontSize26 span_2">{{user_address.phone}}</span>
+								</div>
+								<div class="fontSize26 fontColor999 ShippingAddressBox2">
+									{{user_address.province_name}} {{user_address.city_name}}
+									{{user_address.district_name}} {{user_address.address}}
+								</div>
+							</div>
+							<div class="iconfont fontColor999  ShippingAddressRight fontSize30">
+								&#xe753;
+							</div>
+
+						</div>
+
+						<div class="fontSize32 weight500 fontColor333" v-on:click="goToSelectAdd" style="text-align: center;" v-if="user_address==''">
+							请选择收货地址
+						</div>
+
+
+					</div>
+
+					<div class=" SortContentRightList Js_BuyCarList mlr1rem backColor255">
+
+						<div v-for="(item,index) in orderInfoArr" class="ListHTop SortContentRightListIn" style="margin-bottom: 1rem;">
+							<!--产品图片-->
+							<div class="SortContentRightPic">
+								<img v-bind:src="item.img">
+							</div>
+
+							<!--产品描述-->
+							<div class="ProductDescWrap ">
+								<div class="ListHBothB ProductDescName">
+									<span class="fontSize26 fontColor333 weight500 span_1" style="flex: 1;padding-right: 1rem;">{{item.name}}</span>
+									<span class=" fontSize28 fontColor333 span_2">
+										<em class="red fontSize20 em_1">积分：</em>
+										<em class="fontSize30 red weight500 em_2">{{item.shop_price}}</em>
+									</span>
+
+								</div>
+								<div class="ListHBothB ProductDescName">
+
+									<span class="fontColor666 fontSize22">x1</span>
+
+								</div>
+								<div class="ListHBothB ProductDescLabel">
+									<span class="fontColor666 fontSize22">
+										<em class="fontColor666 fontSize22" v-if="item.is_free==0">包邮</em>
+									</span>
+
+								</div>
+
+
+							</div>
+						</div>
+						
+						<div class="jiagemiaoshu">
+							<div class="ListHBothB MoneyData">
+								<span class="fontSize28 fontColor666 span_1">账户积分</span>
+								<span class="span_2">
+									<em class="fontSize20 fontColor666 em_1"></em>
+									<em class="fontSize30 red em_1">{{userInfo.points}}</em>
+								</span>
+							</div>
+						<!-- 	<div class="ListHBothB MoneyData">
+								<span class="fontSize24 fontColor666 span_1">邮费</span>
+								<span class="span_2">
+									<em class="fontSize20 fontColor666 em_1">￥</em>
+									<em class="fontSize20 fontColor666 em_1">{{money.yunfei}}</em>
+								</span>
+							</div> -->
+
+
+							<!-- 优惠价格坐标 -->
+							<div class="ListHBothB MoneyData MoneyData3">
+								<span class="fontSize28 fontColor666 weight500 span_1">实付积分</span>
+								<span class="span_2">
+									<em class="fontSize30 fontColorFF913D em_2">{{money.shop_price}}</em>
+								</span>
+							</div>
+							<div class="ListHBothB MoneyData MoneyData3">
+								<span class="fontSize28 fontColor666 weight500 span_1">备注</span>
+								<span class="span_2">
+									<input class="info" type="text" name="text" id="" placeholder="请填写订单备注" v-model="info" />
+								</span>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="backColor255 PaymentWrap">
+
+						<div class="PaymentInner">
+							<div class="PaymentList" v-for="(item,index) in selectPayArr" :class="item.selected?'Select':''">
+								<div class="PaymentIcon">
+									<img v-bind:src="item.icon">
+								</div>
+								<div class="fontSize30 fontColor333 PaymentText">{{item.name}}</div>
+								<div class="iconfont fontSize40 fontColore0e0e0 Dg">
+									&#xe74a;
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+				</div>
+
+
+				<div class="backColor255 CarFooterWrap">
+
+					<div class="ListHBothB CarFooterInner">
+
+						<div class=" ListHLeft ">
+							<span class="fontColor333 fontSize26  span_1">实付积分:</span>
+							<span class="red fontSize30 ">{{money.shop_price}}</span>
+						</div>
+						<div class="themeColor ProductFooterList ProductFooterList3 Select " v-on:click="goPayBtn">
+							<span class="fontColor255 fontSize34 span_1">立即付款</span>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+		</div>
+
+		<script type="text/javascript" src="../../script/public.js"></script>
+
+	</body>
+
+	<script>
+		_GlobalFun.IsAPI(function() {
+			VueFun();
+		})
+
+
+		function VueFun() {
+			var vue = new Vue({
+				el: ".Wrap",
+				data: {
+					orderInfoArr: [],
+					money: [],
+					address_id: 0,
+					user_address: {},
+					info: '', // 备注
+					selectPayArr: [{
+						icon: '../../image/order/PaymentIcon3.png',
+						name: '积分支付',
+						selected: true,
+						payIndex: 3
+					}, ],
+					userInfo: {},
+
+				},
+				methods: {
+
+					//获取用户信息
+					getUserInfo() {
+						var _this = this;
+						_GlobalFun.getAjax('user', 'get_user_info', '', function(data) {
+							if (data.code == 0) {
+								$api.setStorage('userLoginID', data.data.id);
+								_this.userInfo = data.data;
+
+							} else {
+								_GlobalFun.alert(data.msg);
+								_GlobalVar.userInfo.isLogin = false;
+								_GlobalFun.goToPage('../login/index.html', 'qdlym', '');
+
+							}
+						})
+					},
+					//去选择收货地址
+					goToSelectAdd() {
+						var _this = this;
+						_GlobalFun.goToPage('../my/addressList.html', 'qxzshdz', {
+							dis_id: _GlobalFun.getPageParam('dis_id'), //优惠券ID
+							id: _GlobalFun.getPageParam('id'), //商品id
+							spec_id: _GlobalFun.getPageParam('spec_id'), //规格id
+							aid: _GlobalFun.getPageParam('aid'), //收货地址id
+							num: _GlobalFun.getPageParam('num'), //商品数量
+							is_use: _GlobalFun.getPageParam('is_use'), //0否1是 金币抵账
+							is_collage: _GlobalFun.getPageParam('is_collage'), //0不是拼团1拼团
+							nums: _GlobalFun.getPageParam('nums'),
+							isadskong: 1,
+						})
+					},
+
+					//获取信息
+					getInfoAPI(checkB) {
+						var _this = this;
+						_GlobalFun.postAjax('shop', 'post_shop_jifen_order', {
+							id: _GlobalFun.getPageParam('id'), //商品id
+							address_id: _this.address_id, //收货地址id
+						}, function(data) {
+							if (data.code == 0) {
+								_this.money = data.data;
+
+								_this.orderInfoArr = [data.data];
+								// alert(JSON.stringify(data));
+								if (checkB == true) {
+									_this.user_address = data.address;
+								}
+
+								if (_this.user_address == null) {
+									_this.user_address = "";
+								}
+								_this.$forceUpdate();
+							} else {
+								_GlobalFun.alert(data.msg);
+							}
+						});
+					},
+
+					//订单提交接口
+					orderSubmit() {
+						var _this = this;
+						_GlobalFun.postAjax('shop', 'post_shop_goods_buy', {
+							id: _GlobalFun.getPageParam('id'),
+							address_id: _this.user_address.address_id,
+							info: _this.info,
+						}, function(data) {
+							_GlobalFun.alert(data.msg);
+							if (data.code == 0) {
+								_this.payScc();
+							}
+						})
+					},
+
+					//支付成功
+					payScc() {
+						var _this = this;
+						api.addEventListener({
+							name: 'viewdisappear'
+						}, function() {
+							api.closeWin();
+						});
+						_GlobalFun.goToPage('success.html', 'qzfcgym', '')
+					},
+
+					goPayBtn() {
+						var _this = this;
+						if (_this.user_address == '') {
+							_GlobalFun.alert('请选择收货地址');
+							return
+						}
+						_this.orderSubmit();
+					},
+
+				},
+				mounted() {
+					var _this = this;
+					_this.address_id = _GlobalFun.getPageParam('aid');
+					this.getInfoAPI(true);
+					this.getUserInfo();
+					if (_GlobalVar.IsAPICloud) {
+						api.addEventListener({
+							name: 'zqddym'
+						}, function(ret, err) {
+							var _datajs = ret.value.msg;
+							_this.address_id = _datajs.address_id;
+							_this.user_address = _datajs
+							_this.getInfoAPI(true);
+
+						});
+					}
+				},
+			});
+		}
+	</script>
+
+
+</html>

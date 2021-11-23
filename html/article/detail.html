@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title></title>
+	<link rel="stylesheet" href="../../css/reset.css" />
+	<link rel="stylesheet" href="../../css/animate.css" />
+	<link rel="stylesheet" href="../../css/mui.min.css" />
+	<!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+	<link rel="stylesheet" href="../../css/public.css" />
+	<script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+	<!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+	<script type="text/javascript" src="../../script/vue.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+	<style>
+		html,
+		body,
+		.Wrap {
+			width: 100%;
+			background: #fff;
+		}
+
+
+		.ajaxContent {
+			width: 100%;
+			padding: 1.25rem;
+			overflow: hidden;
+
+		}
+
+		.ajaxContent * {
+			max-width: 100%;
+		}
+
+		.Main {
+			padding-bottom: 0;
+		}
+	</style>
+</head>
+
+
+<body>
+	<!-- 文章详情公用页面 -->
+	<div class="Wrap" v-cloak>
+		<div class="ajaxContent" v-html="ajaxContent"> </div>
+	</div>
+
+	<script type="text/javascript" src="../../script/public.js"></script>
+
+
+</body>
+
+<script>
+	_GlobalFun.IsAPI(function () {
+
+		VueFun();
+
+	})
+
+
+	function VueFun() {
+		var vue = new Vue({
+			el: ".Wrap",
+			data: {
+				ajaxContent: '',
+				title: '',
+			},
+			methods: {
+				// shareW(){
+				// 		var dialogBox = api.require('dialogBox');
+				// 		dialogBox.actionMenu ({
+				// 		    rect:{
+				// 		        h: 180
+				// 		    },
+				// 		    texts:{
+				// 		         cancel: '取消'
+				// 		    },
+				// 		    items:[
+				// 		    {
+				// 		        text: '微信',
+				// 		        icon: 'widget://image/my/wx.png'
+				// 		    },
+				// 		    {
+				// 		        text: '朋友圈',
+				// 		        icon: 'widget://image/my/p.png'
+				// 		    },
+
+				// 		    ],
+				// 		    styles:{
+				// 		        bg:'#FFF',
+				// 		        column: 2,
+				// 		        itemText: {
+				// 		            color: '#000',
+				// 		            size: 12,
+				// 		            marginT:8
+				// 		        },
+				// 		        itemIcon:{
+				// 		            size:53
+				// 		        },
+				// 		        cancel:{  
+				// 		            bg: 'fs://icon.png',   
+				// 		            color:'#000',          
+				// 		            h: 70 ,                 
+				// 		            size: 14       
+				// 		        }
+				// 		    },
+				// 			tapClose:true,
+				// 		}, function(ret){
+				// 		    // alert(JSON.stringify(ret));
+				// 			if(ret.eventType=='click'){
+				// 				if(ret.index==0){
+				// 					// 微信好友
+				// 				}else{
+				// 					// 微信朋友圈
+				// 				}
+				// 			}
+				// 			dialogBox.close({
+				// 			    dialogName: 'actionMenu'
+				// 			});
+				// 		});
+				// },
+				getContent() {
+					var _this = this;
+					_GlobalFun.getAjax('home', 'get_xieyi?id=' + _GlobalFun.getPageParam('id'), '', function (
+					data) {
+						if (data.code == 0) {
+							_this.ajaxContent = data.list.content;
+						}
+					})
+				},
+				getArticleContent() {
+					var _this = this;
+					_GlobalFun.getAjax('home', 'post_get_mess_one?id=' + _GlobalFun.getPageParam('id'), '',
+						function (data) {
+							if (data.code == 0) {
+								_this.ajaxContent = data.list.content;
+							}
+						})
+				},
+
+			},
+			mounted() {
+				// if (_GlobalFun.getPageParam('type') == 1) {
+				// 	this.getArticleContent();
+				// } else {
+				this.getContent();
+				// }
+				// var _this = this;
+				// api.addEventListener({
+				// 	name: 'navitembtn'
+				// }, function (ret, err) {
+				// 	if (ret.type == 'right') {
+				// 		_this.shareW();
+				// 	}
+				// });
+
+			},
+		});
+	}
+</script>
+
+
+</html>

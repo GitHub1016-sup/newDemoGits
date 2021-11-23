@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>优惠券列表</title>
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <link rel="stylesheet" href="../../css/mui.min.css" />
+    <!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+    <link rel="stylesheet" href="../../css/public.css" />
+    <script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+    <!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+    <script type="text/javascript" src="../../script/vue.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <!-- <script type="text/javascript" src="../../script/mui.min.js"></script> -->
+    <style>
+        body,html{
+            background-color: #F5F5F5;
+        }
+
+        .GoldEcList {
+            padding: 1rem 0;
+            margin-left: 5vw;
+			
+        }
+
+        .GoldEcListLeft {
+            width: 90vw;
+            height: 7.75rem;
+            position: relative;
+            left: 0;
+            background-size: 100% 100%;
+        }
+        .GoldEcListLeftBg1 {
+            background-image: url(../../image/my/pag.png);
+        }
+
+
+
+        .leftMoney{
+
+            align-items: center;
+            height: 5.3125rem;
+            line-height: 5.3125rem;
+        }
+ 
+        .mr45{
+            margin-right: 2.8125rem;
+            position: relative;
+            top: 1.25rem;
+            margin-left: .6875rem;
+        }
+        .mrt33{
+            margin-top: 2.0625rem;
+            text-align: center;
+        }
+        .lingqu{
+            width:7.8125rem;
+            height:3.4375rem;
+            text-align: center;
+            border-radius: 1rem;
+            line-height:3.4375rem;
+        }
+     
+        .tab{
+            display: flex;
+            font-size: 2.125rem;
+            height: 6.3125rem;
+            line-height: 6.3125rem;
+            background-color: #ffffff;
+            border-bottom: .625rem solid #f5f5f5;
+        }
+        .tab div{
+            position: relative;
+            color: #999999;
+        }
+        .tab div.active{
+            color: var(--ThemeColor);
+            font-weight: 500;
+        }
+        .tab div.active::after{
+            width: 6rem;
+            height: .25rem;
+            content: ' ';
+            background-color: var(--ThemeColor);
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%,0);
+            bottom: .625rem;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="Wrap" v-cloak>
+
+        <div class="GoldEcWrap">
+            <div class="tab ListH">
+                <div class="fontSize30 " :class="asd==1?'active':''" @click="goasd(1)">优惠劵</div>
+                <div class="fontSize34" style="opacity: 0;">已领取</div>
+                <div class="fontSize30" :class="asd==2?'active':''"  @click="goasd(2)">已领取</div>
+            </div>
+            <div v-if="getGoldList.length>=1" class="  GoldEcList ">
+
+                <div :id="item.id" v-for="(item,index) in getGoldList" class="GoldEcListLeft GoldEcListLeftBg1 ListHBoth margin-b20">
+                    <div class="leftMoney " >
+                        <div class=" weight500 fontSize54 red ListHCentent" style="width: 6rem;text-align: center;margin-left: 0.5rem;"> <span class="fontSize20">¥</span> {{item.money}}</div>
+                        
+                    </div>
+					<div class="ListV">
+						<div class="fontSize32" style="text-align: center;" >{{item.title}}</div>
+						<div  v-show="asd==1" class="fontSize28 fontColor666">
+							{{item.gold}}积分兑换
+						</div>
+					</div>
+                    <div class="">
+         
+                        <div  v-show="asd==1" @click="getBouns(item.id)" class="lingqu fontSize28 fontColor255 themeBkColor">{{item.gold==0?'领取':'兑换'}}</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="ZnoData" v-if="getGoldList==''">
+                <img src="../../image/nodata/Pic1.png" alt="">
+                <span>
+                    暂无数据
+                </span>
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+    <script type="text/javascript" src="../../script/public.js"></script>
+
+</body>
+
+<script>
+    _GlobalFun.IsAPI(function () {
+        VueFun();
+    })
+
+    function VueFun() {
+
+        var vue = new Vue({
+            el: ".Wrap",
+            data: {
+                getGoldList: [],
+                isSignIn: 0,
+                asd:1,
+            },
+
+            methods: {
+                goasd(index){
+                    this.asd = index;
+                    if(index==1){
+                        this.getGoldListAPI();
+                    }else{
+                        this.getOwn();
+                    }
+                },
+                //获取优惠券列表接口
+                getOwn() {
+                    var _this = this;
+                    _this.getGoldList = '';
+                    _GlobalFun.postAjax('user', 'post_my_red_packet', {
+                        type: 1,
+                        start: 0
+                    }, function (data) {
+                        if (data.code == 0) {
+                            _this.getGoldList = data.list;
+                        } else {
+                            _this.getGoldList = '';
+                        }
+                    });
+                },
+                //获取优惠券列表接口
+                getBouns(id) {
+                    var _this = this;
+                    _GlobalFun.postAjax('home', 'post_home_one_coupon', {
+                        id: id
+                    }, function (data) {
+                        _GlobalFun.alert(data.msg);
+                        if (data.code == 0) {
+                            _this.getGoldListAPI();
+                        }
+                    });
+                },
+                //获取优惠券列表接口
+                getGoldListAPI() {
+                    var _this = this;
+                    _this.getGoldList = '';
+                    _GlobalFun.postAjax('home', 'get_home_coupon_list', {
+                        type: 1,
+                        start: 0
+                    }, function (data) {
+                        if (data.code == 0) {
+                            _this.getGoldList = data.list;
+                        } else {
+                            _this.getGoldList = '';
+                        }
+                    });
+                },
+            },
+
+            mounted() {
+                this.getGoldListAPI();
+            },
+        });
+
+    }
+</script>
+
+
+</html>

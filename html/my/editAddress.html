@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>编辑收货地址</title>
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="../../css/animate.css" />
+    <link rel="stylesheet" href="../../css/mui.min.css" />
+    <link rel="stylesheet" href="../../css/mui.picker.css" />
+    <link rel="stylesheet" href="../../css/mui.poppicker.css" />
+    <!-- <link rel="stylesheet" href="../../css/swiper.min.css" /> -->
+    <link rel="stylesheet" href="../../css/public.css" />
+    <script type="text/javascript" src="../../script/jquery-1.9.1.min.js"></script>
+    <!-- <script type="text/javascript" src="../../script/swiper.min.js"></script> -->
+    <script type="text/javascript" src="../../script/vue.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/mui.min.js"></script>
+    <script type="text/javascript" src="../../script/mui.picker.js"></script>
+    <script type="text/javascript" src="../../script/mui.poppicker.js"></script>
+    <!-- <script type="text/javascript" src="../../script/city.data.js"></script> -->
+    <script type="text/javascript" src="../../script/city.data-3.js"></script>
+    <style>
+        body {
+            background: #fff;
+        }
+
+        .HeaderWrap {
+            background: #fff;
+        }
+
+        .ReceiverWrap {
+
+            padding: 1rem 1rem;
+        }
+
+        .ReceiverList {
+            display: flex
+        }
+
+        .MyInputTitle,
+        .MyInputCon {
+            /* display: inline-block;
+            vertical-align: middle; */
+        }
+
+        .MyInputCon {
+            width: 100%;
+            flex: 1;
+        }
+
+        .ReceiverList input {
+            border: 0;
+            height: initial;
+            line-height: initial;
+            padding: 0;
+            margin: 0;
+            height: 6rem;
+            line-height: 6rem;
+            background: none;
+        }
+
+        .ReceiverList input::-webkit-input-placeholder {
+            color: #ADADAD;
+        }
+
+        .ReceiverList .MyInputTitle,
+        .ReceiverList .MyInputCon {
+            vertical-align: top;
+        }
+
+        .MyInputTitle {
+            width: 11.5rem;
+            padding-left: 1rem;
+            height: 6rem;
+            line-height: 6rem;
+        }
+
+        .MyInputBox2 {
+            display: flex;
+            align-items: center;
+        }
+
+        .MyInputBox {
+            height: 6rem;
+            line-height: 6rem;
+            padding-bottom: 1rem;
+
+        }
+
+        .RadioIcon {
+            width: 2.13rem;
+            height: 2.13rem;
+            border: 0.13rem solid rgba(213, 213, 213, 1);
+            border-radius: 50%;
+            position: relative;
+            margin-right: 0.5rem;
+            position: relative;
+        }
+
+        .RadioList {
+            margin-right: 6rem;
+        }
+
+        .RadioList div {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .RadioList.Select .RadioIcon::after {
+            content: "";
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--ThemeColor);
+            border-radius: 50%;
+        }
+
+        .ReceiverList {
+            border-bottom: 0.06rem solid #E0E0E0;
+        }
+
+        .ReceiverList:last-child {
+            border-bottom: 0;
+        }
+
+        .ReceiverList .MyInputBox {}
+
+
+        .ReceiverList1 {
+            border-bottom: 0;
+        }
+
+        .ReceiverList1 .MyInputBox {
+            border-bottom: 0.06rem solid #E0E0E0;
+
+        }
+
+        .ReceiverListMr {}
+
+        .TouchMode {
+            width: 5rem;
+            height: 2.88rem;
+            border-radius: 1.44rem;
+            position: relative;
+            padding: 0 0.5rem;
+        }
+
+        .TouchModeIn {
+            position: relative;
+            width: 40%;
+            height: 100%;
+        }
+
+        .TouchModeBar {
+            width: 2.41rem;
+            height: 80%;
+            position: absolute;
+            left: 0%;
+            border-radius: 50%;
+            top: 50%;
+            transform: translate(0, -50%);
+            transition: 300ms ease all;
+        }
+
+        .TouchMode.backColorFF913D .TouchModeBar {
+            left: 100%
+        }
+
+        .LoginBtn {
+            margin-top: 2rem;
+        }
+
+        .LoginBtn button {
+            width: 100%;
+            border: 0;
+            width: 44.88rem;
+            height: 4.97rem;
+            background: rgba(224, 224, 224, 1);
+            border-radius: 0.5rem;
+            padding: 0;
+        }
+
+        .LoginBtn button.backColorFF913D {
+            background: var(--ThemeColor) !important;
+        }
+
+
+
+        .LoginBtn button:active {
+            border: 0 !important;
+            background: rgba(224, 224, 224, 1) !important;
+        }
+
+        .new {
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <div class="Wrap" v-cloak>
+
+        <div id="apiHeader" class="HeaderWrap">
+
+            <div class="ListHBothB HeaderInner">
+                <div class=" mui-icon mui-icon-arrowleft fontColorFF913D  HeadReturnBtn Js_HeadReturnBtn"
+                    style="flex: 1;">
+                </div>
+                <div class="fontSize36 fontColor333 weight500 HeaderTitleDesc">编辑收货地址</div>
+                <!--fontColorFF913D-->
+                <div :class="address_id==0?'new':''" v-on:click="delAddress"
+                    class="HeaderRightBtn fontColor666  fontSize24" style="flex: 1;padding-left: 0;padding-right: 0;">
+                    删除</div>
+            </div>
+
+        </div>
+        <div >
+            <div class="ToLine"></div>
+
+            <div class="ReceiverWrap">
+                <div class="ReceiverList">
+                    <div class="fontColor333 fontSize28 MyInputTitle">收货人</div>
+                    <div class="MyInputCon">
+                        <div class="MyInputBox MyInputBox1">
+                            <input v-on:input="inputFun" v-model="name" class="Js_Name fontSize28 fontColor666"
+                                type="text" placeholder="请填写收货人的姓名" />
+							
+                        </div>
+
+						<div v-show="name.length<=1 && name.length != 0" class="fontSize22 themeColor">
+							收货人长度需要在2-25个汉字或字符之间，不能包含特殊字符
+						</div>
+                    </div>
+					
+                </div>
+
+                <div class="ReceiverList">
+                    <div class=" fontColor333 fontSize28 MyInputTitle">手机号码</div>
+                    <div class="MyInputCon">
+                        <div class="MyInputBox MyInputBox1">
+                            <input v-on:input="inputFun" v-model="phone" class="Js_Phone fontSize28 fontColor666"
+                                type="tel" maxlength="11" placeholder="请填写收货人的手机号" />
+                        </div>
+                    </div>
+                </div>
+                <div class="ReceiverList" v-on:click="selectLoca">
+                    <div class="fontColor333 fontSize28 MyInputTitle">收货地址</div>
+                    <div class="MyInputCon" id="showCityPicker3">
+                        <div class="MyInputBox MyInputBox1">
+                            <div id="cityResult3" :class="loca!='请选择收货地址'?'fontColor666':''"
+                                class="fontSize28 fontColorADADAD ">{{loca}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ReceiverList">
+                    <div class="fontColor333 fontSize28 MyInputTitle">详细地址</div>
+                    <div class="MyInputCon">
+                        <div class="MyInputBox MyInputBox1">
+                            <input v-on:input="inputFun" v-model="dtlLoca" class="Js_DtlLoca fontSize28 fontColor666"
+                                type="text" placeholder="请填写收货人的详细地址" />
+                        </div>
+                    </div>
+                </div>
+                <div class="ListHBothB ReceiverList ReceiverListMr">
+                    <div class="fontColor333 fontSize28 MyInputTitle">设为默认地址</div>
+                    <!--backColorFF913D-->
+                    <div class="backColorE0E0E0  TouchMode Js_TouchMode" v-on:click="isSetDefault"
+                        :class="isDefault==1?'backColorFF913D':''">
+                        <div class="TouchModeIn">
+                            <div class="backColor255  TouchModeBar"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mui-button-row LoginBtn  " v-on:click="saveLocaBtn">
+                <button type="button" class="fontSize36 fontColor255 mui-btn mui-btn-primary backColorE0E0E0 "
+                    :class="!isKeySubmit?'backColorFF913D':''">保存收货地址</button>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <script type="text/javascript" src="../../script/public.js"></script>
+
+
+
+
+</body>
+
+<script>
+
+    _GlobalFun.IsAPI(function () {
+
+        VueFun();
+
+    })
+
+    function VueFun() {
+
+        var vue = new Vue({
+            el: ".Wrap",
+
+            data: {
+                name: '',//姓名
+                phone: "",//手机号
+                sex: 1, //2女士 1先生
+                loca: '请选择收货地址',//地址拼接
+                dtlLoca: '',//详细地址
+                isDefault: 0,//是否默认地址
+                isKeySubmit: true,//是否锁定提交按钮
+                locaValue: {//省市value
+                    province: '',
+                    city: '',
+                    district: '',
+                },
+                address_id: _GlobalFun.getPageParam('address_id'),  //地址id
+            },
+
+            methods: {
+
+
+                //删除收货地址
+                delAddress() {
+                    var _this = this;
+
+                    _GlobalFun.Confirm('确认删除此收货地址吗?', '', function () {
+                        _GlobalFun.postAjax('user', 'address_delete', {
+                            address_id: _this.address_id
+                        }, function (data) {
+                            if (data.code == 0) {
+                                _GlobalFun.comeBack();
+                                if (_GlobalVar.IsAPICloud) {
+                                    api.sendEvent({
+                                        name: 'dzxg',
+                                        extra: {
+                                            msg: '地址修改'
+                                        }
+                                    });
+                                }
+
+                            } else {
+                                _GlobalFun.alert(data.msg);
+                            }
+                        });
+                    })
+
+
+
+                },
+
+
+                //性别选择
+                sexSelect() {
+
+                    var _this = this;
+
+                    if (_this.sex == 1) {
+                        _this.sex = 2
+                    } else {
+                        _this.sex = 1
+                    }
+
+
+                },
+
+                //设置默认
+                isSetDefault() {
+
+                    var _this = this;
+
+                    if (_this.isDefault == 1) {
+                        _this.isDefault = 0;
+                    } else {
+                        _this.isDefault = 1;
+                    }
+
+
+                },
+
+                //获取用户信息
+                getUserInfoAPI() {
+                    var _this = this;
+                    _GlobalFun.postAjax('user', 'address_edit', {
+                        address_id: _this.address_id
+                    }, function (data) {
+                        if (data.code == 0) {
+
+                            var _d = data.data;
+                            _this.name = _d.name;
+                            _this.phone = _d.phone;
+                            _this.loca = _d.province_name + " " + _d.city_name + " " + _d.district_name;
+                            _this.dtlLoca = _d.address;
+                            _this.sex = _d.gender;
+                            _this.isDefault = _d.status;
+                            _this.locaValue.province = _d.province;
+                            _this.locaValue.city = _d.city;
+                            _this.locaValue.district = _d.district;
+
+                            if (_this.sex == 0) {
+                                _this.sex = 1;
+                            }
+                            var pattern = /^1[3456789]\d{9}$/;
+                            if (_this.name != "" && _this.phone != "" && pattern.test(_this.phone) && _this.dtlLoca != "" && _this.loca != "请选择收货地址") {
+                                _this.isKeySubmit = false;
+                            } else {
+                                _this.isKeySubmit = true;
+                            }
+                        }
+                    });
+
+                },
+
+                //监听输入内容
+                inputFun(e) {
+                    var _this = this;
+                    // console.log(_this.name);
+                    _this.inputJudge();
+                },
+
+                //选择收货地址
+                selectLoca() {
+                    var _this = this;
+
+                    var cityPicker3 = new mui.PopPicker({
+                        layer: 3
+                    });
+
+                    cityPicker3.setData(cityData3);
+                    // var showCityPickerButton = document.getElementById('showCityPicker3');
+                    var cityResult3 = document.getElementById('cityResult3');
+                    cityPicker3.show(function (items) {
+
+                        // cityResult3.innerText = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                        _this.loca = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+
+                        _this.locaValue.province = (items[0] || {}).value;
+                        _this.locaValue.city = (items[1] || {}).value;
+                        _this.locaValue.district = (items[2] || {}).value;
+
+                        _this.inputJudge();
+
+
+                        //返回 false 可以阻止选择框的关闭
+                        //return false;
+
+                    });
+                },
+
+                inputJudge() {
+                    var _this = this;
+                    var pattern = /^1[3456789]\d{9}$/;
+
+                    if (_this.name != "" && _this.phone != "" && pattern.test(_this.phone) && _this.dtlLoca != "" && _this.loca != "请选择收货地址") {
+                        _this.isKeySubmit = false;
+                    } else {
+                        _this.isKeySubmit = true;
+                    }
+                },
+
+
+                //设置默认状态接口
+                setDefAPI() {
+
+                    var _this = this;
+                    _GlobalFun.postAjax('user', 'address_set', {
+                        address_id: _this.address_id
+                    }, function (data) {
+                        if (data.code == 0) {
+
+                            if (_GlobalVar.IsAPICloud) {
+                                api.sendEvent({
+                                    name: 'dzxg',
+                                    extra: {
+                                        msg: '地址修改'
+                                    }
+                                });
+                            }
+
+                        } else {
+                            // _GlobalFun.alert(data.msg);
+                        }
+                    });
+
+                },
+
+
+                //信息提交
+                infoSubmit() {
+
+                    var _this = this;
+                    if (_this.address_id != 0 && _this.isDefault == 1) {
+                        _this.setDefAPI();
+                    }
+                    _GlobalFun.postAjax('user', 'user_address_post', {
+                        address_id: _this.address_id,
+                        name: _this.name,
+                        phone: _this.phone,
+                        status: _this.isDefault,
+                        province: _this.locaValue.province,
+                        city: _this.locaValue.city,
+                        district: _this.locaValue.district,
+                        address: _this.dtlLoca,
+                        gender: _this.sex,
+                    }, function (data) {
+						api.toast({msg:data.msg})
+                        if (data.code == 0) {
+
+                            _GlobalFun.comeBack();
+                            if (_GlobalVar.IsAPICloud) {
+                                api.sendEvent({
+                                    name: 'dzxg',
+                                    extra: {
+                                        msg: '地址修改'
+                                    }
+                                });
+                            }
+                            // _GlobalFun.alert(data.msg);
+                        } else {
+                            // _GlobalFun.alert(data.msg);
+                        }
+                    });
+
+                },
+
+                //提交按钮
+                saveLocaBtn() {
+                    var _this = this;
+
+                    if (!_this.isKeySubmit) {
+
+                        _this.infoSubmit();
+
+
+
+                    }
+
+                },
+
+            },
+            mounted() {
+                // _GlobalFun.ReturnBtn();
+                var _this = this;
+                this.getUserInfoAPI();
+
+            },
+        });
+
+    }
+
+
+
+
+
+
+</script>
+
+<script>
+
+
+
+
+</script>
+
+
+</html>
